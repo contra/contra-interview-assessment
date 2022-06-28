@@ -4,7 +4,7 @@
 
 Welcome to the next step of Contra's engineering interview process! You'll be asked to complete a short code assessment in the stack we use internally at Contra: Node.JS, TypeScript, React, GraphQL, and PostgreSQL. We've configured sensible repository defaults and provided Github Actions that will build and test your code, so you can spend your time writing actual code, not configuration.
 
-We know not everyone has experience with our core stack &mdash; that's okay! **The goal of this exercise is to assess your ability to learn, and make good software design decisions along the way.** To be respectful of your time, this assessment is designed to be completed in under 6 hours and has no deadlines or due dates.
+We know not everyone has experience with our core stack &mdash; that's okay! **The goal of this exercise is to assess your ability to learn, and make good software design decisions along the way.** To be respectful of your time, this assessment is designed to be completed in under _____ hours and has no deadlines or due dates.
 
 If you have any questions, reach out to [Joseph](mailto:joseph@contra.com) -- he is very helpful 😉.
 
