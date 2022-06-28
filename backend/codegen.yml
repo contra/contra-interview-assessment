@@ -1,0 +1,19 @@
+schema:
+  - src/**/*.graphql
+generates:
+  'src/generated/types.ts':
+    plugins:
+      - typescript
+      - typescript-resolvers
+    config:
+      allowParentTypeOverride: true
+      contextType: '../ResolverContextType#ResolverContext'
+      mapperTypeSuffix: 'Model'
+      maybeValue: 'T | null | undefined'
+      noSchemaStitching: true
+      optionalResolveType: true
+      useIndexSignature: true
+      scalars:
+        ID: 'string | number'
+      useTypeImports: true
+      mappers:

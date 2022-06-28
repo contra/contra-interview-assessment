@@ -1,0 +1,6 @@
+#!/bin/bash
+. "$(dirname "$0")/_/husky.sh"
+
+has_changed () {
+  [[ $(git diff master... --name-only -- ${1} | wc -l) -gt 0 ]]
+}

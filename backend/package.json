@@ -1,0 +1,57 @@
+{
+  "name": "contra-interview-assessment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn lint && yarn test"
+    }
+  },
+  "scripts": {
+    "dev": "NODE_ENV=development ROARR_LOG=true ts-node-dev --respawn ./src/bin/server.ts | roarr pretty-print",
+    "format-graphql-schema": "format-graphql --write true ./src/schema/schema.graphql",
+    "build": "tsc --project ./",
+    "lint": "eslint --fix src . && prettier --write src . && tsc --noEmit && format-graphql --write true src/schema/schema.graphql",
+    "generate-types": "graphql-codegen",
+    "migrate": "ts-node ./src/bin/migrate.ts",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.20.0",
+    "@graphql-codegen/core": "^1.17.9",
+    "@graphql-codegen/typescript": "^1.19.0",
+    "@graphql-codegen/typescript-operations": "^1.17.13",
+    "@graphql-codegen/typescript-resolvers": "^1.18.1",
+    "@slonik/migrator": "^0.11.2",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^7.16.0",
+    "eslint-config-canonical": "^25.0.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "format-graphql": "^1.4.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^10.5.3",
+    "nyc": "^15.1.0",
+    "prettier": "^2.2.1",
+    "ts-node-dev": "^1.1.1",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@roarr/cli": "^3.2.2",
+    "apollo-server-fastify": "3.6.3",
+    "fast-safe-stringify": "^2.1.1",
+    "fastify": "^3.14.0",
+    "fastify-cookie": "^5.4.0",
+    "got": "^11.8.1",
+    "graphql": "^15.4.0",
+    "graphql-import": "^1.0.2",
+    "graphql-tools": "^7.0.2",
+    "roarr": "^3.2.0",
+    "slonik": "^23.5.1",
+    "slonik-interceptor-field-name-transformation": "^1.5.3",
+    "slonik-interceptor-preset": "^1.2.10",
+    "ts-node": "^9.1.1"
+  }
+}
