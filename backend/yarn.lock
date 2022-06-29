@@ -2968,10 +2968,10 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-canonical@25.9.0:
-  version "25.9.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-canonical/-/eslint-config-canonical-25.9.0.tgz#a16dd42770169c53accbdaba148232b9dc712898"
-  integrity sha512-lWyMdBfM1zDaUBKDLsFKywQxWfkiJdkv4y+2pCguBaWcF4t4rP1K67C8eaUWhhWXLmSCQqbc8J4DTy+arxn1MQ==
+eslint-config-canonical@25.9.1:
+  version "25.9.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-canonical/-/eslint-config-canonical-25.9.1.tgz#c2fff25b686855cf28800febfe307568d30d3dcb"
+  integrity sha512-fMoe/hCMwtfSjEtBN+xxlIUuiI6k2iLRB1whsXIp2/B5ol3pVZtL+oY3QKYK71I4wDOmD+eBBphwo9U4Mvzg2A==
   dependencies:
     "@babel/eslint-parser" "^7.12.13"
     "@typescript-eslint/eslint-plugin" "^4.15.0"
