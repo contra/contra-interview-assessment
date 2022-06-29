@@ -12,11 +12,11 @@
     "migrate": "ts-node ./src/bin/migrate.ts"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "1.21.2",
-    "@graphql-codegen/core": "1.17.9",
-    "@graphql-codegen/typescript": "1.21.1",
-    "@graphql-codegen/typescript-operations": "1.17.15",
-    "@graphql-codegen/typescript-resolvers": "1.19.0",
+    "@graphql-codegen/cli": "1.21.8",
+    "@graphql-codegen/core": "1.17.10",
+    "@graphql-codegen/typescript": "1.23.0",
+    "@graphql-codegen/typescript-operations": "1.18.4",
+    "@graphql-codegen/typescript-resolvers": "1.20.0",
     "@slonik/migrator": "0.11.2",
     "@typescript-eslint/parser": "5.12.0",
     "eslint": "7.22.0",
