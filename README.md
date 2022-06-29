@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the next step of Contra's engineering interview process! You'll be asked to complete a short code assessment in the stack we use internally at Contra: Node.JS, TypeScript, React, GraphQL, and PostgreSQL. We've configured sensible repository defaults and provided Github Actions that will build and test your code, so you can spend your time writing actual code, not configuration.
+Welcome to the next step of Contra's engineering interview process! You'll be asked to complete a code assessment in the stack we use internally at Contra: Node.JS, TypeScript, React, GraphQL, and PostgreSQL. We've configured sensible repository defaults so you can spend your time writing actual code, not configuration.
 
 We know not everyone has experience with our core stack &mdash; that's okay! **The goal of this exercise is to assess your ability to learn, and make good software design decisions along the way.** To be respectful of your time, this assessment is designed to be completed in under _____ hours and has no deadlines or due dates.
 
@@ -22,17 +22,16 @@ Assume the following about feature flags:
 
 - **Backend**
   - [ ] Build a GraphQL API that:
-    - [ ] Exposes a GraphQL Query that returns a single user's feature flags based on a user ID
-    - [ ] Exposes a GraphQL Query that returns users and their associated all feature flags
-    - [ ] Exposes a GraphQL Mutation to add new feature flags to the service.
+    - [ ] Exposes a GraphQL Mutation to target one or more users with a specific feature flag
+    - [ ] Exposes a GraphQL Query that returns all users and their associated feature flags
     - [ ] Exposes a GraphQL Mutation to change the value of a feature flag for a specific user
-    - [ ] Exposes a GraphQL Mutation to target one or more users with specific feature flag
 - **Frontend**
-  - [ ] Build a lightweight React dashboard that consumes your GraphQL API, allowing you to:
-    - [ ] Add new feature flags to the service
+  - [ ] Build a lightweight React dashboard that consumes your GraphQL API, providing a UI to:
     - [ ] Target one or more users with a specific feature flag
     - [ ] Change the value of a feature flag for a specific user
     - [ ] List the users in the system alongside their feature flags
+
+_Note: To keep it simple, you don't need to build API functionality to create or delete feature flags or users. Assume that you can manually seed feature flags and users in the database, once you've designed the database schema to support._
 
 ## Evaluation
 
@@ -175,10 +174,12 @@ export const resolve: QueryResolvers["hello"] = async (
 };
 ```
 
-- All migration activity will run agains the database instance you connected through the `POSTGRES_CONNECTION_STRING` environment variable. Make sure that `yarn migrate` prefixes all [commands](https://github.com/mmkal/slonik-tools/tree/master/packages/migrator#commands). Here's an example:
+- All migration activity will run against the database instance you connected through the `POSTGRES_CONNECTION_STRING` environment variable. Make sure that `yarn migrate` prefixes all [commands](https://github.com/mmkal/slonik-tools/tree/master/packages/migrator#commands). Here's an example:
 
 ```sh
 $ yarn migrate create --name user_account.sql
 $ yarn migrate up
 $ yarn migrate down
 ```
+
+- A sample migration for a `user_account` table has provided for your convenience.
