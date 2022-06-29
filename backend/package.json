@@ -2,21 +2,14 @@
   "name": "contra-interview-assessment",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn lint && yarn test"
-    }
-  },
+  "private": true,
   "scripts": {
     "dev": "NODE_ENV=development ROARR_LOG=true ts-node-dev --respawn ./src/bin/server.ts | roarr pretty-print",
     "format-graphql-schema": "format-graphql --write true ./src/schema/schema.graphql",
     "build": "tsc --project ./",
     "lint": "eslint --fix src . && prettier --write src . && tsc --noEmit && format-graphql --write true src/schema/schema.graphql",
     "generate-types": "graphql-codegen",
-    "migrate": "ts-node ./src/bin/migrate.ts",
-    "prepare": "husky install"
+    "migrate": "ts-node ./src/bin/migrate.ts"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.20.0",
@@ -31,7 +24,6 @@
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-import": "^2.22.1",
     "format-graphql": "^1.4.0",
-    "husky": "^8.0.1",
     "lint-staged": "^10.5.3",
     "nyc": "^15.1.0",
     "prettier": "^2.2.1",

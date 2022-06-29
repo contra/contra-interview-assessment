@@ -112,7 +112,7 @@ and the application should come alive at `localhost:3000`
 
 We've provided a fresh NodeJS/Fastify/TypeScript/GraphQL/PostgreSQL project out of the box.
 
-The project expects a valid database connection string passed to the `POSTGRES_CONNECTION_STRING` environment variable to start. We recommend using [Render](render.com), which provides a free hosted PostgreSQL instance in just a few clicks. [Have a look at the Render setup instructions](https://render.com/docs/databases#creating-a-database) for more detail. That said, you're welcome to use another database service of your choice, run a local PostgreSQL Docker container, etc. Regardless, once you've configured a database instance, set the `POSTGRES_CONNECTION_STRING` environment variable:
+The project expects a valid database connection string passed to the `POSTGRES_CONNECTION_STRING` environment variable to start. We recommend using [Render](https://render.com), which provides a free hosted PostgreSQL instance in just a few clicks. [Have a look at the Render setup instructions](https://render.com/docs/databases#creating-a-database) for more detail. That said, you're welcome to use another database service of your choice, run a local PostgreSQL Docker container, etc. Regardless, once you've configured a database instance, set the `POSTGRES_CONNECTION_STRING` environment variable:
 
 ```sh
 $ export POSTGRES_CONNECTION_STRING='YOUR_PG_DATABASE_CONNECTION_STRING'
