@@ -20,7 +20,7 @@
     "@slonik/migrator": "0.11.2",
     "@typescript-eslint/parser": "5.12.0",
     "eslint": "7.22.0",
-    "eslint-config-canonical": "25.9.0",
+    "eslint-config-canonical": "25.9.1",
     "eslint-config-prettier": "7.2.0",
     "eslint-plugin-import": "2.22.1",
     "format-graphql": "1.4.0",
