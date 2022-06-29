@@ -36,7 +36,7 @@
     "fast-safe-stringify": "^2.1.1",
     "fastify": "^3.14.0",
     "fastify-cookie": "^5.4.0",
-    "got": "^11.8.1",
+    "got": "^11.8.5",
     "graphql": "^15.4.0",
     "graphql-import": "^1.0.2",
     "graphql-tools": "^7.0.2",
