@@ -6,7 +6,6 @@ coverage
 tsconfig.tsbuildinfo
 # Next
 next-env.d.ts
-schema.graphql
 src/types/api.ts
 /.next/
 /out/
