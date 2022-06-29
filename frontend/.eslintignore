@@ -23,7 +23,6 @@ src/types/api.ts
 !.gitignore
 !.gitlab
 !.gitlab-ci.yml
-!.husky
 !.lintstagedrc.js
 !.mergify.yml
 !.npmignore

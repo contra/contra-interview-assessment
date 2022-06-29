@@ -7,12 +7,12 @@ import { createFastifyServer } from '../factories/createFastifyServer';
 
 const log = Logger.child({ context: 'bin/server' });
 
-if (!process.env.POSTGRES_CONNECTION_STING)
+if (!process.env.POSTGRES_CONNECTION_STRING)
   throw new Error(
-    'Must provide a PG connection string -- if you need a fresh database, we recommend using Render',
+    'Must provide a PG connection string (export POSTGRES_CONNECTION_STRING=value) -- if you need a fresh database, we recommend using Render.com',
   );
 
-const pool = createPool(process.env.POSTGRES_CONNECTION_STING, {
+const pool = createPool(process.env.POSTGRES_CONNECTION_STRING, {
   captureStackTrace: false,
   connectionTimeout: 60 * 1_000,
   interceptors: [...createInterceptors(), ...createCustomSlonikInterceptors()],

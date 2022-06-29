@@ -30,7 +30,6 @@ src/types/api.ts
 !.nvmrc
 
 !.gitattributes
-!.husky
 !.npmignore
 !.npmrc
 !.nvmrc

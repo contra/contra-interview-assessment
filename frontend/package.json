@@ -9,12 +9,10 @@
     "lint": "yarn lint:eslint && yarn lint:prettier",
     "lint:eslint": "eslint './src/**/*.{js,ts,tsx}' --cache",
     "lint:prettier": "prettier --ignore-path .gitignore --check './**/*.{js,ts,tsx}'",
-    "prepare": "husky install",
     "test": "NODE_ENV=test jest --watch",
     "test:ci": "NODE_ENV=test jest --ci --reporters jest-silent-reporter"
   },
   "dependencies": {
-    "husky": "8.0.1",
     "next": "12.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0"
