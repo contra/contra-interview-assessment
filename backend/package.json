@@ -28,7 +28,7 @@
     "nyc": "15.1.0",
     "prettier": "2.2.1",
     "ts-node-dev": "1.1.6",
-    "typescript": "4.5.5"
+    "typescript": "4.7.4"
   },
   "dependencies": {
     "@roarr/cli": "^3.2.2",
