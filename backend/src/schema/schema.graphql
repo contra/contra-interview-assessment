@@ -1,7 +1,71 @@
-type Mutation {
-  sampleMutation: String!
+type FeatureFlagAssignment {
+  id: ID!
+  value: String!
+  valueType: String!
 }
 
+type User {
+  id: ID!
+  givenName: String!
+  familyName: String!
+  emailAddress: String!
+  featureFlagAssignments: [FeatureFlagAssignment!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+enum FeatureFlagType {
+  BOOLEAN
+  MULTI
+}
+
+type UserAssignment {
+  id: ID!
+  value: String!
+  valueType: String!
+}
+
+type FeatureFlag {
+  id: ID!
+  type: FeatureFlagType!
+  userAssignments: [UserAssignment!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input AddFeatureFlagInput {
+  id: String!
+  type: FeatureFlagType!
+}
+
+input AddUserInput {
+  givenName: String!
+  familyName: String!
+  emailAddress: String!
+}
+
+input TargetSingleUserInput {
+  flagId: ID!
+  userId: ID!
+  value: String!
+  valueType: String!
+}
+
+input TargetMultiUserInput {
+  flagId: String!
+  userIds: [ID!]!
+  value: String!
+  valueType: String!
+} 
+
 type Query {
-  hello: String!
+  users: [User!]!
+  featureFlags: [FeatureFlag!]!
+}
+
+type Mutation {
+  addFeatureFlag(input: AddFeatureFlagInput!): FeatureFlag!
+  addUser(input: AddUserInput!): User!
+  targetSingleUser(input: TargetSingleUserInput!): User
+  targetMultipleUsers(input: TargetMultiUserInput!): [User!]!
 }
