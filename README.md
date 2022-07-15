@@ -2,15 +2,15 @@
 
 ## Introduction
 
-Welcome to the next step of Contra's engineering interview process! You'll be asked to complete a code assessment in the stack we use internally at Contra: Node.JS, TypeScript, React, GraphQL, and PostgreSQL. We've configured sensible repository defaults so you can spend your time writing actual code, not configuration.
+Welcome to the next step of Contra's engineering interview process! You'll be asked to complete a code assessment in the stack we use internally at Contra: Node.JS, TypeScript, React, GraphQL, and PostgreSQL. We've configured sensible repository defaults and boilerplate Frontend and Backend projects, so you can spend your time writing actual code, not configuration.
 
-We know not everyone has experience with our core stack &mdash; that's okay! **The goal of this exercise is to assess your ability to learn, and make good software design decisions along the way.** To be respectful of your time, this assessment is designed to be completed in under 8 hours and has no deadlines or due dates.
+We know not everyone has experience with our core stack &mdash; that's okay! **The goal of this exercise is to assess your ability to learn, and make good software design decisions along the way.** To be respectful of your time, this assessment is designed to be completed in under 4 hours and has no deadlines or due dates.
 
 If you have any questions, reach out to [Joseph](mailto:joseph@contra.com) -- he is very helpful 😉.
 
-## Choose your own technical assessment
+## Choose your own adventure
 
-We have split our technical assessment into a backend assessment and frontend assessment. You have the choice on which assessment you would like to complete. We recommend choosing the assessment that you have the most comfort in and will best showcase your skills. 
+We have split our technical assessment into a backend assessment and frontend assessment -- you are free to choose which one you'd like to complete. While everyone we hire is full-stack, we want every candidate to play to their strengths and past experiences -- we recommend choosing the assessment at which you'll be the most successful. Show us what you've got!
 
 Within the backend and frontend folder you will find a `README.md` that outlines the technical assessment, criteria and setup steps.
 
@@ -46,8 +46,10 @@ When evaluating your submission, we care about the following:
 There's no perfect solution — "Developer Experience, "Performance & Scaleability,", and "Code Quality" mean different things in different contexts. Use your best judgement, and explicitly call out any assumptions you made along the way. Remember: there aren't any tricks here, and we review every submission with the best intent.
 
 ## Submission
+
 Fork & PR
 When you're ready, fork this repository and create a Pull Request. In your Pull Request, be sure to clearly explain the changes you made, and any assumptions your reviewer should keep in mind.
 
 ## Loom Submission
+
 At Contra, we prize great communication over all else. In addition to great written communication, we love concise Loom demos that capture your personality and passion for your work, and convey what you can't in writing. As part of your submission, attach a <5 minute Loom to your PR description that introduces yourself, walks through your code, and the decisions you made along the way.
