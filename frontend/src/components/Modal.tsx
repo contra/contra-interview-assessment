@@ -107,12 +107,12 @@ const Modal = ({ handleClose, title, children }: Props) => {
         const firstElement: HTMLElement = focusableModalElements?.[0];
         const lastElement: HTMLElement = focusableModalElements?.[focusableModalElements.length - 1];
 
-        if (!e.shiftKey && document.activeElement !== firstElement) {
+        if (!e.shiftKey && document.activeElement === lastElement) {
             firstElement?.focus();
             return e.preventDefault();
         }
 
-        if (e.shiftKey && document.activeElement !== lastElement) {
+        if (e.shiftKey && document.activeElement === firstElement) {
             lastElement?.focus();
             e.preventDefault();
         }
@@ -134,7 +134,7 @@ const Modal = ({ handleClose, title, children }: Props) => {
                     <div style={header}>
                         <h1 style={headerText}>{title}</h1>
                         <button
-                            style={closeButton}
+                            style={contraModalCloseButton}
                             autoFocus
                             onClick={handleClose}>
                             <svg
