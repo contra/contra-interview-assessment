@@ -81,9 +81,6 @@ const Scroll: NextPage = () => {
           aliquet urna. Nulla eget felis velit. Suspendisse eleifend nisi
           lacinia pharetra imperdiet.
         </p>
-        <Link href="/">
-          <a>Home</a>
-        </Link>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed
           consequat nisi. Vestibulum ante ipsum primis in faucibus orci luctus

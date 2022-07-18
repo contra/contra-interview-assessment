@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styles from './Modal.module.css';
+import FocusTrap from 'focus-trap-react';
 
 interface ModalProps {
   onExit: (event: KeyboardEvent | React.MouseEvent<HTMLButtonElement>) => void;
@@ -37,7 +38,7 @@ function Modal({ onExit, children, footer }: ModalProps) {
     };
   }, []);
 
-  // Background scrolling
+  // Background scrolling lock
   useEffect(() => {
     requestAnimationFrame(() => {
       const scrollY = window.scrollY;
@@ -56,21 +57,23 @@ function Modal({ onExit, children, footer }: ModalProps) {
   }, []);
 
   return (
-    <div
-      className={styles['modalBackground']}
-      aria-labelledby="modal-title"
-      id="modal"
-      role="dialog"
-      tabIndex={-1}
-    >
-      <div className={styles['modalContainer']}>
-        <div className={styles['titleCloseBtn']}>
-          <button onClick={onClickHandler}>X</button>
-        </div>
-        {children}
-        <div className={styles['footer']}>{footer}</div>
+    <FocusTrap>
+      <div
+        className={styles['modalBackground']}
+        aria-labelledby="modal-title"
+        id="modal"
+        role="dialog"
+        tabIndex={-1}
+      >
+        <section className={styles['modalContainer']}>
+          <div className={styles['titleCloseBtn']}>
+            <button onClick={onClickHandler}>X</button>
+          </div>
+          {children}
+          <div className={styles['footer']}>{footer}</div>
+        </section>
       </div>
-    </div>
+    </FocusTrap>
   );
 }
 
