@@ -8,22 +8,76 @@ interface ModalProviderProps {
 }
 
 function ModalProvider({ children }: ModalProviderProps) {
-  const [modalType, setModalType] = useState('');
+  const [modalsType, setModalsType] = useState<string[]>([]);
 
   const [isSSR, setIsSSR] = useState(true);
 
-  const value = useMemo(
-    () => ({ modalType, setModalType, isOpen: modalType !== '' }),
-    []
-  );
+  function setModalType(modalType: string) {
+    setModalsType((listModals) => {
+      return listModals.concat(modalType);
+    });
+  }
 
   function onExit() {
-    setModalType('');
+    if (modalsType.length >= 1) {
+      setModalsType((listModals) => {
+        return listModals.slice(0, -1);
+      });
+    }
   }
+
+  const value = useMemo(
+    () => ({
+      setModalType,
+      isOpen: modalsType.length >= 1,
+    }),
+    []
+  );
 
   useEffect(() => {
     setIsSSR(false);
   }, []);
+
+  function checkDocumentKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
+      onExit();
+    }
+  }
+
+  // Register Escape event
+  useEffect(() => {
+    setTimeout(() => {
+      document.addEventListener('keydown', checkDocumentKeyDown);
+    });
+
+    return () => {
+      setTimeout(() => {
+        document.removeEventListener('keydown', checkDocumentKeyDown);
+      });
+    };
+  }, [modalsType]);
+
+  // Background scrolling lock
+  useEffect(() => {
+    if (modalsType.length !== 1) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+    });
+
+    return () => {
+      requestAnimationFrame(() => {
+        const scrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      });
+    };
+  }, [modalsType]);
 
   if (isSSR) {
     return null;
@@ -37,7 +91,7 @@ function ModalProvider({ children }: ModalProviderProps) {
 
       {portalRootElement &&
         ReactDOM.createPortal(
-          <ModalContainer modalType={modalType} onExit={onExit} />,
+          <ModalContainer modalsType={modalsType} onExit={onExit} />,
           portalRootElement
         )}
     </ModalContext.Provider>

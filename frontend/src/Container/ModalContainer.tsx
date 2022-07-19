@@ -2,7 +2,7 @@ import { ComponentType, LazyExoticComponent } from 'react';
 import React, { Suspense } from 'react';
 
 interface ModalProps {
-  modalType: string | null;
+  modalsType: string[] | null;
   onExit: (event: KeyboardEvent | React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -18,16 +18,32 @@ const MODALS: {
   [MODAL_TYPES.SIMPLE]: SimpleModal,
 };
 
-function ModalContainer({ modalType, onExit }: ModalProps) {
-  if (modalType && MODALS[modalType]) {
+interface ModalLazyLoadProps {
+  onExit: (event: KeyboardEvent | React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+function ModalContainer({ modalsType, onExit }: ModalProps) {
+  if (modalsType && Array.isArray(modalsType)) {
     return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <SimpleModal onExit={onExit} />
-      </Suspense>
+      <>
+        {modalsType.map((modalType, index) => {
+          if (modalType) {
+            const Component = MODALS[
+              modalType
+            ] as ComponentType<ModalLazyLoadProps>;
+            return (
+              <Suspense fallback={<div>Loading...</div>} key={`${index}-modal`}>
+                <Component onExit={onExit} />
+              </Suspense>
+            );
+          }
+          return <></>;
+        })}
+      </>
     );
   }
 
-  return null;
+  return <></>;
 }
 
 export default ModalContainer;
