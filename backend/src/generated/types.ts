@@ -13,6 +13,23 @@ export type Scalars = {
   Float: number;
 };
 
+export type FeatureFlag = {
+  __typename?: 'FeatureFlag';
+  featureflagid: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['ID'];
+  givenname: Scalars['String'];
+  familyname: Scalars['String'];
+  emailaddress: Scalars['String'];
+  featureflags: Array<FeatureFlag>;
+  createdat: Scalars['String'];
+  updatedat: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   sampleMutation: Scalars['String'];
@@ -105,10 +122,13 @@ export type ResolversParentTypes = ResolversObject<{
 
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
   sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  addFeatureFlagToUsers?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  changeFeatureFlagForUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  getAllUsersWithFeatureFlags?: Resolver<Array<ResolversTypes['{}']>, ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{

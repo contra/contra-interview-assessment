@@ -1,7 +1,27 @@
+type User {
+  id: ID!
+  givenname: String!
+  familyname: String!
+  emailaddress: String!
+  createdat: String!
+  updatedat: String!
+  featureflags: [FeatureFlag!]!
+}
+
+type FeatureFlag {
+  featureflagid: ID!
+  name: String!
+  value: String!
+}
+
 type Mutation {
   sampleMutation: String!
+  addFeatureFlagToUsers(name: String!, value: String!, userIds: [ID!]!): Boolean!
+  changeFeatureFlagForUser(name: String!, value: String!, userId: ID!): Boolean!
 }
 
 type Query {
   hello: String!
+  getAllUsersWithFeatureFlags: [User!]!
 }
+
