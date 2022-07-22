@@ -2,7 +2,6 @@ import Logger from 'roarr';
 import { createPool } from 'slonik';
 // @ts-expect-error
 import { createInterceptors } from 'slonik-interceptor-preset';
-import { createCustomSlonikInterceptors } from '../factories/createCustomSlonikInterceptors';
 import { createFastifyServer } from '../factories/createFastifyServer';
 
 const log = Logger.child({ context: 'bin/server' });
@@ -15,7 +14,7 @@ if (!process.env.POSTGRES_CONNECTION_STRING)
 const pool = createPool(process.env.POSTGRES_CONNECTION_STRING, {
   captureStackTrace: false,
   connectionTimeout: 60 * 1_000,
-  interceptors: [...createInterceptors(), ...createCustomSlonikInterceptors()],
+  interceptors: createInterceptors(),
 });
 
 (async () => {
