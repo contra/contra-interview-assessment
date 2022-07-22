@@ -1,5 +1,5 @@
 CREATE TABLE user_account (
-  id PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   given_name text NOT NULL,
   family_name text NOT NULL,
   email_address text NOT NULL,
