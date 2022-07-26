@@ -9,8 +9,8 @@
     "lint:eslint": "eslint './src/**/*.{js,ts,tsx}' --cache",
     "lint:prettier": "prettier --ignore-path .gitignore --check './**/*.{js,ts,tsx}'",
     "start": "next start",
-    "test": "set NODE_ENV=test jest --watch",
-    "test:ci": "set NODE_ENV=test jest --ci --reporters jest-silent-reporter"
+    "test": "NODE_ENV=test jest --watch",
+    "test:ci": "NODE_ENV=test jest --ci --reporters jest-silent-reporter"
   },
   "dependencies": {
     "focus-trap-react": "^9.0.2",
