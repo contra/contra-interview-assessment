@@ -7,7 +7,6 @@ import tw from 'twin.macro';
 
 import { UserSidebar } from '@/containers/UserSidebar';
 import { ProjectsBody } from '@/containers/ProjectsBody';
-import { userData } from '@/data/projectsData';
 
 const PageContainer = styled.div`
   ${tw`
@@ -44,7 +43,7 @@ const Index: NextPage = () => {
   return (
     <React.Fragment>
       <Head>
-        <title>Projects created by {userData.name}</title>
+        <title>Projects created by Douglas Eduardo</title>
         <meta
           property="og:title"
           content="Projects created by Douglas Eduardo"
