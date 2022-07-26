@@ -1245,7 +1245,7 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@roarr/cli@^3.2.2":
+"@roarr/cli@3.2.3":
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/@roarr/cli/-/cli-3.2.3.tgz#4209b8b33f7a57a3679ff3aa4ce6b90e0598e0eb"
   integrity sha512-So/n1C44gFi4sUe9S2RAhql6X3/dpn/mvZg+Lk+z6mKMTkAtV6WuzLPIoiwwiKKYfrxz6CfdiLINbKEniPGrrQ==
@@ -3479,15 +3479,15 @@ fast-redact@^3.0.0:
   resolved "https://registry.yarnpkg.com/fast-redact/-/fast-redact-3.0.0.tgz#ac2f9e36c9f4976f5db9fb18c6ffbaf308cf316d"
   integrity sha512-a/S/Hp6aoIjx7EmugtzLqXmcNsyFszqbt6qQ99BdG61QjBZF6shNis0BYR6TsZOQ1twYc0FN2Xdhwwbv6+KD0w==
 
+fast-safe-stringify@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
+  integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
+
 fast-safe-stringify@^2.0.7:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.7.tgz#124aa885899261f68aedb42a7c080de9da608743"
   integrity sha512-Utm6CdzT+6xsDk2m8S6uL8VHxNwI6Jub+e9NYTcAms28T84pTa25GJQV9j0CY0N1rM8hK4x6grpF2BQf+2qwVA==
-
-fast-safe-stringify@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
-  integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
 fastify-accepts@^2.0.1:
   version "2.0.1"
@@ -3497,7 +3497,7 @@ fastify-accepts@^2.0.1:
     accepts "^1.3.5"
     fastify-plugin "^2.0.0"
 
-fastify-cookie@^5.4.0:
+fastify-cookie@5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/fastify-cookie/-/fastify-cookie-5.4.0.tgz#2648b64a9f4090c783369b86f5862b1cc501fec3"
   integrity sha512-uKTbOLx6pSyKqA9oD2G9hpMuRTVtKRm98bRwJVg4ga7GCm+RR6771stmfhbblXxHHcQQHuHvwdOdPeHJjr2sgg==
@@ -3535,7 +3535,7 @@ fastify-warning@^0.2.0:
   resolved "https://registry.yarnpkg.com/fastify-warning/-/fastify-warning-0.2.0.tgz#e717776026a4493dc9a2befa44db6d17f618008f"
   integrity sha512-s1EQguBw/9qtc1p/WTY4eq9WMRIACkj+HTcOIK1in4MV5aFaQC9ZCIt0dJ7pr5bIf4lPpHvAtP2ywpTNgs7hqw==
 
-fastify@^3.14.0:
+fastify@3.14.0:
   version "3.14.0"
   resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.14.0.tgz#0a75f624a95f65ac3d319fb7b0bf79f84d522a76"
   integrity sha512-a6W2iVPJMOaULqCykJ5nFRtnoknqt9K3b6rqAQcGjT/O2Hy+vvo+9/+cL2907KN0iF/91Ke+XQluKrVNF6+Z7w==
@@ -3904,7 +3904,7 @@ globby@^11.0.4:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
-got@^11.8.5:
+got@11.8.5:
   version "11.8.5"
   resolved "https://registry.yarnpkg.com/got/-/got-11.8.5.tgz#ce77d045136de56e8f024bebb82ea349bc730046"
   integrity sha512-o0Je4NvQObAuZPHLFoRSkdG2lTgtcynqymzg2Vupdx6PorhaT5MCbIyXG6d4D94kk8ZG57QeosgdiqfJWhEhlQ==
@@ -3961,7 +3961,7 @@ graphql-config@^3.2.0:
     string-env-interpolation "1.0.1"
     tslib "^2.0.0"
 
-graphql-import@^1.0.2:
+graphql-import@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/graphql-import/-/graphql-import-1.0.2.tgz#e011758846cbc311777afac275cd9b75346f477e"
   integrity sha512-//8qdouS1dJIllNqKVSgD60+1u9+pJ3MlD1G8KEwCxVJi8h99dlZgG33DznEfpQAPIH7T/l55WGiLDOuDN1Wsw==
@@ -4008,7 +4008,7 @@ graphql-tools-fork@9.0.1:
     node-fetch "^2.6.0"
     uuid "^7.0.2"
 
-graphql-tools@^7.0.2:
+graphql-tools@7.0.4:
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-7.0.4.tgz#2ab8ee2afe1eb066f79fe8d0d643822d119d4ae3"
   integrity sha512-9tEqKSAprMQMCB8WzwQKudzTVl6a3nANR4rLL9VJbgGn+ULjZTxeW0lMA8gKfds5Cu4EtD/Esc8QRbEf3seY6g==
@@ -4055,7 +4055,7 @@ graphql-ws@4.1.5:
   resolved "https://registry.yarnpkg.com/graphql-ws/-/graphql-ws-4.1.5.tgz#03526b29acb54a424a9fbe300a4bd69ff65a50b3"
   integrity sha512-yUQ1AjegD1Y9jDS699kyw7Mw+9H+rILm2HoS8N5a5B5YTH93xy3yifFhAJpKGc2wb/8yGdlVy8gTcud0TPqi6Q==
 
-graphql@^15.1.0, graphql@^15.4.0:
+graphql@15.5.0, graphql@^15.1.0:
   version "15.5.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.5.0.tgz#39d19494dbe69d1ea719915b578bf920344a69d5"
   integrity sha512-OmaM7y0kaK31NKG31q4YbD2beNYa6jBBKtMFT6gLYJljHLJr42IqJ8KX08u3Li/0ifzTU5HjmoOOrwa5BRLeDA==
@@ -6448,19 +6448,7 @@ rimraf@^3.0.0, rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-roarr@^2.15.4:
-  version "2.15.4"
-  resolved "https://registry.yarnpkg.com/roarr/-/roarr-2.15.4.tgz#f5fe795b7b838ccfe35dc608e0282b9eba2e7afd"
-  integrity sha512-CHhPh+UNHD2GTXNYhPWLnU8ONHdI+5DI+4EYIAOaiD63rHeYlZvyh8P+in5999TTSFgUYuKUAjzRI4mdh/p+2A==
-  dependencies:
-    boolean "^3.0.1"
-    detect-node "^2.0.4"
-    globalthis "^1.0.1"
-    json-stringify-safe "^5.0.1"
-    semver-compare "^1.0.0"
-    sprintf-js "^1.1.2"
-
-roarr@^3.2.0:
+roarr@3.3.0, roarr@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/roarr/-/roarr-3.3.0.tgz#e04898efa2d778e42f3e68c0b5ab0f8b7f636c34"
   integrity sha512-9kZ+t1lba/ENPpC8euUg7oPkUJ1M8SeoYYmkO2lvkH61EaVLRI/Apm2+HIe/Fvza5EpNye9s8JfYhlPNlLHyUw==
@@ -6474,6 +6462,18 @@ roarr@^3.2.0:
     is-circular "^1.0.2"
     json-stringify-safe "^5.0.1"
     semver-compare "^1.0.0"
+
+roarr@^2.15.4:
+  version "2.15.4"
+  resolved "https://registry.yarnpkg.com/roarr/-/roarr-2.15.4.tgz#f5fe795b7b838ccfe35dc608e0282b9eba2e7afd"
+  integrity sha512-CHhPh+UNHD2GTXNYhPWLnU8ONHdI+5DI+4EYIAOaiD63rHeYlZvyh8P+in5999TTSFgUYuKUAjzRI4mdh/p+2A==
+  dependencies:
+    boolean "^3.0.1"
+    detect-node "^2.0.4"
+    globalthis "^1.0.1"
+    json-stringify-safe "^5.0.1"
+    semver-compare "^1.0.0"
+    sprintf-js "^1.1.2"
 
 roarr@^4.2.0:
   version "4.2.0"
@@ -6722,7 +6722,7 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-slonik-interceptor-field-name-transformation@^1.5.3:
+slonik-interceptor-field-name-transformation@1.5.3, slonik-interceptor-field-name-transformation@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/slonik-interceptor-field-name-transformation/-/slonik-interceptor-field-name-transformation-1.5.3.tgz#5ad39d0f215e25fe233c1d934319f8e0965ea2c7"
   integrity sha512-cWMQ3SNGUbpRRaITCG/8P7YD4g9mkmRzEL6hThBHFy/8qbM7sj2gaieqDDuqTtqNQS+wSKvWTJd0Tjr5mInJzw==
@@ -6731,7 +6731,7 @@ slonik-interceptor-field-name-transformation@^1.5.3:
     core-js "^3.6.4"
     slonik "^22.4.0"
 
-slonik-interceptor-preset@^1.2.10:
+slonik-interceptor-preset@1.2.10:
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/slonik-interceptor-preset/-/slonik-interceptor-preset-1.2.10.tgz#9a17640393f238daf75355df141df8297ea5fb76"
   integrity sha512-TKy5roPfJh+f7GIaGuJGhS5U51mqFgrlEA5GmfpO+KuqHeUEvjEwju2pKtrQVqqxewN17YSIvJH7ZxNoA7SoYQ==
@@ -6771,6 +6771,29 @@ slonik-interceptor-query-normalisation@^1.1.10:
     core-js "^3.6.4"
     slonik "^22.4.0"
 
+slonik@23.6.2:
+  version "23.6.2"
+  resolved "https://registry.yarnpkg.com/slonik/-/slonik-23.6.2.tgz#347c91632121fd1c7c3617b62ac1f79fb6e9031f"
+  integrity sha512-WCgO592MQbJKbrfMittSx4WBVT8/6liTbGJCjq7ZDJ+JUbKgCplqxSd/fStMaRKYdR3PemaOG1pAIq9q5Dr1qQ==
+  dependencies:
+    concat-stream "^2.0.0"
+    delay "^5.0.0"
+    es6-error "^4.1.1"
+    get-stack-trace "^2.0.3"
+    hyperid "^2.1.0"
+    is-plain-object "^5.0.0"
+    iso8601-duration "^1.3.0"
+    pg "^8.5.1"
+    pg-connection-string "^2.4.0"
+    pg-copy-streams "^5.1.1"
+    pg-copy-streams-binary "^2.0.1"
+    pg-cursor "^2.5.2"
+    postgres-array "^3.0.1"
+    postgres-interval "^3.0.0"
+    roarr "^4.2.0"
+    serialize-error "^8.0.1"
+    through2 "^4.0.2"
+
 slonik@^22.4.0:
   version "22.7.1"
   resolved "https://registry.yarnpkg.com/slonik/-/slonik-22.7.1.tgz#46326b3050f3e466918a7db3eacc62dc40834ea5"
@@ -6795,29 +6818,6 @@ slonik@^22.4.0:
     serialize-error "^7.0.1"
     through2 "^4.0.2"
     ulid "^2.3.0"
-
-slonik@^23.5.1:
-  version "23.6.2"
-  resolved "https://registry.yarnpkg.com/slonik/-/slonik-23.6.2.tgz#347c91632121fd1c7c3617b62ac1f79fb6e9031f"
-  integrity sha512-WCgO592MQbJKbrfMittSx4WBVT8/6liTbGJCjq7ZDJ+JUbKgCplqxSd/fStMaRKYdR3PemaOG1pAIq9q5Dr1qQ==
-  dependencies:
-    concat-stream "^2.0.0"
-    delay "^5.0.0"
-    es6-error "^4.1.1"
-    get-stack-trace "^2.0.3"
-    hyperid "^2.1.0"
-    is-plain-object "^5.0.0"
-    iso8601-duration "^1.3.0"
-    pg "^8.5.1"
-    pg-connection-string "^2.4.0"
-    pg-copy-streams "^5.1.1"
-    pg-copy-streams-binary "^2.0.1"
-    pg-cursor "^2.5.2"
-    postgres-array "^3.0.1"
-    postgres-interval "^3.0.0"
-    roarr "^4.2.0"
-    serialize-error "^8.0.1"
-    through2 "^4.0.2"
 
 snake-case@^3.0.4:
   version "3.0.4"
@@ -7308,7 +7308,7 @@ ts-node-dev@1.1.6:
     ts-node "^9.0.0"
     tsconfig "^7.0.0"
 
-ts-node@^9, ts-node@^9.0.0, ts-node@^9.1.1:
+ts-node@9.1.1, ts-node@^9, ts-node@^9.0.0:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-9.1.1.tgz#51a9a450a3e959401bda5f004a72d54b936d376d"
   integrity sha512-hPlt7ZACERQGf03M253ytLY3dHbGNGrAq9qIHWUY9XHYl1z7wYngSr3OQ5xmui8o2AaxsONxIzjafLUiWBo1Fg==
