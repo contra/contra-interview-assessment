@@ -26,7 +26,8 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2015",
-    "useUnknownInCatchVariables": true
+    "useUnknownInCatchVariables": true,
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "exclude": ["node_modules"],
   "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts"]

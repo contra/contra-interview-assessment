@@ -3,32 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "dev": "next dev",
     "lint": "yarn lint:eslint && yarn lint:prettier",
     "lint:eslint": "eslint './src/**/*.{js,ts,tsx}' --cache",
     "lint:prettier": "prettier --ignore-path .gitignore --check './**/*.{js,ts,tsx}'",
+    "start": "next start",
     "test": "NODE_ENV=test jest --watch",
     "test:ci": "NODE_ENV=test jest --ci --reporters jest-silent-reporter"
   },
   "dependencies": {
+    "focus-trap-react": "^9.0.2",
     "next": "12.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@testing-library/react": "^13.3.0",
     "@types/jest": "28.1.3",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
+    "@types/testing-library__react": "^10.2.0",
     "eslint": "8.18.0",
     "eslint-config-canonical": "35.0.1",
     "eslint-config-next": "12.1.6",
     "eslint-config-prettier": "8.5.0",
     "jest": "28.1.1",
+    "jest-environment-jsdom": "^28.1.3",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
-    "typescript": "4.7.4"
+    "typescript": "4.7.4",
+    "typescript-plugin-css-modules": "^3.4.0"
   }
 }

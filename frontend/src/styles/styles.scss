@@ -1,0 +1,35 @@
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  caret-color: transparent;
+
+  &:focus {
+    outline: auto 5px $focusColor;
+  }
+}
+
+.centered {
+  margin-inline: auto;
+  display: grid;
+  place-items: center;
+}
+
+.wrapped-text {
+  max-width: 65ch;
+  line-height: 2;
+}
+
+[data-scroll-lock='true'] {
+  overflow: hidden;
+  margin-right: var(--scrollbarWidth);
+}
