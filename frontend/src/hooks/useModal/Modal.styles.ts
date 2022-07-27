@@ -56,11 +56,17 @@ export const ModalWrapper = styled.div<{ animated: boolean }>`
 export const ModalContainer = styled.div<{ animated: boolean }>`
   ${tw`
     z-index[100]
-    bg-white
+    flex
+    flex-col
     relative
+    gap-y-2
+    justify-center
+    items-center
+    bg-white
     rounded-2xl
     mx-4
     p-8
+    md:min-w-[512px]
     md:p-12
   `}
   ${({ animated }) =>
@@ -82,7 +88,6 @@ export const ModalContainer = styled.div<{ animated: boolean }>`
 
 export const ModalHeader = styled.div`
   ${tw`
-    
     flex
     justify-end
   `}
@@ -100,5 +105,37 @@ export const ModalCloseButton = styled.button`
     opacity-30
     cursor-pointer
     border-none
+  `}
+`;
+
+export const ModalOptionsTitle = styled.h1`
+  ${tw`
+    text-4xl
+    font-bold
+    tracking-tight
+    max-w-md
+    text-center
+    pb-2
+    lg:pb-4
+  `}
+`;
+
+export const ModalOptionsMessage = styled.p`
+  ${tw`
+    max-w-xs
+    text-gray-500
+    text-center
+  `}
+`;
+
+export const ModalOptionsButtonGroup = styled.div`
+  ${tw`
+    flex
+    flex-col
+    w-full
+    items-center
+    mt-6
+    gap-y-4
+    lg:mt-8
   `}
 `;

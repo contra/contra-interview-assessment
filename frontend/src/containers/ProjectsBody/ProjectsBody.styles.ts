@@ -135,34 +135,6 @@ export const Card = styled.div`
   `}
 `;
 
-export const CardDeleteButtonContainer = styled.div`
-  ${tw`
-    absolute
-    top-2
-    right-2
-    flex
-    justify-center
-    items-center
-    rounded-full
-    w-12
-    h-12
-    bg-gray-100
-    transition-all
-    cursor-pointer
-    hover:bg-gray-200
-    xl:top-3
-    xl:right-3
-  `}
-`;
-
-export const CardDeleteButton = styled.button`
-  ${tw`
-    font-semibold
-    text-xs
-    text-red-500
-  `}
-`;
-
 export const CardImage = styled.img`
   ${tw`
     rounded-xl

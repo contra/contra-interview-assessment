@@ -4,8 +4,11 @@ import {
   ModalCloseButton,
   ModalContainer,
   ModalHeader,
+  ModalOptionsTitle,
+  ModalOptionsMessage,
   ModalOverlay,
   ModalWrapper,
+  ModalOptionsButtonGroup,
 } from './Modal.styles';
 
 type OptionsTypes = {
@@ -13,6 +16,8 @@ type OptionsTypes = {
   closeButton?: boolean;
   title?: string;
   message?: string;
+  icon?: JSX.Element;
+  buttons?: JSX.Element[];
 };
 
 interface UseModalReturnType {
@@ -42,9 +47,22 @@ export const Modal = ({
       return children;
     }
     if (options && options.message) {
-      return <div className="modali-body-style">{options.message}</div>;
+      return <ModalOptionsMessage>{options.message}</ModalOptionsMessage>;
     }
     return false;
+  };
+
+  const renderButtons = () => {
+    const buttons = options?.buttons;
+    return (
+      buttons && (
+        <ModalOptionsButtonGroup>
+          {buttons.map((button) => (
+            <React.Fragment>{button}</React.Fragment>
+          ))}
+        </ModalOptionsButtonGroup>
+      )
+    );
   };
 
   return isModalVisible
@@ -75,7 +93,12 @@ export const Modal = ({
                   </ModalCloseButton>
                 </ModalHeader>
               ) : null}
+              {options && options.icon}
+              {options && options.title && (
+                <ModalOptionsTitle>{options.title}</ModalOptionsTitle>
+              )}
               {renderBody()}
+              {renderButtons()}
             </ModalContainer>
           </ModalWrapper>
         </React.Fragment>,

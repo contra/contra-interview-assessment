@@ -6,3 +6,4 @@ export { GithubIcon } from './GithubIcon';
 export { LinkedinIcon } from './LinkedinIcon';
 export { LocationIcon } from './LocationIcon';
 export { TwitterIcon } from './TwitterIcon';
+export { ProjectIcon } from './ProjectIcon';

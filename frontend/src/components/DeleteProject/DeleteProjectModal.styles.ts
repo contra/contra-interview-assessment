@@ -32,68 +32,30 @@ export const SubTitle = styled.p`
   `}
 `;
 
-export const FormContainer = styled.div`
+export const CardDeleteButtonContainer = styled.div`
   ${tw`
-    mt-12
-    mb-6
-  `}
-`;
-
-export const SectionContainer = styled.div`
-  ${tw`
-    w-full
+    absolute
+    top-2
+    right-2
+    flex
+    justify-center
+    items-center
+    rounded-full
+    w-12
+    h-12
     bg-gray-100
-    p-3
-    flex
-    min-h-[44px]
-    justify-between
-    mb-6
-    items-center
-    rounded-[10px]
-  `}
-
-  p {
-    ${tw`
-      text-[10px]
-      font-semibold
-      text-gray-900
-      uppercase
-      tracking-widest
-    `}
-  }
-`;
-
-export const MessageArea = styled.textarea`
-  ${tw`
-    flex-1
-    min-h-[126px]
-    p-2
-    w-full
-    border
-    border-b-black
-    rounded-t-lg
-    outline-none
+    transition-all
+    cursor-pointer
+    hover:bg-gray-200
+    xl:top-3
+    xl:right-3
   `}
 `;
 
-export const ButtonGroup = styled.div`
+export const CardDeleteButton = styled.button`
   ${tw`
-    flex
-    flex-col
-    w-full
-    items-center
-    mt-6
-    gap-y-4
-    lg:mt-8
-  `}
-`;
-
-export const FooterText = styled.p`
-  ${tw`
+    font-semibold
     text-xs
-    max-w-lg
-    text-center
-    mx-auto
-    text-gray-500
+    text-red-500
   `}
 `;

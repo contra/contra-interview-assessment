@@ -11,7 +11,7 @@ import {
   LinkedinIcon,
   LocationIcon,
   TwitterIcon,
-} from '@/components/SVGIcons';
+} from '@/components/Icons';
 import { GetInTouchModalForm } from '@/components/GetInTouchModalForm';
 import {
   UserContainer,
