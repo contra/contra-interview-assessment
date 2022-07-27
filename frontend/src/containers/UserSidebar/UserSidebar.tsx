@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { Suspense } from 'react';
 import { useModal } from '@/hooks/useModal';
 const Modal = React.lazy(() => import('@/hooks/useModal'));
@@ -11,12 +12,10 @@ import {
   LocationIcon,
   TwitterIcon,
 } from '@/components/SVGIcons';
-import { userData } from '@/data/projectsData';
 import { GetInTouchModalForm } from '@/components/GetInTouchModalForm';
 import {
   UserContainer,
   StickyContainer,
-  Avatar,
   FullName,
   TextContainer,
   ProfileTitle,
@@ -32,27 +31,49 @@ import {
   TextLocation,
   SocialContainer,
   ProfileTitleContainer,
+  AvatarContainer,
 } from './UserSidebar.styles';
 
-export function UserSidebar() {
-  if (!userData) return <div>Loading...</div>;
+interface UserSidebarProps {
+  user: {
+    userId: string;
+    firstName: string;
+    lastName: string;
+    verifiedAccount: boolean;
+    profileTitle?: string | null;
+    imageUrl?: string | null;
+    tags?: string[] | null;
+    bio?: string | null;
+    location?: string | null;
+  };
+}
 
+export function UserSidebar({ user }: UserSidebarProps) {
   return (
     <UserContainer>
       <StickyContainer>
-        <Avatar src={userData.imageUrl} />
+        <AvatarContainer>
+          <Image
+            className="rounded-full"
+            src={user.imageUrl as string}
+            width={208}
+            height={208}
+          />
+        </AvatarContainer>
         <TextContainer>
-          <FullName>{userData.name}</FullName>
+          <FullName>
+            {user.firstName} {user.lastName}
+          </FullName>
           <BadgeContainer>
-            {userData.verifiedAccount ? <Badge /> : <BadgeUnchecked />}
+            {user.verifiedAccount ? <Badge /> : <BadgeUnchecked />}
           </BadgeContainer>
         </TextContainer>
         <ProfileTitleContainer>
-          <ProfileTitle>{userData.profileTitle}</ProfileTitle>
+          <ProfileTitle>{user.profileTitle}</ProfileTitle>
         </ProfileTitleContainer>
         <TextContainer>
           <BoxTagGroup>
-            {userData.tags.map((tag) => (
+            {user.tags?.map((tag) => (
               <BoxTag key={tag} className="shadow-xl shadow-cyan-100/30">
                 <BoxTagText>{tag}</BoxTagText>
               </BoxTag>
@@ -65,12 +86,12 @@ export function UserSidebar() {
           </ButtonWrapper>
         </TextContainer>
         <TextContainer>
-          <BioText>{userData.bio}</BioText>
+          <BioText>{user.bio}</BioText>
         </TextContainer>
         <TextContainer>
           <LocationContainer>
             <LocationIcon />
-            <TextLocation>{userData.location}</TextLocation>
+            <TextLocation>{user.location}</TextLocation>
           </LocationContainer>
         </TextContainer>
         <TextContainer>
@@ -89,7 +110,6 @@ export function UserSidebar() {
 const GetInTouch = () => {
   const [modalOptions, toggle] = useModal({
     animated: true,
-    message: "Hello, I'm a modal!!",
   });
 
   return (

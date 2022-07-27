@@ -1,4 +1,4 @@
-import { Field, ID, InputType, ObjectType } from 'type-graphql';
+import { Field, ID, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
@@ -31,16 +31,4 @@ export class Project extends BaseEntity {
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user) => user.projects)
   user!: Relation<User>;
-}
-
-@InputType()
-export class ProjectInput implements Partial<Project> {
-  @Field(() => String)
-  title!: string;
-
-  @Field(() => String)
-  description?: string;
-
-  @Field(() => String)
-  imageUrl?: string;
 }

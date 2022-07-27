@@ -119,6 +119,7 @@ export const CreateProjectTitle = styled.span`
 
 export const Card = styled.div`
   ${tw`
+    relative
     flex
     flex-col
     justify-center
@@ -131,6 +132,34 @@ export const Card = styled.div`
     xl:max-w-full
     xl:p-8
     xl:gap-x-5
+  `}
+`;
+
+export const CardDeleteButtonContainer = styled.div`
+  ${tw`
+    absolute
+    top-2
+    right-2
+    flex
+    justify-center
+    items-center
+    rounded-full
+    w-12
+    h-12
+    bg-gray-100
+    transition-all
+    cursor-pointer
+    hover:bg-gray-200
+    xl:top-3
+    xl:right-3
+  `}
+`;
+
+export const CardDeleteButton = styled.button`
+  ${tw`
+    font-semibold
+    text-xs
+    text-red-500
   `}
 `;
 
@@ -175,14 +204,5 @@ export const CardDetailsDescription = styled.p`
   ${tw`
     text-base
     font-sans
-  `}
-`;
-
-export const CardDetailsAvatar = styled.img`
-  ${tw`
-    mt-auto
-    rounded-full
-    w-8
-    xl:w-12
   `}
 `;

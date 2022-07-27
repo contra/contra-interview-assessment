@@ -33,11 +33,10 @@ export const StickyContainer = styled.div`
   `}
 `;
 
-export const Avatar = styled.img`
+export const AvatarContainer = styled.div`
   ${tw`
-    rounded-full
-    w-36
-    lg:w-52
+    max-w-[144px]
+    lg:max-w-[208px]    
   `}
 `;
 

@@ -7,6 +7,8 @@ import tw from 'twin.macro';
 
 import { UserSidebar } from '@/containers/UserSidebar';
 import { ProjectsBody } from '@/containers/ProjectsBody';
+import { useGetUserQuery } from '@/lib/client/graphql/generated';
+import { LoadingScreen } from '@/components/Loading';
 
 const PageContainer = styled.div`
   ${tw`
@@ -40,6 +42,16 @@ const SectionContainer = styled.section`
 `;
 
 const Index: NextPage = () => {
+  const { data, loading } = useGetUserQuery({
+    variables: {
+      userId: '4f056d52-eb7e-4a05-b962-3ef4c1804d66',
+    },
+  });
+
+  if (loading) return <LoadingScreen />;
+  if (!data) return <h1>Error loading data...</h1>;
+  const { getUser: user } = data;
+
   return (
     <React.Fragment>
       <Head>
@@ -59,8 +71,8 @@ const Index: NextPage = () => {
       <PageContainer>
         <ContentContainer>
           <SectionContainer>
-            <UserSidebar />
-            <ProjectsBody />
+            <UserSidebar user={user} />
+            <ProjectsBody user={user} />
           </SectionContainer>
         </ContentContainer>
       </PageContainer>

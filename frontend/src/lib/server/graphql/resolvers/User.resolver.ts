@@ -1,5 +1,5 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
-import { User, ProjectInput } from '@/lib/server/entities';
+import { User } from '@/lib/server/entities';
 import type { IContext } from '@/lib/server/utils/createContext';
 
 @Resolver()
@@ -31,9 +31,7 @@ export class UserResolver {
     @Arg('bio', () => String, { nullable: true }) bio?: string,
     @Arg('verifiedAccount', () => Boolean, { nullable: true })
     verifiedAccount?: boolean,
-    @Arg('location', () => String, { nullable: true }) location?: string,
-    @Arg('projects', () => [ProjectInput], { nullable: true })
-    projects?: ProjectInput[]
+    @Arg('location', () => String, { nullable: true }) location?: string
   ): Promise<User> {
     return await dataSource
       .getRepository(User)
@@ -48,7 +46,6 @@ export class UserResolver {
         bio,
         verifiedAccount,
         location,
-        projects,
       })
       .save();
   }

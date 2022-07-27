@@ -7,7 +7,17 @@ import MicroCors from 'micro-cors';
 import { createContext } from '@/lib/server/utils/createContext';
 import { ProjectResolver, UserResolver } from '@/lib/server/graphql/resolvers';
 
-const cors = MicroCors();
+const cors = MicroCors({
+  origin: 'https://studio.apollographql.com',
+  allowMethods: ['GET', 'POST'],
+  allowHeaders: [
+    'Access-Control-Allow-Credentials',
+    'true',
+    'Content-Type',
+    'Access-Control-Allow-Origin',
+    'Access-Control-Allow-Headers',
+  ],
+});
 
 const schema = await buildSchema({
   resolvers: [ProjectResolver, UserResolver],
