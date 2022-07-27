@@ -4,7 +4,6 @@ import { PageConfig } from 'next';
 import { buildSchema } from 'type-graphql';
 import MicroCors from 'micro-cors';
 
-import { createContext } from '@/lib/server/utils/createContext';
 import { ProjectResolver, UserResolver } from '@/lib/server/graphql/resolvers';
 
 const cors = MicroCors({
@@ -25,7 +24,6 @@ const schema = await buildSchema({
 
 const server = new ApolloServer({
   schema,
-  context: createContext,
 });
 
 export const config: PageConfig = {

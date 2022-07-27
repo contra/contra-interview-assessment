@@ -10,10 +10,7 @@ body {
   color: #131313;
 }
 
-::-moz-selection {
-  background: #f6d77f;
-}
-
+::-moz-selection,
 ::selection {
   background: #f6d77f;
 }

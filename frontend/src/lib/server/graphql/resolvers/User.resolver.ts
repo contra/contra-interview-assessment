@@ -1,25 +1,23 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { User } from '@/lib/server/entities';
-import type { IContext } from '@/lib/server/utils/createContext';
+import { AppDataSource } from '../../utils/database';
 
 @Resolver()
 export class UserResolver {
+  private userRepository = AppDataSource.getRepository(User);
+
   @Query(() => [User])
-  async getAllUsers(@Ctx() { dataSource }: IContext): Promise<User[]> {
-    return await dataSource.getRepository(User).find();
+  async getAllUsers(): Promise<User[]> {
+    return await this.userRepository.find();
   }
 
   @Query(() => User)
-  async getUser(
-    @Arg('userId') userId: string,
-    @Ctx() { dataSource }: IContext
-  ): Promise<User | null> {
-    return await dataSource.getRepository(User).findOneBy({ userId });
+  async getUser(@Arg('userId') userId: string): Promise<User | null> {
+    return await this.userRepository.findOneBy({ userId });
   }
 
   @Mutation(() => User)
   async registerUser(
-    @Ctx() { dataSource }: IContext,
     @Arg('firstName', () => String) firstName: string,
     @Arg('lastName', () => String) lastName: string,
     @Arg('email', () => String) email: string,
@@ -33,8 +31,7 @@ export class UserResolver {
     verifiedAccount?: boolean,
     @Arg('location', () => String, { nullable: true }) location?: string
   ): Promise<User> {
-    return await dataSource
-      .getRepository(User)
+    return await this.userRepository
       .create({
         firstName,
         lastName,
@@ -51,14 +48,11 @@ export class UserResolver {
   }
 
   @Mutation(() => User, { nullable: true })
-  async destroyUser(
-    @Arg('userId') userId: string,
-    @Ctx() { dataSource }: IContext
-  ): Promise<User> {
-    const user = await dataSource.getRepository(User).findOneBy({ userId });
+  async destroyUser(@Arg('userId') userId: string): Promise<User> {
+    const user = await this.userRepository.findOneBy({ userId });
     if (!user) throw new Error('User not found');
 
-    await dataSource.getRepository(User).delete({ userId });
+    await this.userRepository.delete({ userId });
 
     return user;
   }
