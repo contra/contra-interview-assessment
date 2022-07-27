@@ -33,6 +33,7 @@ import {
   ProfileTitleContainer,
   AvatarContainer,
 } from './UserSidebar.styles';
+import { Button } from '@/components/Button';
 
 interface UserSidebarProps {
   user: {
@@ -108,8 +109,18 @@ export function UserSidebar({ user }: UserSidebarProps) {
 }
 
 const GetInTouch = () => {
-  const [modalOptions, toggle] = useModal({
+  const [modalOptions, toggle, toggleNestedModal] = useModal({
     animated: true,
+    title: 'Want to Work with Douglas?',
+    message:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    buttons: [
+      <Button
+        label="Get in Touch"
+        onClickHandler={() => toggleNestedModal()}
+      />,
+      <Button label="Cancel" isCancel onClickHandler={() => toggle()} />,
+    ],
   });
 
   return (
@@ -119,9 +130,10 @@ const GetInTouch = () => {
         <ButtonText>Get In Touch</ButtonText>
       </GetInTouchButton>
       <Suspense fallback={<div>Loading...</div>}>
-        <Modal {...modalOptions}>
-          <GetInTouchModalForm hide={toggle} />
-        </Modal>
+        <Modal
+          {...modalOptions}
+          nestedModal={<GetInTouchModalForm hide={toggleNestedModal} />}
+        />
       </Suspense>
     </>
   );

@@ -22,20 +22,27 @@ type OptionsTypes = {
 
 interface UseModalReturnType {
   isModalVisible: boolean;
+  isNestedModalVisible: boolean;
   hide: () => void;
+  hideNested: () => void;
   options?: OptionsTypes;
 }
 
 type ModalProps = {
   isModalVisible: boolean;
+  isNestedModalVisible: boolean;
   hide: () => void;
+  hideNested: () => void;
+  nestedModal?: JSX.Element;
   options?: OptionsTypes;
   children?: ReactNode;
 };
 
 export const Modal = ({
   isModalVisible,
+  isNestedModalVisible,
   hide,
+  nestedModal,
   options,
   children,
 }: ModalProps) => {
@@ -43,25 +50,25 @@ export const Modal = ({
   const hasCloseButton = options?.closeButton ? true : false;
 
   const renderBody = () => {
-    if (children) {
-      return children;
-    }
-    if (options && options.message) {
-      return <ModalOptionsMessage>{options.message}</ModalOptionsMessage>;
-    }
-    return false;
-  };
+    if (isNestedModalVisible && nestedModal) return nestedModal;
+    if (children) return children;
 
-  const renderButtons = () => {
-    const buttons = options?.buttons;
     return (
-      buttons && (
-        <ModalOptionsButtonGroup>
-          {buttons.map((button) => (
-            <React.Fragment>{button}</React.Fragment>
-          ))}
-        </ModalOptionsButtonGroup>
-      )
+      <>
+        {options?.title && (
+          <ModalOptionsTitle>{options.title}</ModalOptionsTitle>
+        )}
+        {options?.message && (
+          <ModalOptionsMessage>{options.message}</ModalOptionsMessage>
+        )}
+        {options?.buttons && (
+          <ModalOptionsButtonGroup>
+            {options.buttons.map((button) => (
+              <React.Fragment>{button}</React.Fragment>
+            ))}
+          </ModalOptionsButtonGroup>
+        )}
+      </>
     );
   };
 
@@ -93,12 +100,8 @@ export const Modal = ({
                   </ModalCloseButton>
                 </ModalHeader>
               ) : null}
-              {options && options.icon}
-              {options && options.title && (
-                <ModalOptionsTitle>{options.title}</ModalOptionsTitle>
-              )}
+              {options?.icon}
               {renderBody()}
-              {renderButtons()}
             </ModalContainer>
           </ModalWrapper>
         </React.Fragment>,
@@ -109,11 +112,16 @@ export const Modal = ({
 
 export const useModal = (
   options?: OptionsTypes
-): [UseModalReturnType, () => void] => {
+): [UseModalReturnType, () => void, () => void] => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isNestedModalVisible, setIsNestedModalVisible] = useState(false);
 
   const toggle = () => {
-    setIsModalVisible((prevParam) => !prevParam);
+    setIsModalVisible((prev) => !prev);
+  };
+
+  const toggleNestedModal = () => {
+    setIsNestedModalVisible((prev) => !prev);
   };
 
   useEffect(() => {
@@ -125,5 +133,15 @@ export const useModal = (
     }
   }, [isModalVisible]);
 
-  return [{ isModalVisible, hide: toggle, options }, toggle];
+  return [
+    {
+      isModalVisible,
+      isNestedModalVisible,
+      hide: toggle,
+      hideNested: toggleNestedModal,
+      options,
+    },
+    toggle,
+    toggleNestedModal,
+  ];
 };

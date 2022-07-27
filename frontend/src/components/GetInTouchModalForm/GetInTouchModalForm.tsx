@@ -18,7 +18,7 @@ interface GetInTouchProps {
 export function GetInTouchModalForm({ hide }: GetInTouchProps) {
   return (
     <Container>
-      <HeaderTitle>Want to work with Douglas?</HeaderTitle>
+      <HeaderTitle>Get In Touch</HeaderTitle>
       <SubTitle>
         Fill out the form below and we'll send a message on your behalf.
       </SubTitle>
