@@ -1,6 +1,6 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { Project, User } from '@/lib/server/entities';
-import { AppDataSource } from '../../utils/database';
+import { AppDataSource } from '@/lib/server/utils/database';
 
 @Resolver()
 export class ProjectResolver {

@@ -22,7 +22,7 @@ import {
   CreateProjectContainer,
   CardDetailsCreate,
 } from './ProjectsBody.styles';
-import { LoadingScreen } from '../../components/Loading';
+import { LoadingScreen } from '@/components/Loading';
 import { ProjectIcon } from '@/components/Icons';
 
 interface ProjectsBodyProps {
