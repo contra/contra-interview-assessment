@@ -1,0 +1,8 @@
+query GetProjectsByUserId($userId: String!) {
+  getProjectsByUserId(userId: $userId) {
+    projectId
+    title
+    description
+    imageUrl
+  }
+}

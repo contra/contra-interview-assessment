@@ -1,0 +1,15 @@
+mutation CreateProject(
+  $imageUrl: String!
+  $description: String!
+  $title: String!
+  $userId: String!
+) {
+  createProject(
+    imageUrl: $imageUrl
+    description: $description
+    title: $title
+    userId: $userId
+  ) {
+    projectId
+  }
+}
