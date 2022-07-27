@@ -42,6 +42,7 @@ export const Modal = ({
   isModalVisible,
   isNestedModalVisible,
   hide,
+  hideNested,
   nestedModal,
   options,
   children,
@@ -72,6 +73,15 @@ export const Modal = ({
     );
   };
 
+  const hideModals = () => {
+    if (isNestedModalVisible) {
+      hideNested();
+      hide();
+    } else {
+      hide();
+    }
+  };
+
   return isModalVisible
     ? ReactDOM.createPortal(
         <React.Fragment>
@@ -81,7 +91,7 @@ export const Modal = ({
             aria-hidden
             tabIndex={-1}
             role="dialog"
-            onClick={hasCloseButton ? () => null : hide}
+            onClick={hasCloseButton ? () => null : hideModals}
             animated={isAnimated}
           >
             <ModalContainer
@@ -94,7 +104,7 @@ export const Modal = ({
                     type="button"
                     data-dismiss="modal"
                     aria-label="Close"
-                    onClick={hide}
+                    onClick={hideModals}
                   >
                     <span aria-hidden="true">&times;</span>
                   </ModalCloseButton>
