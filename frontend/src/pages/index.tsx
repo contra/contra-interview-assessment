@@ -12,7 +12,9 @@ const Index: NextPage = () => {
         return Math.max(pre, cur.styles.zIndex);
       }, 0);
     const newModal = {
-      value: `${Math.floor(Math.random()*100)}`,
+      active: 'A',
+      valueA: `${Math.floor(Math.random()*100)}`,
+      valueB: `${Math.floor(Math.random()*100)}`,
       diffX: 0,
       diffY: 0,
       dragging: false,
@@ -35,7 +37,7 @@ const Index: NextPage = () => {
       <Navbar openModal={openModal}/>
       <Textbox/>
       {modals.map((modalObj, i) => (
-        <Modal modals={modals} setModals={setModals} index={i} key={i} >{modalObj.value}</Modal>
+        <Modal modals={modals} setModals={setModals} index={i} key={i}/>
       ))}
     </div>
   )
