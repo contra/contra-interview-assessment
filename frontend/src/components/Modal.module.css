@@ -1,6 +1,5 @@
 .modalHeader {
   cursor: move;
-  z-index: 11;
   background-color: aqua;
   width: 100%;
   height: auto;
@@ -8,11 +7,13 @@
 
 .modal {
   border: 1px solid black;
-  position: absolute;
+  cursor: move;
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   background-color: #aaa;
   padding: 0;
-  z-index: 10;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

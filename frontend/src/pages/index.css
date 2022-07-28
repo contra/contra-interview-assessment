@@ -1,0 +1,12 @@
+* {
+  margin: 0;
+}
+.blurred {
+  filter: blur(3px);
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.scrollLock {
+  overflow: hidden;
+}

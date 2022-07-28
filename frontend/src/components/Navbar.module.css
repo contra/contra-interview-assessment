@@ -1,0 +1,21 @@
+.navbar{
+  background-color: #555;
+  color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999999;
+  display: flex;
+  height: 5vh;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 40vw;
+  padding: 0 1rem;
+}
+
+.modalBtn {
+  height: 75%;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+}

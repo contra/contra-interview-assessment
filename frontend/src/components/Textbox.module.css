@@ -1,0 +1,7 @@
+.textContainer{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin-top: 6vh;
+  margin-left: 1rem;
+}

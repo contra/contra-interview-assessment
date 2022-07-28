@@ -7,18 +7,49 @@ export default function Modal({children, index, setModals, modals}) {
     setModals(modals.slice(0, index).concat(modals.slice(index + 1)));
   }
   const dragStart = (e) => {
-    modals[index].dragging = true;
-    console.log(e.clientX, e.clientY)
+    const largestZ = modals.reduce((pre, cur) => {
+      return Math.max(pre, cur.styles.zIndex);
+    }, 0);
+    const updatedModals = [...modals];
+    updatedModals[index] = {
+      ...modals[index],
+      diffX: e.screenX - e.currentTarget.getBoundingClientRect().left,
+      diffY: e.screenY - e.currentTarget.getBoundingClientRect().top,
+      dragging: true,
+      styles: {
+        ...modals[index].styles,
+        zIndex: largestZ + 1,
+      }
+    }
+    setModals(updatedModals);
   }
   const dragging = (e) => {
-    console.log('holding down the mouse button!')
+    if (modals[index].dragging){
+      let left = e.screenX - modals[index].diffX;
+      let top = e.screenY - modals[index].diffY;
+      const updatedModals = [...modals];
+      updatedModals[index] = {
+        ...modals[index],
+        styles: {
+          ...modals[index].styles,
+          left: left,
+          top: top,
+        }
+      }
+      setModals(updatedModals)
+    }
   }
-  const dragEnd = (e) => {
-    modals[index].dragging = false;
+  const dragEnd = () => {
+    const updatedModals = [...modals];
+    updatedModals[index] = {
+      ...modals[index],
+      dragging: false,
+    }
+    setModals(updatedModals)
   }
   return createPortal(
-    <div className={styles.modal}>
-      <div className={styles.modalHeader} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={dragEnd}>Click here to move</div>
+    <div className={styles.modal} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={dragEnd} style={modals[index].styles}>
+      <div className={styles.modalHeader}>Drag Modal to Move</div>
       <p>{children}</p>
       <button onClick={closeModal}>Close</button>
     </div>,
