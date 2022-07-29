@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
 import Textbox from '@/components/Textbox';
 import Navbar from '@/components/Navbar';
+import { iModal } from '@/types';
 
 const Index: NextPage = () => {
   const [modals, setModals] = useState([]);
   const openModal = () => {
-    const largestZ = modals.reduce((pre, cur) => {
-        return Math.max(pre, cur.styles.zIndex);
+    const largestZ = modals.reduce((pre, cur: iModal) => {
+        return Math.max(pre, (cur.styles?.zIndex || 10));
       }, 0);
     const newModal = {
       active: 'A',

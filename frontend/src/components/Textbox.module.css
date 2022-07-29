@@ -1,7 +1,39 @@
+.mainContainer{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
 .textContainer{
   display: flex;
   flex-direction: column;
   width: 40%;
   margin-top: 6vh;
   margin-left: 1rem;
+  padding-bottom: 3rem;
+}
+
+@media all and (max-width: 1200px) {
+  .textContainer{
+    width: 60%;
+  }
+}
+
+@media all and (max-width: 1024px) {
+  .textContainer {
+    width: 70%;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .textContainer {
+    width: 75%;
+  }
+}
+
+@media all and (max-width: 480px) {
+  .textContainer {
+    width: 80%;
+  }
 }
