@@ -22,20 +22,23 @@ const Index: NextPage = () => {
       styles: {zIndex: modals.length ? largestZ + 1 : 10},
     }
     setModals([...modals, newModal])
-    document.getElementById('root')?.classList.toggle('blurred', true);
-    document.querySelector('body')?.classList.toggle('scrollLock', true);
   }
-
+  const closeModals = () => {
+    setModals([]);
+  }
   useEffect(() => {
     if (modals.length === 0){
       document.getElementById('root')?.classList.toggle('blurred', false);
       document.querySelector('body')?.classList.toggle('scrollLock', false);
+    } else {
+      document.getElementById('root')?.classList.toggle('blurred', true);
+      document.querySelector('body')?.classList.toggle('scrollLock', true);
     }
   }, [modals]);
 
   return (
     <div id='root'>
-      <Navbar openModal={openModal}/>
+      <Navbar openModal={openModal} closeModals={closeModals}/>
       <Textbox/>
       {modals.map((modalObj, i) => (
         <Modal modals={modals} setModals={setModals} index={i} key={i}/>

@@ -4,20 +4,16 @@ import styles from './Navbar.module.css'
 import { NavbarProps } from '@/types';
 
 export default function Navbar(props: NavbarProps) {
-  const {openModal} = props;
-  if (typeof window !== 'undefined'){
-    return createPortal(
-      <nav className={styles['navbar']}>
-        <h1>Welcome to Contra!</h1>
-        <button className={styles['modalBtn']} onClick={openModal}>Open Modal</button>
-      </nav>,
-      document.getElementById('portal')
-    )
-  }
-  return (
+  const {openModal, closeModals} = props;
+  const navbar = (
     <nav className={styles['navbar']}>
-      <h1>Welcome to Contra!</h1>
-      <button className={styles['modalBtn']} onClick={openModal}>Open Modal</button>
+      <h1 className={styles['title']}>Welcome to Contra!</h1>
+      <div className={styles['buttons']}>
+        <button className={styles['modalBtn']} onClick={openModal}>Open Modal</button>
+        <button className={styles['modalBtn']} onClick={closeModals}>Close All Modals</button>
+      </div>
     </nav>
   )
+  if (typeof window !== 'undefined') return createPortal(navbar, document.getElementById('portal'))
+  else return (navbar)
 }

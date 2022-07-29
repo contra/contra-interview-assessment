@@ -41,6 +41,8 @@
   background-color: #aaa;
   font-weight: 600;
   height: 1.75rem;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 
 .inactiveTab {
@@ -52,6 +54,8 @@
   color: #777;
   font-weight: 500;
   height: 1.75rem;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 
 .inactiveTab:hover {

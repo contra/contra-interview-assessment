@@ -6,6 +6,7 @@ export type ModalProps = {
 
 export type NavbarProps = {
   openModal: () => void;
+  closeModals: () => void;
 }
 
 export interface iModal {

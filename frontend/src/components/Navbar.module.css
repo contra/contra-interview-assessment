@@ -13,14 +13,41 @@
   padding-left: 2rem;
 }
 
-.modalBtn {
-  height: 75%;
-  border: 1px solid white;
-  border-radius: 10px;
-  cursor: pointer;
+.buttons {
   margin-right: 4rem;
+  display: flex;
+  column-gap: 1.5rem;
+}
+.modalBtn {
+  height: 2rem;
+  border: 1px solid white;
+  border-radius: 0.3rem;
+  cursor: pointer;
 }
 
 .modalBtn:hover{
   background-color: #ccc;
+}
+
+@media all and (max-width: 500px) {
+  .navbar{
+    padding-left: 1rem;
+  }
+  .buttons{
+    margin-right: 2rem;
+    column-gap: 0.5rem;;
+  }
+  .modalBtn{
+    height: 1.75rem;
+    font-size:x-small;
+  }
+  .title {
+    font-weight: 400;
+  }
+}
+
+@media all and (max-width: 394px) {
+  .title {
+    font-size: medium;
+  }
 }
