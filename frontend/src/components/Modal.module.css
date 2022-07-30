@@ -68,17 +68,18 @@
 }
 
 .closeBtn {
-  border: 1px solid darkblue;
-  color: white;
-  background-color: darkblue;
-  height: 100%;
+  border: 1px solid #d5dadd;
+  color: black;
+  background-color: #ccd3d8;
   font-weight: 700;
-  width: 2rem;
+  height: 1.75rem;
+  width: 1.75rem;
+  margin: 0.1rem;
 }
 
 .closeBtn:hover {
-  border: 1px solid red;
-  background-color: red;
+  border: 1px solid #adb3b8;
+  background-color: #adb3b8;
 }
 
 .content {

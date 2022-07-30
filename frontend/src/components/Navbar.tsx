@@ -5,10 +5,6 @@ import { NavbarProps } from '@/types';
 
 export default function Navbar(props: NavbarProps) {
   const {openModal, closeModals} = props;
-  const [domReady, setDomReady] = React.useState(false);
-  React.useEffect(() => {
-    setDomReady(true)
-  })
   const navbar = (
     <nav className={styles['navbar']}>
       <h1 className={styles['title']}>Welcome to Contra!</h1>
@@ -18,8 +14,6 @@ export default function Navbar(props: NavbarProps) {
       </div>
     </nav>
   )
-  // if (typeof window !== 'undefined') return createPortal(navbar, document.getElementById('portal'))
-  // else return (navbar)
-  if (domReady) return createPortal(navbar, document.getElementById('portal'))
-  else return null;
+  if (typeof window !== 'undefined') return createPortal(navbar, document.getElementById('portal'))
+  else return (navbar)
 }
