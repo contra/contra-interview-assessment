@@ -1,9 +1,9 @@
 /* eslint-disable canonical/filename-match-exported */
 import { type NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import Modal from '@/components/Modal';
-import Textbox from '@/components/Textbox';
-import Navbar from '@/components/Navbar';
+import Modal from '../components/Modal';
+import Textbox from '../components/Textbox';
+import Navbar from '../components/Navbar';
 import { iModal } from '@/types';
 
 const Index: NextPage = () => {
