@@ -23,9 +23,12 @@ Follow the nvm installation instructions
 
 Next, you'll want to install the version of Node this repository uses -- v16.11
 
+```
 $ nvm install 16.11
 $ cd contra-interview-assessment
 $ nvm use
+```
+
 If successful, you should get a message like this:
 
 Now using node v16.11.0 (npm v7.11.2)
@@ -38,11 +41,12 @@ Follow the yarn setup instructions
 
 When evaluating your submission, we care about the following:
 
-[ ] Correctness
-[ ] Developer Experience
-[ ] Tests of any kind, as long as you can explain why you added the tests that you did
-[ ] Performance & Scaleability
-[ ] Code consistency, style, and quality
+- Correctness
+- Developer Experience
+- Tests of any kind, as long as you can explain why you added the tests that you did
+- Performance & Scaleability
+- Code consistency, style, and quality
+
 There's no perfect solution — "Developer Experience, "Performance & Scaleability,", and "Code Quality" mean different things in different contexts. Use your best judgement, and explicitly call out any assumptions you made along the way. Remember: there aren't any tricks here, and we review every submission with the best intent.
 
 ## Submission
