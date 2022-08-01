@@ -1,7 +1,38 @@
+input FeatureFlagInput {
+  value: String
+  valueType: String
+}
+
+input UserAccountInput {
+  givenName: String
+  familyName: String
+  emailAddress: String
+}
+
 type Mutation {
-  sampleMutation: String!
+  updateFeatureFlags(
+    userAccountIds: [ID!]!
+    input: FeatureFlagInput!
+  ): [FeatureFlag]
+  updateUserAccounts(
+    featureFlagId: ID!
+    input: UserAccountInput!
+  ): [UserAccount]
 }
 
 type Query {
-  hello: String!
+  userAccounts: [UserAccount]
+}
+
+type UserAccount {
+  id: ID!
+  givenName: String!
+  familyName: String!
+  emailAddress: String!
+  featureFlags: [FeatureFlag]
+}
+
+type FeatureFlag {
+  id: ID!
+  value: String!
 }

@@ -4,23 +4,63 @@ export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
+  ID: string | number;
   String: string;
   Boolean: boolean;
   Int: number;
   Float: number;
 };
 
+export type FeatureFlagInput = {
+  value?: Maybe<Scalars['String']>;
+  valueType?: Maybe<Scalars['String']>;
+};
+
+export type UserAccountInput = {
+  givenName?: Maybe<Scalars['String']>;
+  familyName?: Maybe<Scalars['String']>;
+  emailAddress?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  sampleMutation: Scalars['String'];
+  updateFeatureFlags?: Maybe<Array<Maybe<FeatureFlag>>>;
+  updateUserAccounts?: Maybe<Array<Maybe<UserAccount>>>;
+};
+
+
+export type MutationUpdateFeatureFlagsArgs = {
+  userAccountIds: Array<Scalars['ID']>;
+  input: FeatureFlagInput;
+};
+
+
+export type MutationUpdateUserAccountsArgs = {
+  featureFlagId: Scalars['ID'];
+  input: UserAccountInput;
 };
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
+  userAccounts?: Maybe<Array<Maybe<UserAccount>>>;
+};
+
+export type UserAccount = {
+  __typename?: 'UserAccount';
+  id: Scalars['ID'];
+  givenName: Scalars['String'];
+  familyName: Scalars['String'];
+  emailAddress: Scalars['String'];
+  featureFlags?: Maybe<Array<Maybe<FeatureFlag>>>;
+};
+
+export type FeatureFlag = {
+  __typename?: 'FeatureFlag';
+  id: Scalars['ID'];
+  value: Scalars['String'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -89,31 +129,59 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
-  Mutation: ResolverTypeWrapper<{}>;
+  FeatureFlagInput: FeatureFlagInput;
   String: ResolverTypeWrapper<Scalars['String']>;
+  UserAccountInput: UserAccountInput;
+  Mutation: ResolverTypeWrapper<{}>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Query: ResolverTypeWrapper<{}>;
+  UserAccount: ResolverTypeWrapper<UserAccount>;
+  FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
-  Mutation: {};
+  FeatureFlagInput: FeatureFlagInput;
   String: Scalars['String'];
+  UserAccountInput: UserAccountInput;
+  Mutation: {};
+  ID: Scalars['ID'];
   Query: {};
+  UserAccount: UserAccount;
+  FeatureFlag: FeatureFlag;
   Boolean: Scalars['Boolean'];
 }>;
 
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
-  sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updateFeatureFlags?: Resolver<Maybe<Array<Maybe<ResolversTypes['FeatureFlag']>>>, ParentType, ContextType, RequireFields<MutationUpdateFeatureFlagsArgs, 'userAccountIds' | 'input'>>;
+  updateUserAccounts?: Resolver<Maybe<Array<Maybe<ResolversTypes['UserAccount']>>>, ParentType, ContextType, RequireFields<MutationUpdateUserAccountsArgs, 'featureFlagId' | 'input'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
-  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  userAccounts?: Resolver<Maybe<Array<Maybe<ResolversTypes['UserAccount']>>>, ParentType, ContextType>;
+}>;
+
+export type UserAccountResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['UserAccount']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  givenName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  familyName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  emailAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  featureFlags?: Resolver<Maybe<Array<Maybe<ResolversTypes['FeatureFlag']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  UserAccount?: UserAccountResolvers<ContextType>;
+  FeatureFlag?: FeatureFlagResolvers<ContextType>;
 }>;
 
 

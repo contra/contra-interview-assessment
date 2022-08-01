@@ -25,7 +25,8 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "types": ["jest"]
   },
-  "include": ["src", "test"]
+  "include": ["src", "__tests__"]
 }
