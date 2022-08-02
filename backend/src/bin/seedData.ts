@@ -35,7 +35,7 @@ VALUES
   );
 `);
 
-await pool.query(sql`
+  await pool.query(sql`
 INSERT INTO
 public.user_account (
   id,
@@ -52,6 +52,90 @@ VALUES
   'Florence',
   'jon@mail.com',
   '2012-01-01 00:00:00.000',
+  '2022-08-02 16:24:26.143'
+);
+`);
+
+  await pool.query(sql`
+INSERT INTO
+public.user_account (
+  id,
+  given_name,
+  family_name,
+  email_address,
+  created_at,
+  updated_at
+)
+VALUES
+(
+  '3',
+  'Tom',
+  'Davis',
+  'tom.davis@mail.com',
+  '2012-01-01 00:00:00.000',
+  '2022-08-02 16:24:26.143'
+);
+`);
+
+  await pool.query(sql`
+INSERT INTO
+public.feature_flag (
+  id,
+  user_id,
+  flag_key,
+  flag_value,
+  created_at,
+  updated_at
+)
+VALUES
+(
+  '1',
+  '1',
+  'background',
+  'green',
+  '2022-08-02 00:00:00.000',
+  '2022-08-02 16:24:26.143'
+);
+`);
+
+  await pool.query(sql`
+INSERT INTO
+public.feature_flag (
+  id,
+  user_id,
+  flag_key,
+  flag_value,
+  created_at,
+  updated_at
+)
+VALUES
+(
+  '2',
+  '1',
+  'isBeta',
+  'true',
+  '2022-08-02 00:00:00.000',
+  '2022-08-02 16:24:26.143'
+);
+`);
+
+  await pool.query(sql`
+INSERT INTO
+public.feature_flag (
+  id,
+  user_id,
+  flag_key,
+  flag_value,
+  created_at,
+  updated_at
+)
+VALUES
+(
+  '3',
+  '2',
+  'isBeta',
+  'false',
+  '2022-08-02 00:00:00.000',
   '2022-08-02 16:24:26.143'
 );
 `);
