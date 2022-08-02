@@ -3,14 +3,14 @@ require('dotenv').config();
 import { runServer } from '../src/bin/runServer';
 import request from 'supertest';
 
-describe('Get all users feature flags', () => {
+describe('Hello', () => {
   let testServer: any;
 
   beforeAll(async () => {
     testServer = await runServer();
   });
 
-  it('hello world', async () => {
+  it('world', async () => {
     const queryData = {
       query: `query Query {
         hello
