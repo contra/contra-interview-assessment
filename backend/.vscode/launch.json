@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug server",
+        "type": "pwa-node",
+        "request": "launch",
+        "skipFiles": ["<node_internals>/**"],
+        "program": "${workspaceFolder}/src/bin/server.ts",
+        "runtimeArgs": ["-r", "ts-node/register"],
+        "console": "integratedTerminal",
+      },
+      {
+        "name": "Debug current test file",
+        "type": "pwa-node",
+        "request": "launch",
+        "skipFiles": ["<node_internals>/**"],
+        "program": "${workspaceFolder}/node_modules/.bin/jest",
+        "runtimeArgs": ["-r", "ts-node/register"],
+        "args": ["--testTimeout=30000", "${file}"],
+        "console": "integratedTerminal",
+      }
+    ]
+  }
+  
