@@ -17,6 +17,8 @@ describe('setUserFeatureFlag', () => {
       'createFeatureFlag',
     );
 
+    const newFlagKey = `newFlagKey-${Date.now()}`;
+
     const queryData = {
       query: `mutation Mutation($userId: Int!, $flagData: FeatureFlagData!) {
         setUserFeatureFlag(userId: $userId, flagData: $flagData) {
@@ -25,7 +27,7 @@ describe('setUserFeatureFlag', () => {
       }`,
       variables: {
         userId: 1,
-        flagData: { key: 'newFlagKey', value: 'some-value' },
+        flagData: { key: newFlagKey, value: 'some-value' },
       },
     };
     const response = await request(testServer.server)
