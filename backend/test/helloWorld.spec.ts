@@ -1,7 +1,7 @@
 require('dotenv').config();
+import request from 'supertest';
 
 import { runServer } from '../src/bin/runServer';
-import request from 'supertest';
 
 describe('Hello', () => {
   let testServer: any;
