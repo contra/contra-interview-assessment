@@ -6,7 +6,7 @@ Welcome to the next step of Contra's engineering interview process! You'll be as
 
 We know not everyone has experience with our core stack &mdash; that's okay! **The goal of this exercise is to assess your ability to learn, and make good software design decisions along the way.** To be respectful of your time, this assessment is designed to be completed in under 4 hours and has no deadlines or due dates.
 
-If you have any questions, reach out to [Joseph](mailto:joseph@contra.com) -- he is very helpful 😉.
+If you have any questions, reach out to [Joseph](mailto:joseph@contra.com) - he is very helpful 😉.
 
 ## Choose your own adventure
 
