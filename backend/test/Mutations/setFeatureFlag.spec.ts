@@ -1,4 +1,5 @@
 require('dotenv').config();
+import _ from 'lodash';
 import request from 'supertest';
 
 import { runServer } from '../../src/bin/runServer';
@@ -15,7 +16,8 @@ describe('setFeatureFlag', () => {
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
-          success
+            failedUserIds
+            affectedUserIds
         }
       }`,
       variables: {
@@ -27,28 +29,39 @@ describe('setFeatureFlag', () => {
       .post('/graphql')
       .send(queryData);
 
-    const { success } = response.body.data.setFeatureFlag;
-    expect(success).toBe(false);
+    const {
+      failedUserIds,
+      affectedUserIds,
+    } = response.body.data.setFeatureFlag;
+
+    expect(_.isEqual(affectedUserIds, [])).toBe(true);
+    expect(_.isEqual(failedUserIds, queryData.variables.userIds)).toBe(true);
   });
 
-  it('expect set a flag for 3 different users and return success', async () => {
+  it('should fail one user and sucessfully update another', async () => {
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
-          success
+            failedUserIds
+            affectedUserIds
         }
       }`,
       variables: {
-        userIds: [1, 2, 3],
-        flagData: { key: 'flagForAll', value: 'somevalue' },
+        userIds: [1, 999],
+        flagData: { key: 'flagForPartialUpdate', value: 'somevalue' },
       },
     };
     const response = await request(testServer.server)
       .post('/graphql')
       .send(queryData);
 
-    const { success } = response.body.data.setFeatureFlag;
-    expect(success).toBe(true);
+    const {
+      failedUserIds,
+      affectedUserIds,
+    } = response.body.data.setFeatureFlag;
+
+    expect(_.isEqual(affectedUserIds, [1])).toBe(true);
+    expect(_.isEqual(failedUserIds, [999])).toBe(true);
   });
 
   it('expect to set a flag for a user if it already exists', async () => {
@@ -60,7 +73,8 @@ describe('setFeatureFlag', () => {
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
-          success
+            failedUserIds
+            affectedUserIds
         }
       }`,
       variables: {
@@ -74,8 +88,13 @@ describe('setFeatureFlag', () => {
 
     expect(updateFeatureFlagSpy).toHaveBeenCalledTimes(1);
 
-    const { success } = response.body.data.setFeatureFlag;
-    expect(success).toBe(true);
+    const {
+      failedUserIds,
+      affectedUserIds,
+    } = response.body.data.setFeatureFlag;
+
+    expect(_.isEqual(affectedUserIds, queryData.variables.userIds)).toBe(true);
+    expect(_.isEqual(failedUserIds, [])).toBe(true);
   });
 
   it('expect create a flag for a user if is not defined yet', async () => {
@@ -89,7 +108,8 @@ describe('setFeatureFlag', () => {
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
-          success
+            failedUserIds
+            affectedUserIds
         }
       }`,
       variables: {
@@ -103,8 +123,13 @@ describe('setFeatureFlag', () => {
 
     expect(createFeatureFlagSpy).toHaveBeenCalledTimes(1);
 
-    const { success } = response.body.data.setFeatureFlag;
-    expect(success).toBe(true);
+    const {
+      failedUserIds,
+      affectedUserIds,
+    } = response.body.data.setFeatureFlag;
+
+    expect(_.isEqual(affectedUserIds, queryData.variables.userIds)).toBe(true);
+    expect(_.isEqual(failedUserIds, [])).toBe(true);
   });
 
   it('should not set the flag for any user if userIds input is empty', async () => {
@@ -121,7 +146,8 @@ describe('setFeatureFlag', () => {
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
-          success
+            failedUserIds
+            affectedUserIds
         }
       }`,
       variables: {
@@ -136,7 +162,12 @@ describe('setFeatureFlag', () => {
     expect(updateFeatureFlagSpy).toHaveBeenCalledTimes(0);
     expect(createFeatureFlagSpy).toHaveBeenCalledTimes(0);
 
-    const { success } = response.body.data.setFeatureFlag;
-    expect(success).toBe(true);
+    const {
+      failedUserIds,
+      affectedUserIds,
+    } = response.body.data.setFeatureFlag;
+
+    expect(_.isEqual(affectedUserIds, [])).toBe(true);
+    expect(_.isEqual(failedUserIds, [])).toBe(true);
   });
 });

@@ -22,9 +22,17 @@ type UpdateResponse {
   success: Boolean!
 }
 
+type SetFeatureFlagResponse {
+  affectedUserIds: [Int]!
+  failedUserIds: [Int]!
+}
+
 type Mutation {
   setUserFeatureFlag(userId: Int!, flagData: FeatureFlagData!): UpdateResponse
-  setFeatureFlag(userIds: [Int!]!, flagData: FeatureFlagData!): UpdateResponse
+  setFeatureFlag(
+    userIds: [Int!]!
+    flagData: FeatureFlagData!
+  ): SetFeatureFlagResponse
 }
 
 type Query {

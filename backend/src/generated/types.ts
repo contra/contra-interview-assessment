@@ -41,10 +41,16 @@ export type UpdateResponse = {
   success: Scalars['Boolean'];
 };
 
+export type SetFeatureFlagResponse = {
+  __typename?: 'SetFeatureFlagResponse';
+  affectedUserIds: Array<Maybe<Scalars['Int']>>;
+  failedUserIds: Array<Maybe<Scalars['Int']>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   setUserFeatureFlag?: Maybe<UpdateResponse>;
-  setFeatureFlag?: Maybe<UpdateResponse>;
+  setFeatureFlag?: Maybe<SetFeatureFlagResponse>;
 };
 
 
@@ -138,8 +144,9 @@ export type ResolversTypes = ResolversObject<{
   FeatureFlagData: FeatureFlagData;
   UpdateResponse: ResolverTypeWrapper<UpdateResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  Mutation: ResolverTypeWrapper<{}>;
+  SetFeatureFlagResponse: ResolverTypeWrapper<SetFeatureFlagResponse>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
 }>;
 
@@ -152,8 +159,9 @@ export type ResolversParentTypes = ResolversObject<{
   FeatureFlagData: FeatureFlagData;
   UpdateResponse: UpdateResponse;
   Boolean: Scalars['Boolean'];
-  Mutation: {};
+  SetFeatureFlagResponse: SetFeatureFlagResponse;
   Int: Scalars['Int'];
+  Mutation: {};
   Query: {};
 }>;
 
@@ -179,9 +187,15 @@ export type UpdateResponseResolvers<ContextType = ResolverContext, ParentType = 
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type SetFeatureFlagResponseResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['SetFeatureFlagResponse']> = ResolversObject<{
+  affectedUserIds?: Resolver<Array<Maybe<ResolversTypes['Int']>>, ParentType, ContextType>;
+  failedUserIds?: Resolver<Array<Maybe<ResolversTypes['Int']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
   setUserFeatureFlag?: Resolver<Maybe<ResolversTypes['UpdateResponse']>, ParentType, ContextType, RequireFields<MutationSetUserFeatureFlagArgs, 'userId' | 'flagData'>>;
-  setFeatureFlag?: Resolver<Maybe<ResolversTypes['UpdateResponse']>, ParentType, ContextType, RequireFields<MutationSetFeatureFlagArgs, 'userIds' | 'flagData'>>;
+  setFeatureFlag?: Resolver<Maybe<ResolversTypes['SetFeatureFlagResponse']>, ParentType, ContextType, RequireFields<MutationSetFeatureFlagArgs, 'userIds' | 'flagData'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
@@ -193,6 +207,7 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   FeatureFlag?: FeatureFlagResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UpdateResponse?: UpdateResponseResolvers<ContextType>;
+  SetFeatureFlagResponse?: SetFeatureFlagResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 }>;

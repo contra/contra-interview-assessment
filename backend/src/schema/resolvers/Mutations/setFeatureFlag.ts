@@ -1,6 +1,6 @@
 import {
   MutationResolvers,
-  UpdateResponse,
+  SetFeatureFlagResponse,
   FeatureFlagData,
 } from '../../../generated/types';
 import { FeatureFlagPersistence } from '../FeatureFlagPersistence';
@@ -10,18 +10,27 @@ async function setFeatureFlag(
   pool: any,
   userId: number,
   flagData: FeatureFlagData,
-) {
-  const featureFlagExists = await FeatureFlagPersistence.doesFeatureFlagExist(
-    pool,
-    userId,
-    flagData,
-  );
+): Promise<Boolean> {
+  try {
+    const userExists = await UserAccountPersistence.userExists(pool, userId);
+    if (!userExists) return false;
 
-  if (featureFlagExists) {
-    await FeatureFlagPersistence.updateFeatureFlag(pool, userId, flagData);
-  } else {
-    await FeatureFlagPersistence.createFeatureFlag(pool, userId, flagData);
+    const featureFlagExists = await FeatureFlagPersistence.doesFeatureFlagExist(
+      pool,
+      userId,
+      flagData,
+    );
+
+    if (featureFlagExists) {
+      await FeatureFlagPersistence.updateFeatureFlag(pool, userId, flagData);
+    } else {
+      await FeatureFlagPersistence.createFeatureFlag(pool, userId, flagData);
+    }
+  } catch (err) {
+    console.error(err);
+    return false;
   }
+  return true;
 }
 
 export const resolve: MutationResolvers['setFeatureFlag'] = async (
@@ -31,16 +40,17 @@ export const resolve: MutationResolvers['setFeatureFlag'] = async (
 ) => {
   const { userIds, flagData } = _args;
 
-  try {
-    for (let userId of userIds) {
-      const userExists = await UserAccountPersistence.userExists(pool, userId);
-      if (!userExists) return { success: false } as UpdateResponse;
-      await setFeatureFlag(pool, userId, flagData);
-    }
-  } catch (err) {
-    console.error(err);
-    return { success: false } as UpdateResponse;
+  let response = {
+    affectedUserIds: [],
+    failedUserIds: [],
+  } as SetFeatureFlagResponse;
+
+  for (let userId of userIds) {
+    const isSuccess = await setFeatureFlag(pool, userId, flagData);
+    isSuccess
+      ? response.affectedUserIds.push(userId)
+      : response.failedUserIds.push(userId);
   }
 
-  return { success: true } as UpdateResponse;
+  return response;
 };
