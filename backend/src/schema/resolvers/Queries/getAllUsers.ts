@@ -6,5 +6,5 @@ export const resolve: QueryResolvers['getAllUsers'] = async (
   _args,
   { pool },
 ) => {
-  return await UserAccountPersistence.doesFeatureFlagExist(pool);
+  return await UserAccountPersistence.getAllUsers(pool);
 };
