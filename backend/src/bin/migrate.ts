@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import { SlonikMigrator } from '@slonik/migrator';
 import { createPool } from 'slonik';
 

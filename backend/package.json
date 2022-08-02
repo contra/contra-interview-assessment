@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "test": "jest --testTimeout=10000",
+    "seed": "ts-node ./src/bin/seedData.ts",
     "dev": "NODE_ENV=development ROARR_LOG=true ts-node-dev --respawn ./src/bin/server.ts | roarr pretty-print",
     "format-graphql-schema": "format-graphql --write true ./src/schema/schema.graphql",
     "build": "tsc --project ./",
