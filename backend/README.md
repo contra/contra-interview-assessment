@@ -130,3 +130,16 @@ $ yarn migrate down
 ```
 
 - A sample migration for a `user_account` table has provided for your convenience.
+
+
+## Notes
+
+To improve:
+
+* add pagination to getAllUsers
+
+* on setFeatureFlag, find all non existing users first and then run bulkUpdate
+
+* lock rows for update
+
+* improve data seeding
