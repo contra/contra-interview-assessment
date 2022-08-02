@@ -12,7 +12,7 @@ describe('setFeatureFlag', () => {
     testServer = await runServer();
   });
 
-  it('should fail is user_id does not exist', async () => {
+  it('should fail if user_id does not exist', async () => {
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
@@ -38,7 +38,7 @@ describe('setFeatureFlag', () => {
     expect(_.isEqual(failedUserIds, queryData.variables.userIds)).toBe(true);
   });
 
-  it('should fail one user and sucessfully update another', async () => {
+  it('should fail for user 999 and succeed for user 1', async () => {
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
@@ -132,7 +132,7 @@ describe('setFeatureFlag', () => {
     expect(_.isEqual(failedUserIds, [])).toBe(true);
   });
 
-  it('should not set the flag for any user if userIds input is empty', async () => {
+  it('should not set the flag for any user if userId input is empty', async () => {
     const updateFeatureFlagSpy = jest.spyOn(
       FeatureFlagPersistence,
       'updateFeatureFlag',
