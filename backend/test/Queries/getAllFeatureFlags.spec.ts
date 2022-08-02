@@ -10,7 +10,7 @@ describe('getAllFeatureFlags', () => {
     testServer = await runServer();
   });
 
-  it('expect an array of FeatureFlags', async () => {
+  it('expect an array as a response', async () => {
     const queryData = {
       query: `query Query {
         getAllFeatureFlags {
@@ -22,6 +22,6 @@ describe('getAllFeatureFlags', () => {
     const response = await request(testServer.server)
       .post('/graphql')
       .send(queryData);
-    expect(Array.isArray(response.body.data)).toBe(true);
+    expect(Array.isArray(response.body.data.getAllFeatureFlags)).toBe(true);
   });
 });
