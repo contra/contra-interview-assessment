@@ -4,6 +4,7 @@ export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string | number;
@@ -30,9 +31,25 @@ export type User = {
   featureFlags?: Maybe<Array<FeatureFlag>>;
 };
 
+export type FeatureFlagData = {
+  key: Scalars['String'];
+  value: Scalars['String'];
+};
+
+export type UpdateResponse = {
+  __typename?: 'UpdateResponse';
+  success: Scalars['Boolean'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  sampleMutation: Scalars['String'];
+  setUserFeatureFlag?: Maybe<UpdateResponse>;
+};
+
+
+export type MutationSetUserFeatureFlagArgs = {
+  userId: Scalars['Int'];
+  flagData: FeatureFlagData;
 };
 
 export type Query = {
@@ -111,9 +128,12 @@ export type ResolversTypes = ResolversObject<{
   ID: ResolverTypeWrapper<Scalars['ID']>;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
-  Mutation: ResolverTypeWrapper<{}>;
-  Query: ResolverTypeWrapper<{}>;
+  FeatureFlagData: FeatureFlagData;
+  UpdateResponse: ResolverTypeWrapper<UpdateResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  Query: ResolverTypeWrapper<{}>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -122,9 +142,12 @@ export type ResolversParentTypes = ResolversObject<{
   ID: Scalars['ID'];
   String: Scalars['String'];
   User: User;
-  Mutation: {};
-  Query: {};
+  FeatureFlagData: FeatureFlagData;
+  UpdateResponse: UpdateResponse;
   Boolean: Scalars['Boolean'];
+  Mutation: {};
+  Int: Scalars['Int'];
+  Query: {};
 }>;
 
 export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
@@ -144,8 +167,13 @@ export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversP
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type UpdateResponseResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['UpdateResponse']> = ResolversObject<{
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
-  sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  setUserFeatureFlag?: Resolver<Maybe<ResolversTypes['UpdateResponse']>, ParentType, ContextType, RequireFields<MutationSetUserFeatureFlagArgs, 'userId' | 'flagData'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
@@ -156,6 +184,7 @@ export type QueryResolvers<ContextType = ResolverContext, ParentType = Resolvers
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   FeatureFlag?: FeatureFlagResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  UpdateResponse?: UpdateResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 }>;

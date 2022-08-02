@@ -1,5 +1,5 @@
 CREATE TABLE feature_flag (
-  id serial PRIMARY KEY,
+  id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   user_id int NOT NULL,
   flag_key text NOT NULL,
   flag_value text NOT NULL,

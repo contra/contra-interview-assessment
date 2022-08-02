@@ -13,8 +13,20 @@ type User {
   featureFlags: [FeatureFlag!]
 }
 
+input FeatureFlagData {
+  key: String!
+  value: String!
+}
+
+type UpdateResponse {
+  success: Boolean!
+}
+
 type Mutation {
-  sampleMutation: String!
+  setUserFeatureFlag(
+    userId: Int!
+    flagData: FeatureFlagData!
+  ): UpdateResponse
 }
 
 type Query {

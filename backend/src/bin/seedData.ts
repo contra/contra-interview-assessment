@@ -26,7 +26,7 @@ async function seedData() {
   )
 VALUES
 (
-    '1',
+    DEFAULT,
     'tiago',
     'Gomes',
     'tiago@mail.com',
@@ -47,7 +47,7 @@ public.user_account (
 )
 VALUES
 (
-  '2',
+  DEFAULT,
   'Jon',
   'Florence',
   'jon@mail.com',
@@ -68,7 +68,7 @@ public.user_account (
 )
 VALUES
 (
-  '3',
+  DEFAULT,
   'Tom',
   'Davis',
   'tom.davis@mail.com',
@@ -89,7 +89,7 @@ public.feature_flag (
 )
 VALUES
 (
-  '1',
+  DEFAULT,
   '1',
   'background',
   'green',
@@ -110,7 +110,7 @@ public.feature_flag (
 )
 VALUES
 (
-  '2',
+  DEFAULT,
   '1',
   'isBeta',
   'true',
@@ -131,7 +131,7 @@ public.feature_flag (
 )
 VALUES
 (
-  '3',
+  DEFAULT,
   '2',
   'isBeta',
   'false',
