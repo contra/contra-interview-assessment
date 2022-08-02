@@ -1,7 +1,15 @@
+type FeatureFlag {
+  id: ID!
+  userId: ID!
+  flagKey: String!
+  flagValue: String!
+}
+
 type Mutation {
   sampleMutation: String!
 }
 
 type Query {
   hello: String!
+  getAllFeatureFlags: [FeatureFlag]!
 }
