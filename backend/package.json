@@ -4,6 +4,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "test":"jest",
     "dev": "NODE_ENV=development ROARR_LOG=true ts-node-dev --respawn ./src/bin/server.ts | roarr pretty-print",
     "format-graphql-schema": "format-graphql --write true ./src/schema/schema.graphql",
     "build": "tsc --project ./",
@@ -12,21 +13,25 @@
     "migrate": "ts-node ./src/bin/migrate.ts"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.18.6",
     "@graphql-codegen/cli": "1.21.2",
     "@graphql-codegen/core": "1.17.9",
     "@graphql-codegen/typescript": "1.21.1",
     "@graphql-codegen/typescript-operations": "1.17.15",
     "@graphql-codegen/typescript-resolvers": "1.19.0",
     "@slonik/migrator": "0.11.2",
+    "@types/jest": "^28.1.6",
     "@typescript-eslint/parser": "5.12.0",
     "eslint": "7.22.0",
     "eslint-config-canonical": "25.9.1",
     "eslint-config-prettier": "7.2.0",
     "eslint-plugin-import": "2.22.1",
     "format-graphql": "1.4.0",
+    "jest": "^28.1.3",
     "lint-staged": "10.5.4",
     "nyc": "15.1.0",
     "prettier": "2.2.1",
+    "ts-jest": "^28.0.7",
     "ts-node-dev": "1.1.6",
     "typescript": "4.5.5"
   },
