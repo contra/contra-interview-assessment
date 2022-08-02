@@ -1,0 +1,86 @@
+.modalContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgb(11 15 24 / 95%);
+  z-index: 999999 !important;
+
+  .modal {
+    position: relative;
+    margin: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    max-width: 80%;
+    width: 500px;
+    max-height: 80%;
+    height: 100%;
+    background-color: #2e3034;
+    display: block;
+    border-radius: 20px;
+    color: #fff;
+    overflow: hidden;
+
+    .modalHeader {
+      padding: 25px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: #2e3034;
+      width: 100%;
+      border-bottom: 1px solid #333945;
+
+      .closeButton {
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+
+        svg {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .modalBody {
+      height: calc(100% - 180px);
+      overflow-y: scroll;
+      background-color: inherit;
+      padding: 25px 30px;
+
+      button {
+        margin: 0;
+      }
+    }
+
+    .modalFooter {
+      text-align: right;
+      position: sticky;
+      bottom: 0;
+      background: #2e3034;
+      width: 100%;
+      padding: 30px 25px 0 30px;
+      border-top: 1px solid #333945;
+
+      button {
+        margin: 0;
+      }
+    }
+
+    @media only screen and (max-width: 750px) {
+      position: fixed;
+      transform: none;
+      left: 0;
+      top: auto;
+      bottom: 0;
+      border-radius: 20px 20px 0px 0px;
+      width: 100% !important;
+      max-width: 100%;
+    }
+  }
+}
