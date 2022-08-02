@@ -3,7 +3,7 @@ import request from 'supertest';
 
 import { runServer } from '../../src/bin/runServer';
 
-describe('getAllFeatureFlags', () => {
+describe('getAllUsers', () => {
   let testServer: any;
 
   beforeAll(async () => {
@@ -13,15 +13,16 @@ describe('getAllFeatureFlags', () => {
   it('expect an array as a response', async () => {
     const queryData = {
       query: `query Query {
-        getAllFeatureFlags {
+        getAllUsers {
           id
-          userId
         }
       }`,
     };
     const response = await request(testServer.server)
       .post('/graphql')
       .send(queryData);
-    expect(Array.isArray(response.body.data.getAllFeatureFlags)).toBe(true);
+
+    const usersList = response.body.data.getAllUsers;
+    expect(Array.isArray(usersList)).toBe(true);
   });
 });

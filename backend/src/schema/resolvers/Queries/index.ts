@@ -1,7 +1,7 @@
 import { resolve as hello } from './hello';
-import { resolve as getAllFeatureFlags } from './getAllFeatureFlags';
+import { resolve as getAllUsers } from './getAllUsers';
 
 export const Query = {
   hello,
-  getAllFeatureFlags,
+  getAllUsers,
 };

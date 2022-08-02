@@ -6,6 +6,7 @@ export const resolve: QueryResolvers['hello'] = async (
   _args,
   { pool },
 ) => {
+  
   const result = await pool.one<{ phrase: string }>(
     sql`SELECT 'world' as phrase;`,
   );

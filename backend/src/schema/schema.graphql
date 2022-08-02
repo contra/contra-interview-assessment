@@ -5,11 +5,19 @@ type FeatureFlag {
   flagValue: String!
 }
 
+type User {
+  id: ID!
+  givenName: String!
+  familyName: String!
+  email: String!
+  featureFlags: [FeatureFlag!]
+}
+
 type Mutation {
   sampleMutation: String!
 }
 
 type Query {
   hello: String!
-  getAllFeatureFlags: [FeatureFlag]!
+  getAllUsers: [User!]!
 }
