@@ -1,5 +1,6 @@
 import { MutationResolvers, UpdateResponse } from '../../../generated/types';
 import { FeatureFlagPersistence } from '../FeatureFlagPersistence';
+import { UserAccountPersistence } from '../UserAccountPersistence';
 
 export const resolve: MutationResolvers['setUserFeatureFlag'] = async (
   _parent,
@@ -9,6 +10,9 @@ export const resolve: MutationResolvers['setUserFeatureFlag'] = async (
   const { userId, flagData } = _args;
 
   try {
+    const userExists = await UserAccountPersistence.userExists(pool, userId);
+    if (!userExists) return { success: false } as UpdateResponse;
+
     const featureFlagExists = await FeatureFlagPersistence.doesFeatureFlagExist(
       pool,
       userId,

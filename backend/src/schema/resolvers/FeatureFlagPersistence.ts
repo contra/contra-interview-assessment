@@ -8,7 +8,7 @@ export class FeatureFlagPersistence {
     flagData: FeatureFlagData,
   ): Promise<Boolean> {
     return pool.exists(
-      sql`SELECT id, user_id as "userId", flag_key as "flagKey", flag_value as "flagValue" from public.feature_flag WHERE flag_key = ${flagData.key} AND user_id = ${userId} LIMIT 1`,
+      sql`SELECT id from public.feature_flag WHERE flag_key = ${flagData.key} AND user_id = ${userId} LIMIT 1`,
     );
   }
 

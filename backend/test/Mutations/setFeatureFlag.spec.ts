@@ -11,7 +11,27 @@ describe('setFeatureFlag', () => {
     testServer = await runServer();
   });
 
-  it('expect set a flag for user_id 3 using', async () => {
+  it('should fail is user_id does not exist', async () => {
+    const queryData = {
+      query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
+        setFeatureFlag(userIds: $userIds, flagData: $flagData) {
+          success
+        }
+      }`,
+      variables: {
+        userIds: [999],
+        flagData: { key: 'flagForAll', value: 'somevalue' },
+      },
+    };
+    const response = await request(testServer.server)
+      .post('/graphql')
+      .send(queryData);
+
+    const { success } = response.body.data.setFeatureFlag;
+    expect(success).toBe(false);
+  });
+
+  it('expect set a flag for 3 different users and return success', async () => {
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
@@ -31,7 +51,7 @@ describe('setFeatureFlag', () => {
     expect(success).toBe(true);
   });
 
-  it('expect set a flag for a user even if it already exists', async () => {
+  it('expect to set a flag for a user if it already exists', async () => {
     const updateFeatureFlagSpy = jest.spyOn(
       FeatureFlagPersistence,
       'updateFeatureFlag',
