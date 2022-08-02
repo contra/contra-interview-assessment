@@ -19,14 +19,13 @@ export async function runServer() {
     interceptors: createInterceptors(),
   });
 
-  try {
-    const app = await createFastifyServer(pool);
+  const app = await createFastifyServer(pool);
 
-    app.listen(8_080, () =>
-      log.info(`🛩 Server ready at http://localhost:8080/graphql`),
-    );
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(error);
-  }
+  app.listen(8_080, () =>
+    log.info(`🛩 Server ready at http://localhost:8080/graphql`),
+  );
+
+  await app.ready();
+
+  return app;
 }
