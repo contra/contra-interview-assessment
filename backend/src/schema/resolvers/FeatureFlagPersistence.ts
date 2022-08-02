@@ -1,4 +1,5 @@
 import { sql } from 'slonik';
+import { UserAccountPersistence } from './UserAccountPersistence';
 import { FeatureFlagData } from '../../generated/types';
 
 export class FeatureFlagPersistence {
@@ -47,5 +48,32 @@ export class FeatureFlagPersistence {
           `);
     if (createResult.rowCount != 1)
       throw new Error('Failed to create feature flag!');
+  }
+
+  static async setFeatureFlag(
+    pool: any,
+    userId: number,
+    flagData: FeatureFlagData,
+  ): Promise<Boolean> {
+    try {
+      const userExists = await UserAccountPersistence.userExists(pool, userId);
+      if (!userExists) return false;
+
+      const featureFlagExists = await FeatureFlagPersistence.doesFeatureFlagExist(
+        pool,
+        userId,
+        flagData,
+      );
+
+      if (featureFlagExists) {
+        await FeatureFlagPersistence.updateFeatureFlag(pool, userId, flagData);
+      } else {
+        await FeatureFlagPersistence.createFeatureFlag(pool, userId, flagData);
+      }
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+    return true;
   }
 }
