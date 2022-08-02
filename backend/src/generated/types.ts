@@ -44,11 +44,18 @@ export type UpdateResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   setUserFeatureFlag?: Maybe<UpdateResponse>;
+  setFeatureFlag?: Maybe<UpdateResponse>;
 };
 
 
 export type MutationSetUserFeatureFlagArgs = {
   userId: Scalars['Int'];
+  flagData: FeatureFlagData;
+};
+
+
+export type MutationSetFeatureFlagArgs = {
+  userIds: Array<Scalars['Int']>;
   flagData: FeatureFlagData;
 };
 
@@ -174,6 +181,7 @@ export type UpdateResponseResolvers<ContextType = ResolverContext, ParentType = 
 
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
   setUserFeatureFlag?: Resolver<Maybe<ResolversTypes['UpdateResponse']>, ParentType, ContextType, RequireFields<MutationSetUserFeatureFlagArgs, 'userId' | 'flagData'>>;
+  setFeatureFlag?: Resolver<Maybe<ResolversTypes['UpdateResponse']>, ParentType, ContextType, RequireFields<MutationSetFeatureFlagArgs, 'userIds' | 'flagData'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{

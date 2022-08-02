@@ -23,10 +23,8 @@ type UpdateResponse {
 }
 
 type Mutation {
-  setUserFeatureFlag(
-    userId: Int!
-    flagData: FeatureFlagData!
-  ): UpdateResponse
+  setUserFeatureFlag(userId: Int!, flagData: FeatureFlagData!): UpdateResponse
+  setFeatureFlag(userIds: [Int!]!, flagData: FeatureFlagData!): UpdateResponse
 }
 
 type Query {
