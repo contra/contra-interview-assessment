@@ -1,1 +1,1 @@
-raise 'down migration not implemented'
+drop TABLE feature_flag_user_map;
