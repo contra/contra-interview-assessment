@@ -1,7 +1,45 @@
 type Mutation {
   sampleMutation: String!
+  setFlagForUsers(input: SetFlagForUsersInput!): SetFlagForUsersResponse!
+  updateFlagForUser(input: UpdateFlagForUserInput!): FeatureFlag!
 }
 
 type Query {
   hello: String!
+  getAllUsersFlags: [UserFeatureFlags!]
+}
+
+type SetFlagForUsersResponse {
+  success: Boolean!
+  userIds: [Int!]
+  flagName: String
+  booleanValue: Boolean
+  multivariateValue: String
+}
+
+type UserFeatureFlags {
+  userId: Int!
+  name: String
+  featureFlags: [FeatureFlag!]
+}
+
+type FeatureFlag {
+  id: Int!
+  name: String!
+  booleanValue: Boolean
+  multivariateValue: String
+}
+
+input SetFlagForUsersInput {
+  userIds: [Int!]
+  flagId: Int!
+  boolean_value: Boolean
+  multivariate_value: String
+}
+
+input UpdateFlagForUserInput {
+  userId: Int!
+  flagId: Int!
+  boolean_value: Boolean
+  multivariate_value: String
 }

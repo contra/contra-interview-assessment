@@ -4,6 +4,7 @@ export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -16,11 +17,62 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   sampleMutation: Scalars['String'];
+  setFlagForUsers: SetFlagForUsersResponse;
+  updateFlagForUser: FeatureFlag;
+};
+
+
+export type MutationSetFlagForUsersArgs = {
+  input: SetFlagForUsersInput;
+};
+
+
+export type MutationUpdateFlagForUserArgs = {
+  input: UpdateFlagForUserInput;
 };
 
 export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
+  getAllUsersFlags?: Maybe<Array<UserFeatureFlags>>;
+};
+
+export type SetFlagForUsersResponse = {
+  __typename?: 'SetFlagForUsersResponse';
+  success: Scalars['Boolean'];
+  userIds?: Maybe<Array<Scalars['Int']>>;
+  flagName?: Maybe<Scalars['String']>;
+  booleanValue?: Maybe<Scalars['Boolean']>;
+  multivariateValue?: Maybe<Scalars['String']>;
+};
+
+export type UserFeatureFlags = {
+  __typename?: 'UserFeatureFlags';
+  userId: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+  featureFlags?: Maybe<Array<FeatureFlag>>;
+};
+
+export type FeatureFlag = {
+  __typename?: 'FeatureFlag';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  booleanValue?: Maybe<Scalars['Boolean']>;
+  multivariateValue?: Maybe<Scalars['String']>;
+};
+
+export type SetFlagForUsersInput = {
+  userIds?: Maybe<Array<Scalars['Int']>>;
+  flagId: Scalars['Int'];
+  boolean_value?: Maybe<Scalars['Boolean']>;
+  multivariate_value?: Maybe<Scalars['String']>;
+};
+
+export type UpdateFlagForUserInput = {
+  userId: Scalars['Int'];
+  flagId: Scalars['Int'];
+  boolean_value?: Maybe<Scalars['Boolean']>;
+  multivariate_value?: Maybe<Scalars['String']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -92,7 +144,13 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Query: ResolverTypeWrapper<{}>;
+  SetFlagForUsersResponse: ResolverTypeWrapper<SetFlagForUsersResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  UserFeatureFlags: ResolverTypeWrapper<UserFeatureFlags>;
+  FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
+  SetFlagForUsersInput: SetFlagForUsersInput;
+  UpdateFlagForUserInput: UpdateFlagForUserInput;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -100,20 +158,56 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
   String: Scalars['String'];
   Query: {};
+  SetFlagForUsersResponse: SetFlagForUsersResponse;
   Boolean: Scalars['Boolean'];
+  Int: Scalars['Int'];
+  UserFeatureFlags: UserFeatureFlags;
+  FeatureFlag: FeatureFlag;
+  SetFlagForUsersInput: SetFlagForUsersInput;
+  UpdateFlagForUserInput: UpdateFlagForUserInput;
 }>;
 
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
   sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  setFlagForUsers?: Resolver<ResolversTypes['SetFlagForUsersResponse'], ParentType, ContextType, RequireFields<MutationSetFlagForUsersArgs, 'input'>>;
+  updateFlagForUser?: Resolver<ResolversTypes['FeatureFlag'], ParentType, ContextType, RequireFields<MutationUpdateFlagForUserArgs, 'input'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  getAllUsersFlags?: Resolver<Maybe<Array<ResolversTypes['UserFeatureFlags']>>, ParentType, ContextType>;
+}>;
+
+export type SetFlagForUsersResponseResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['SetFlagForUsersResponse']> = ResolversObject<{
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  userIds?: Resolver<Maybe<Array<ResolversTypes['Int']>>, ParentType, ContextType>;
+  flagName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  booleanValue?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  multivariateValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserFeatureFlagsResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['UserFeatureFlags']> = ResolversObject<{
+  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  featureFlags?: Resolver<Maybe<Array<ResolversTypes['FeatureFlag']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  booleanValue?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  multivariateValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  SetFlagForUsersResponse?: SetFlagForUsersResponseResolvers<ContextType>;
+  UserFeatureFlags?: UserFeatureFlagsResolvers<ContextType>;
+  FeatureFlag?: FeatureFlagResolvers<ContextType>;
 }>;
 
 

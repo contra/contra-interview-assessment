@@ -4,12 +4,15 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development ROARR_LOG=true ts-node-dev --respawn ./src/bin/server.ts | roarr pretty-print",
+    "dev": "NODE_ENV=development ROARR_LOG=true ts-node-dev -r dotenv/config --respawn ./src/bin/server.ts | roarr pretty-print",
     "format-graphql-schema": "format-graphql --write true ./src/schema/schema.graphql",
     "build": "tsc --project ./",
     "lint": "eslint --fix src . && prettier --write src . && tsc --noEmit && format-graphql --write true src/schema/schema.graphql",
     "generate-types": "graphql-codegen",
-    "migrate": "ts-node ./src/bin/migrate.ts"
+    "migrate": "ts-node -r dotenv/config ./src/bin/migrate.ts",
+    "dev:start": "docker-compose -f docker-compose.dev.yml up",
+    "start:local": "yarn && yarn migrate up && yarn dev",
+    "test": "jest --maxWorkers=1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "1.21.2",
@@ -18,21 +21,29 @@
     "@graphql-codegen/typescript-operations": "1.17.15",
     "@graphql-codegen/typescript-resolvers": "1.19.0",
     "@slonik/migrator": "0.11.2",
+    "@types/jest": "^26.0.13",
+    "@types/lodash": "^4.14.182",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/parser": "5.12.0",
     "eslint": "7.22.0",
     "eslint-config-canonical": "25.9.1",
     "eslint-config-prettier": "7.2.0",
     "eslint-plugin-import": "2.22.1",
     "format-graphql": "1.4.0",
+    "jest": "^27.3.1",
     "lint-staged": "10.5.4",
+    "node-fetch": "^3.2.10",
     "nyc": "15.1.0",
     "prettier": "2.2.1",
+    "ts-jest": "^27.0.7",
     "ts-node-dev": "1.1.6",
     "typescript": "4.5.5"
   },
   "dependencies": {
     "@roarr/cli": "^3.2.2",
     "apollo-server-fastify": "3.6.3",
+    "apollo-server-integration-testing": "^3.0.0",
+    "dotenv": "^16.0.1",
     "fast-safe-stringify": "^2.1.1",
     "fastify": "^3.14.0",
     "fastify-cookie": "^5.4.0",
@@ -40,10 +51,12 @@
     "graphql": "^15.4.0",
     "graphql-import": "^1.0.2",
     "graphql-tools": "^7.0.2",
+    "lodash": "^4.17.21",
     "roarr": "^3.2.0",
-    "slonik": "^23.5.1",
+    "slonik": "^29.0.0",
     "slonik-interceptor-field-name-transformation": "^1.5.3",
     "slonik-interceptor-preset": "^1.2.10",
+    "supertest": "^6.2.4",
     "ts-node": "^9.1.1"
   }
 }

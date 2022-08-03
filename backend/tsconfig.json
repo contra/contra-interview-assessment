@@ -25,7 +25,10 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "checkJs": false,
+    "allowJs": true
   },
-  "include": ["src", "test"]
+  "include": ["src", "test"],
+  "allowDeclarations": true,
 }
