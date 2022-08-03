@@ -71,6 +71,12 @@ export type Query = {
   getAllUsers: Array<User>;
 };
 
+
+export type QueryGetAllUsersArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
 
@@ -200,7 +206,7 @@ export type MutationResolvers<ContextType = ResolverContext, ParentType = Resolv
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  getAllUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  getAllUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetAllUsersArgs, never>>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{

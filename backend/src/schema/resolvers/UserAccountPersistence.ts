@@ -1,10 +1,14 @@
 import { sql } from 'slonik';
 import { User } from '../../generated/types';
-
+import { DEFAULT_SKIP, DEFAULT_LIMIT } from '../../constants';
 export class UserAccountPersistence {
-  static async getAllUsers(pool: any): Promise<User[]> {
+  static async getAllUsers(
+    pool: any,
+    skip = DEFAULT_SKIP,
+    limit = DEFAULT_LIMIT,
+  ): Promise<User[]> {
     return (await pool.many(
-      sql`SELECT id, given_name as "givenName", family_name as "familyName", email_address as email from public.user_account`,
+      sql`SELECT id, given_name as "givenName", family_name as "familyName", email_address as email from public.user_account order by id desc limit ${limit} offset ${skip}`,
     )) as User[];
   }
 

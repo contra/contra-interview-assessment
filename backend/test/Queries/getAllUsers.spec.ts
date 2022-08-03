@@ -49,4 +49,48 @@ describe('getAllUsers', () => {
       expect(Array.isArray(user.featureFlags)).toBe(true);
     }
   });
+
+  it('expect only 1 user record if limit is set to 1', async () => {
+    const limit = 1;
+    const queryData = {
+      query: `query Query($limit: Int, $skip: Int) {
+        getAllUsers(limit: $limit, skip: $skip) {
+          id
+          featureFlags {
+            id
+            userId
+          }
+        }
+      }`,
+      variables: { limit },
+    };
+    const response = await request(testServer.server)
+      .post('/graphql')
+      .send(queryData);
+
+    const usersList = response.body.data.getAllUsers;
+    expect(usersList.length).toBe(limit);
+  });
+
+  it('expect user with id 1 to be missing because we skipped the first record using skip=1', async () => {
+    const skip = 1;
+    const queryData = {
+      query: `query Query($limit: Int, $skip: Int) {
+        getAllUsers(limit: $limit, skip: $skip) {
+          id
+          featureFlags {
+            id
+            userId
+          }
+        }
+      }`,
+      variables: { skip },
+    };
+    const response = await request(testServer.server)
+      .post('/graphql')
+      .send(queryData);
+
+    const usersList = response.body.data.getAllUsers;
+    expect(usersList[0].id !== 1).toBe(true);
+  });
 });

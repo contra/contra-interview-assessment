@@ -37,5 +37,5 @@ type Mutation {
 
 type Query {
   hello: String!
-  getAllUsers: [User!]!
+  getAllUsers(skip: Int, limit: Int): [User!]!
 }
