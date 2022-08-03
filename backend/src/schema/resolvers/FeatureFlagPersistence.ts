@@ -1,10 +1,10 @@
-import { sql, NotFoundError } from 'slonik';
+import { sql, NotFoundError, DatabasePoolType } from 'slonik';
 import { UserAccountPersistence } from './UserAccountPersistence';
 import { FeatureFlagData } from '../../generated/types';
 
 export class FeatureFlagPersistence {
   static async doesFeatureFlagExist(
-    pool: any,
+    pool: DatabasePoolType,
     userId: number,
     flagData: FeatureFlagData,
   ): Promise<Boolean> {
@@ -14,7 +14,7 @@ export class FeatureFlagPersistence {
   }
 
   static async getUsersIdsHaveFlag(
-    pool: any,
+    pool: DatabasePoolType,
     userIds: number[],
     flagKey: string,
   ): Promise<number[]> {
@@ -34,7 +34,7 @@ export class FeatureFlagPersistence {
   }
 
   static async bulkCreateFeatureFlag(
-    pool: any,
+    pool: DatabasePoolType,
     userIds: number[],
     flagData: FeatureFlagData,
   ) {
@@ -45,7 +45,7 @@ export class FeatureFlagPersistence {
   }
 
   static async bulkUpdateFeatureFlag(
-    pool: any,
+    pool: DatabasePoolType,
     userIds: number[],
     flagData: FeatureFlagData,
   ) {
@@ -65,7 +65,7 @@ export class FeatureFlagPersistence {
   }
 
   static async updateFeatureFlag(
-    pool: any,
+    pool: DatabasePoolType,
     userId: number,
     flagData: FeatureFlagData,
   ) {
@@ -77,7 +77,7 @@ export class FeatureFlagPersistence {
   }
 
   static async createFeatureFlag(
-    pool: any,
+    pool: DatabasePoolType,
     userId: number,
     flagData: FeatureFlagData,
   ) {
@@ -102,7 +102,7 @@ export class FeatureFlagPersistence {
   }
 
   static async setFeatureFlag(
-    pool: any,
+    pool: DatabasePoolType,
     userId: number,
     flagData: FeatureFlagData,
   ): Promise<Boolean> {

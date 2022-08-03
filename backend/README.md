@@ -136,8 +136,6 @@ $ yarn migrate down
 
 To improve:
 
-* Improve types. Remove pool:any
-
 * lock rows for update
 
 * improve data seeding
