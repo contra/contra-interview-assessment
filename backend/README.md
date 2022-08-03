@@ -136,8 +136,6 @@ $ yarn migrate down
 
 To improve:
 
-* on setFeatureFlag, find all non existing users first and then run bulkUpdate
-
 * Improve types. Remove pool:any
 
 * lock rows for update
