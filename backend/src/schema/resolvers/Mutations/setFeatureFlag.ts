@@ -3,6 +3,7 @@ import {
   SetFeatureFlagResponse,
 } from '../../../generated/types';
 import { FeatureFlagPersistence } from '../FeatureFlagPersistence';
+import { UserAccountPersistence } from '../UserAccountPersistence';
 
 export const resolve: MutationResolvers['setFeatureFlag'] = async (
   _parent,
@@ -14,7 +15,18 @@ export const resolve: MutationResolvers['setFeatureFlag'] = async (
     failedUserIds: [],
   } as SetFeatureFlagResponse;
 
-  for (let userId of userIds) {
+  if (userIds.length === 0) return response;
+
+  let existingUserIds: number[] = (
+    await UserAccountPersistence.getUsersByIds(pool, userIds)
+  ).map((user) => user.id as number);
+
+  // mark non existing users as failed
+  response.failedUserIds = userIds.filter(
+    (id) => !existingUserIds.includes(id),
+  );
+
+  for (let userId of existingUserIds) {
     const isSuccess = await FeatureFlagPersistence.setFeatureFlag(
       pool,
       userId,
