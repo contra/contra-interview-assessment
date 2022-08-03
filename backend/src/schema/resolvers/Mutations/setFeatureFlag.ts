@@ -43,11 +43,11 @@ export const resolve: MutationResolvers['setFeatureFlag'] = async (
           flagData,
         );
         // all users were updated if you did not get an error until here
-        response.affectedUserIds = existingUserIds;
+        response.affectedUserIds = exisingUsersHaveFlag;
       } catch (err) {
         response.failedUserIds = [
           ...response.failedUserIds,
-          ...existingUserIds,
+          ...exisingUsersHaveFlag,
         ];
       }
     }
