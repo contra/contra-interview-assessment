@@ -128,6 +128,8 @@ export class FeatureFlagPersistence {
     return true;
   }
 }
+
+// builds SQL arrays such VALUES ((1,2),(3,4)) used on bulk update/insert
 export function buildBulkValues(userIds: number[], flagData: FeatureFlagData) {
   function buildUpdateValue(
     userId: number,
@@ -144,6 +146,5 @@ export function buildBulkValues(userIds: number[], flagData: FeatureFlagData) {
   }
 
   const updateDataRaw = buildUpdateData(userIds, flagData);
-  const updateData = sql`${sql.join(updateDataRaw, sql`,`)}`;
-  return updateData;
+  return sql`${sql.join(updateDataRaw, sql`,`)}`;
 }
