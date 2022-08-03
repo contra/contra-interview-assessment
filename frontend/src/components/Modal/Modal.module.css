@@ -1,0 +1,48 @@
+.overlay, .modalWrapper {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.overlay {
+  background-color: var(--overlay-bg-color);
+  z-index: 1000;
+}
+
+/* 
+  Seperating the modal from the overlay makes it easier to avoid mouse clicks
+  potentially bubling to the overlay and triggering a close of the modal. 
+*/
+.modalWrapper {
+  z-index: 1001;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  pointer-events:none;
+}
+
+.modal {
+  background-color: var(--modal-bg-color);
+  min-width: max(50vw, 500px);
+  max-width: 90vw;
+  max-height: 90vh;
+  min-height: max(50vh, 200px);
+  pointer-events: initial;
+  overflow: auto;
+}
+
+/* 
+  At a mobile size we will show the modal full screen
+*/
+@media (max-width: 500px) { 
+  .modal {
+    width: 100%;
+    height: 100vh;
+    min-width: initial;
+    max-width: initial;
+    min-height: initial;
+    max-height: initial;
+  }
+}

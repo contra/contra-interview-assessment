@@ -1,0 +1,23 @@
+:root {
+  --overlay-bg-color: rgba(0, 0, 0, 0.5);
+  --bg-color: white;
+  --modal-bg-color: white;
+  --text-color-1: black;
+}
+
+
+[data-theme="dark"] {
+  --overlay-bg-color: rgba(0, 0, 0, 0.7);
+  --bg-color: #333;
+  --modal-bg-color: #333;
+  --text-color-1: white;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color-1);
+}
+
+body.stopScroll {
+  overflow: hidden;
+}

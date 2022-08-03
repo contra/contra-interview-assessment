@@ -1,0 +1,26 @@
+
+.button {
+  font-size: 20px;
+}
+
+.buttonWrapper {
+  display: grid;
+  gap: 20px;
+}
+
+.modalBody {
+  text-align: center;
+}
+
+.modalBody input {
+  margin-bottom: 10px;
+}
+
+/* generated here: https://www.magicpattern.design/tools/css-backgrounds */
+.sillyBackground {
+  background-color: #e5e5f7;
+  opacity: 0.8;
+  background-image:  repeating-linear-gradient(45deg, #444cf7 25%, transparent 25%, transparent 75%, #444cf7 75%, #444cf7), repeating-linear-gradient(45deg, #444cf7 25%, #e5e5f7 25%, #e5e5f7 75%, #444cf7 75%, #444cf7);
+  background-position: 0 0, 10px 10px;
+  background-size: 20px 20px;
+}
