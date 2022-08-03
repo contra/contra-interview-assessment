@@ -18,12 +18,12 @@ export const resolve: QueryResolvers['getAllUsersFlags'] = async (
   const result = users.map((user: any) => {
     const userFlags = featureFlags.map((flag: any) => {
       const flagMap = _.find(featureFlagMaps, {
-        feature_flag_id: flag.id,
-        user_id: user.id,
+        featureFlagId: flag.id,
+        userId: user.id,
       });
       if (flagMap) {
         return {
-          booleanValue: flag.isBoolean ? Boolean(flagMap.flag_boolean) : null,
+          booleanValue: flag.isBoolean ? Boolean(flagMap.flagBoolean) : null,
           id: Number(flag.id),
           multivariateValue: flag.isBoolean
             ? null
