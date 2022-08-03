@@ -136,8 +136,6 @@ $ yarn migrate down
 
 To improve:
 
-* add pagination to getAllUsers
-
 * on setFeatureFlag, find all non existing users first and then run bulkUpdate
 
 * lock rows for update
