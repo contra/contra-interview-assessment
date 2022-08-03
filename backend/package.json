@@ -11,7 +11,9 @@
     "generate-types": "graphql-codegen",
     "migrate": "ts-node -r dotenv/config ./src/bin/migrate.ts",
     "dev:start": "docker-compose -f docker-compose.dev.yml up",
-    "start:local": "yarn && yarn migrate up && yarn dev",
+    "test:start": "docker-compose -f docker-compose.test.yml up",
+    "dev:ci": "yarn && yarn migrate up && ROARR_LOG=true ts-node-dev --respawn ./src/bin/server.ts | roarr pretty-print",
+    "test:ci": "yarn && yarn migrate up && yarn test",
     "test": "jest --maxWorkers=1"
   },
   "devDependencies": {

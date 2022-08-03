@@ -1,35 +1,41 @@
 version: "3"
 
+networks:
+  contrassessment_test:
+
+
 services:
-  app:
+  test_app:
     build:
-      dockerfile: ./docker/development/Dockerfile
+      dockerfile: ./docker/test/Dockerfile
       context: .
     depends_on:
-      - postgres
+      - test_postgres
     environment:
-      - NODE_ENV=development
-    env_file: ./docker.dev.env
+      - NODE_ENV=test
+    env_file: ./docker.test.env
     expose:
       - 8080
     ports:
       - "8080:8080"
+    networks:
+      - contrassessment_test
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
 
-  postgres:
+  test_postgres:
     image: postgres:12.4
     environment:
       POSTGRES_USER: contrassessment
       POSTGRES_PASSWORD: contrassessment
       POSTGRES_DBNAME: contrassessment
     ports:
-      - "5432:5432"
-    volumes:
-      - my-db:/var/lib/postgresql/data
+      - "25432:5432"
+    networks:
+      - contrassessment_test
+    # volumes:
+    #   - ./postgres:/var/lib/postgresql/data
+    #   - ./docker.dev.env:/docker-entrypoint-initdb.d/docker.dev.env
     # restart: always
     command: postgres -c max_connections=300
-
-volumes:
-  my-db:

@@ -55,8 +55,8 @@ export const server = async () => {
   try {
     const app = await createFastifyServer(pool);
 
-    await app.listen(8_080);
-    log.info('Server listening on port 8080');
+    await app.listen(8_080, '0.0.0.0');
+    log.info('Server listening on port 8080 new');
 
     return app;
   } catch (error) {
