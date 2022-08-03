@@ -20,7 +20,7 @@ describe('setFeatureFlag', () => {
         }
       }`,
       variables: {
-        userIds: [999],
+        userIds: [999, 888],
         flagData: { key: 'flagForAll', value: 'somevalue' },
       },
     };
@@ -37,7 +37,7 @@ describe('setFeatureFlag', () => {
     expect(_.isEqual(failedUserIds, queryData.variables.userIds)).toBe(true);
   });
 
-  it('should fail for user 999 and succeed for user 1', async () => {
+  it('should fail for users that do not exist: 999, 555 and succeed for user 1', async () => {
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
@@ -46,7 +46,7 @@ describe('setFeatureFlag', () => {
         }
       }`,
       variables: {
-        userIds: [1, 999],
+        userIds: [1, 999, 555],
         flagData: { key: 'flagForPartialUpdate', value: 'somevalue' },
       },
     };
@@ -60,7 +60,7 @@ describe('setFeatureFlag', () => {
     } = response.body.data.setFeatureFlag;
 
     expect(_.isEqual(affectedUserIds, [1])).toBe(true);
-    expect(_.isEqual(failedUserIds, [999])).toBe(true);
+    expect(_.isEqual(failedUserIds, [999, 555])).toBe(true);
   });
 
   it('expect to set a flag for a user if it already exists', async () => {
