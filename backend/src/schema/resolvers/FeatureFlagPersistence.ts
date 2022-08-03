@@ -39,7 +39,7 @@ export class FeatureFlagPersistence {
     flagData: FeatureFlagData,
   ) {
     const insertData = buildBulkValues(userIds, flagData);
-    return await pool.query(
+    await pool.query(
       sql`INSERT INTO public.feature_flag (user_id, flag_key, flag_value) VALUES ${insertData}`,
     );
   }
