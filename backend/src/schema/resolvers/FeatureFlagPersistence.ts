@@ -1,4 +1,4 @@
-import { sql } from 'slonik';
+import { sql, NotFoundError } from 'slonik';
 import { UserAccountPersistence } from './UserAccountPersistence';
 import { FeatureFlagData } from '../../generated/types';
 
@@ -11,6 +11,57 @@ export class FeatureFlagPersistence {
     return pool.exists(
       sql`SELECT id from public.feature_flag WHERE flag_key = ${flagData.key} AND user_id = ${userId} LIMIT 1`,
     );
+  }
+
+  static async getUsersIdsHaveFlag(
+    pool: any,
+    userIds: number[],
+    flagKey: string,
+  ): Promise<number[]> {
+    try {
+      const rows = (await pool.many(
+        sql`SELECT user_id as "userId" from public.feature_flag WHERE flag_key = ${flagKey} AND user_id IN (${sql.join(
+          userIds,
+          sql`, `,
+        )})`,
+      )) as { userId: number }[];
+      return rows.map((e) => e.userId);
+    } catch (err) {
+      if (err instanceof NotFoundError) return [];
+      console.error(err);
+      throw err;
+    }
+  }
+
+  static async bulkCreateFeatureFlag(
+    pool: any,
+    userIds: number[],
+    flagData: FeatureFlagData,
+  ) {
+    const insertData = buildBulkValues(userIds, flagData);
+    return await pool.query(
+      sql`INSERT INTO public.feature_flag (user_id, flag_key, flag_value) VALUES ${insertData}`,
+    );
+  }
+
+  static async bulkUpdateFeatureFlag(
+    pool: any,
+    userIds: number[],
+    flagData: FeatureFlagData,
+  ) {
+    const updateData = buildBulkValues(userIds, flagData);
+
+    try {
+      // notice the cast to ::varchar, postgre does not do any magic typecasting for you
+      const updateResult = await pool.query(
+        sql`UPDATE public.feature_flag as ff SET flag_value = ff2.flag_value FROM (values ${updateData}) as ff2(user_id, flag_key, flag_value) where ff2.flag_key = ff.flag_key AND ff2.user_id = ff.user_id::varchar`,
+      );
+      if (updateResult.rowCount != userIds.length)
+        throw new Error('Failed to update feature flag in a bulk!');
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   }
 
   static async updateFeatureFlag(
@@ -76,4 +127,23 @@ export class FeatureFlagPersistence {
     }
     return true;
   }
+}
+export function buildBulkValues(userIds: number[], flagData: FeatureFlagData) {
+  function buildUpdateValue(
+    userId: number,
+    flagKey: string,
+    flagValue: string,
+  ) {
+    return sql`(${sql.join([userId, flagKey, flagValue], sql`,`)})`;
+  }
+
+  function buildUpdateData(userIds: number[], flagData: FeatureFlagData) {
+    return userIds.map((userId) =>
+      buildUpdateValue(userId, flagData.key, flagData.value),
+    );
+  }
+
+  const updateDataRaw = buildUpdateData(userIds, flagData);
+  const updateData = sql`${sql.join(updateDataRaw, sql`,`)}`;
+  return updateData;
 }

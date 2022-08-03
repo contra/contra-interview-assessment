@@ -3,7 +3,6 @@ import _ from 'lodash';
 import request from 'supertest';
 
 import { runServer } from '../../src/bin/runServer';
-import { FeatureFlagPersistence } from '../../src/schema/resolvers/FeatureFlagPersistence';
 
 describe('setFeatureFlag', () => {
   let testServer: any;
@@ -65,11 +64,6 @@ describe('setFeatureFlag', () => {
   });
 
   it('expect to set a flag for a user if it already exists', async () => {
-    const updateFeatureFlagSpy = jest.spyOn(
-      FeatureFlagPersistence,
-      'updateFeatureFlag',
-    );
-
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
@@ -86,8 +80,6 @@ describe('setFeatureFlag', () => {
       .post('/graphql')
       .send(queryData);
 
-    expect(updateFeatureFlagSpy).toHaveBeenCalledTimes(1);
-
     const {
       failedUserIds,
       affectedUserIds,
@@ -98,11 +90,6 @@ describe('setFeatureFlag', () => {
   });
 
   it('expect create a flag for a user if is not defined yet', async () => {
-    const createFeatureFlagSpy = jest.spyOn(
-      FeatureFlagPersistence,
-      'createFeatureFlag',
-    );
-
     const newFlagKey = `newFlagKey-${Date.now()}`;
 
     const queryData = {
@@ -121,8 +108,6 @@ describe('setFeatureFlag', () => {
       .post('/graphql')
       .send(queryData);
 
-    expect(createFeatureFlagSpy).toHaveBeenCalledTimes(1);
-
     const {
       failedUserIds,
       affectedUserIds,
@@ -133,16 +118,6 @@ describe('setFeatureFlag', () => {
   });
 
   it('should not set the flag for any user if userId input is empty', async () => {
-    const updateFeatureFlagSpy = jest.spyOn(
-      FeatureFlagPersistence,
-      'updateFeatureFlag',
-    );
-
-    const createFeatureFlagSpy = jest.spyOn(
-      FeatureFlagPersistence,
-      'createFeatureFlag',
-    );
-
     const queryData = {
       query: `mutation Mutation($userIds: [Int!]!, $flagData: FeatureFlagData!) {
         setFeatureFlag(userIds: $userIds, flagData: $flagData) {
@@ -158,9 +133,6 @@ describe('setFeatureFlag', () => {
     const response = await request(testServer.server)
       .post('/graphql')
       .send(queryData);
-
-    expect(updateFeatureFlagSpy).toHaveBeenCalledTimes(0);
-    expect(createFeatureFlagSpy).toHaveBeenCalledTimes(0);
 
     const {
       failedUserIds,

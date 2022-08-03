@@ -26,15 +26,55 @@ export const resolve: MutationResolvers['setFeatureFlag'] = async (
     (id) => !existingUserIds.includes(id),
   );
 
-  for (let userId of existingUserIds) {
-    const isSuccess = await FeatureFlagPersistence.setFeatureFlag(
+  // set the flag only for existing users
+  if (existingUserIds && existingUserIds.length > 0) {
+    const exisingUsersHaveFlag: number[] = await FeatureFlagPersistence.getUsersIdsHaveFlag(
       pool,
-      userId,
-      flagData,
+      existingUserIds,
+      flagData.key,
     );
-    isSuccess
-      ? response.affectedUserIds.push(userId)
-      : response.failedUserIds.push(userId);
+
+    if (exisingUsersHaveFlag && exisingUsersHaveFlag.length > 0) {
+      try {
+        // bulk update existing flag for users that have it
+        await FeatureFlagPersistence.bulkUpdateFeatureFlag(
+          pool,
+          exisingUsersHaveFlag,
+          flagData,
+        );
+        // all users were updated if you did not get an error until here
+        response.affectedUserIds = existingUserIds;
+      } catch (err) {
+        response.failedUserIds = [
+          ...response.failedUserIds,
+          ...existingUserIds,
+        ];
+      }
+    }
+
+    const existingUsersNoFlag = existingUserIds.filter(
+      (id) => !exisingUsersHaveFlag.includes(id),
+    );
+
+    if (existingUsersNoFlag && existingUsersNoFlag.length > 0) {
+      try {
+        // bulk create flag for users that do not have it
+        await FeatureFlagPersistence.bulkCreateFeatureFlag(
+          pool,
+          existingUsersNoFlag,
+          flagData,
+        );
+        response.affectedUserIds = [
+          ...response.affectedUserIds,
+          ...existingUsersNoFlag,
+        ];
+      } catch (err) {
+        response.failedUserIds = [
+          ...response.failedUserIds,
+          ...existingUsersNoFlag,
+        ];
+      }
+    }
   }
 
   return response;
