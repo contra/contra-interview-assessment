@@ -6,9 +6,9 @@ export class KeyboardManager {
     this.subscribe();
   }
 
-  private registeredKeys: { [key: string]:  ((e: KeyboardEvent) => void)[] } = {}
+  registeredKeys: { [key: string]:  ((e: KeyboardEvent) => void)[] } = {}
 
-  private handleKey(event: KeyboardEvent) {
+  handleKey(event: KeyboardEvent) {
     let key = event.key;
     const keys = this.registeredKeys[key];
 

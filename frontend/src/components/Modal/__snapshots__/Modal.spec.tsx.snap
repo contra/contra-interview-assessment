@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyComponent should render correctly 1`] = `
+Array [
+  <div
+    className="overlay"
+    onClick={[Function]}
+  />,
+  <div
+    className="modalWrapper"
+  >
+    <div
+      className="modal"
+      role="dialog"
+    >
+      <p>
+        Hello World!
+      </p>
+    </div>
+  </div>,
+]
+`;
