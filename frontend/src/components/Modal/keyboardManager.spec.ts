@@ -3,7 +3,7 @@ import KeyboardManager from './keyboardManager';
 describe('KeyboardManager', () => {
   beforeEach(() => {
     KeyboardManager.registeredKeys = {};
-  })
+  });
 
   it('register', () => {
     const func = jest.fn();
@@ -30,5 +30,5 @@ describe('KeyboardManager', () => {
     // @ts-ignore
     expect(KeyboardManager.registeredKeys[key]).not.toContain(func);
 
-  })
-})
+  });
+});
