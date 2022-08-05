@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react';
 import React, { useEffect, useState, useMemo, type FC, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSpring, animated } from 'react-spring';
+import SimpleButton from '../SimpleButton';
 import {
   bodyStyle,
   closeButtonStyle,
@@ -9,7 +10,7 @@ import {
   footerStyle,
   modalStyle,
   overlayVariants,
-} from './Modal.css';
+} from './modal.css';
 
 type PortalProps = {
   children?: React.ReactNode;
@@ -69,6 +70,8 @@ const Modal: FC<ModalProps> = ({
     onRest: () => {
       if (!modalVisible) {
         setOpened(false);
+      } else if (modalElmRef.current) {
+        modalElmRef.current.focus();
       }
     },
   });
@@ -79,6 +82,22 @@ const Modal: FC<ModalProps> = ({
   };
 
   useEffect(() => {
+    let firstElm: HTMLElement | null = null;
+    let lastElm: HTMLElement | null = null;
+    const onFirstElmKeyDown = (event: KeyboardEvent) => {
+      if (event.key === `Tab` && event.shiftKey) {
+        event.preventDefault();
+        lastElm?.focus();
+      }
+    };
+
+    const onLastElmKeyDown = (event: KeyboardEvent) => {
+      if (event.key === `Tab` && !event.shiftKey) {
+        event.preventDefault();
+        firstElm?.focus();
+      }
+    };
+
     if (loaded && modalElmRef.current) {
       const elms = Array.from(
         modalElmRef.current.querySelectorAll(
@@ -92,40 +111,35 @@ const Modal: FC<ModalProps> = ({
         );
       });
       if (elms.length > 0) {
-        const firstElm = elms[0] as HTMLElement;
-        const lastElm = elms[elms.length - 1] as HTMLElement;
-        const onFirstElmKeyDown = (event: KeyboardEvent) => {
-          if (event.key === `Tab` && event.shiftKey) {
-            event.preventDefault();
-            lastElm.focus();
-          }
-        };
-
-        const onLastElmKeyDown = (event: KeyboardEvent) => {
-          if (event.key === `Tab` && !event.shiftKey) {
-            event.preventDefault();
-            firstElm.focus();
-          }
-        };
+        firstElm = elms[0] as HTMLElement;
+        lastElm = elms[elms.length - 1] as HTMLElement;
 
         firstElm.addEventListener(`keydown`, onFirstElmKeyDown);
         lastElm.addEventListener('keydown', onLastElmKeyDown);
-
-        return () => {
-          firstElm.removeEventListener(`keydown`, onFirstElmKeyDown);
-          lastElm.removeEventListener(`keydown`, onLastElmKeyDown);
-        };
       }
     } else {
       setLoaded(true);
     }
+
+    return () => {
+      if (firstElm && lastElm) {
+        firstElm.removeEventListener(`keydown`, onFirstElmKeyDown);
+        lastElm.removeEventListener(`keydown`, onLastElmKeyDown);
+      }
+    };
   }, [modalElmRef, loaded]);
 
   useEffect(() => {
     if (visible) {
-      setOpened(true);
+      setOpened(visible);
     }
   }, [visible]);
+
+  // lock body scrolling when modal is visible
+  useEffect(() => {
+    if (!loaded) return;
+    document.body.style.overflowY = opened ? `hidden` : `auto`;
+  }, [loaded, opened]);
 
   return (
     <Portal>
@@ -141,6 +155,7 @@ const Modal: FC<ModalProps> = ({
           ref={modalElmRef}
           role="dialog"
           style={modalAnimationStyle}
+          tabIndex={0}
         >
           <div className={headerStyle}>
             {title}
@@ -154,7 +169,12 @@ const Modal: FC<ModalProps> = ({
             </button>
           </div>
           <div className={bodyStyle}>{children}</div>
-          <div className={footerStyle}></div>
+          <div className={footerStyle}>
+            <SimpleButton onClick={closeModal}>Cancel</SimpleButton>
+            <SimpleButton onClick={onOk} type="primary">
+              OK
+            </SimpleButton>
+          </div>
         </animated.div>
       </animated.div>
     </Portal>

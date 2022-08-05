@@ -24,6 +24,7 @@ export const modalStyle = style({
   borderRadius: `2px`,
   boxShadow: `0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d`,
   minWidth: `520px`,
+  outline: `none`,
 });
 
 export const headerStyle = style({
@@ -63,6 +64,10 @@ export const bodyStyle = style({
 });
 
 export const footerStyle = style({
+  alignItems: `center`,
   borderTop: `1px solid rgba(0,0,0,0.06)`,
+  display: `flex`,
+  gap: variables.spacing[2],
+  justifyContent: `flex-end`,
   padding: `${variables.spacing['2.5']} ${variables.spacing[4]}`,
 });
