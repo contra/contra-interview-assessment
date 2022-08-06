@@ -1,5 +1,12 @@
 import { Icon } from '@iconify/react';
-import React, { useEffect, useState, useMemo, type FC, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  type FC,
+  useRef,
+  useCallback,
+} from 'react';
 import { createPortal } from 'react-dom';
 import { useSpring, animated } from 'react-spring';
 import SimpleButton from '../SimpleButton';
@@ -8,6 +15,7 @@ import {
   closeButtonStyle,
   headerStyle,
   footerStyle,
+  modalWrapperVariant,
   modalStyle,
   overlayVariants,
 } from './modal.css';
@@ -30,6 +38,8 @@ const Portal: FC<PortalProps> = ({ children }) => {
 
 type ModalProps = {
   children?: React.ReactNode;
+  escapable?: boolean;
+  maskClosable?: boolean;
   onCancel?: () => void;
   onOk?: () => void;
   title?: string;
@@ -40,6 +50,8 @@ const Modal: FC<ModalProps> = ({
   title,
   visible,
   children,
+  escapable = true,
+  maskClosable = true,
   onOk,
   onCancel,
 }: ModalProps) => {
@@ -47,6 +59,7 @@ const Modal: FC<ModalProps> = ({
   const [opened, setOpened] = useState(visible);
   const [modalVisible, setModalVisible] = useState(visible);
   const modalElmRef = useRef<HTMLDivElement | null>(null);
+  const maskElmRef = useRef<HTMLDivElement | null>(null);
   const labelledBy = useMemo(
     () => (title ? title : `modal_${Date.now()}`),
     [title]
@@ -59,27 +72,65 @@ const Modal: FC<ModalProps> = ({
     onRest: () => {
       if (opened) {
         setModalVisible(true);
+      } else {
+        onCancel?.();
       }
     },
     opacity: opened ? 1 : 0,
   });
+
   const modalAnimationStyle = useSpring({
     ...(modalVisible
       ? { opacity: 1, scale: 1, y: 0 }
       : { opacity: 0, scale: 0.9, y: 20 }),
     onRest: () => {
-      if (!modalVisible) {
-        setOpened(false);
-      } else if (modalElmRef.current) {
+      if (modalElmRef.current) {
         modalElmRef.current.focus();
       }
     },
   });
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setModalVisible(false);
-    onCancel?.();
+    setOpened(false);
+  }, []);
+
+  const onModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
   };
+
+  useEffect(() => {
+    const maskElement = maskElmRef.current;
+    const onEscape = (event: KeyboardEvent) => {
+      event.stopPropagation();
+      if (event.key === `Escape`) {
+        closeModal();
+      }
+    };
+
+    const onMaskClick = (event: MouseEvent) => {
+      if (maskElement === event.target) {
+        event.stopPropagation();
+        closeModal();
+      }
+    };
+
+    if (maskElement && escapable) {
+      maskElement.addEventListener(`keydown`, onEscape);
+    }
+
+    if (maskElement && maskClosable) {
+      maskElement.addEventListener(`click`, onMaskClick);
+    }
+
+    return () => {
+      if (maskElement) {
+        maskElement.removeEventListener(`keydown`, onEscape);
+        maskElement.removeEventListener(`click`, onMaskClick);
+      }
+    };
+  }, [maskElmRef, loaded, escapable, maskClosable, closeModal]);
 
   useEffect(() => {
     let firstElm: HTMLElement | null = null;
@@ -135,6 +186,29 @@ const Modal: FC<ModalProps> = ({
     }
   }, [visible]);
 
+  useEffect(() => {
+    const modals = Array.from(
+      document.querySelectorAll(
+        `.${overlayVariants.visible.split(` `)[0]} .${
+          modalWrapperVariant.active.split(` `)[0]
+        }`
+      )
+    );
+    if (opened && modals.length > 1) {
+      const modal = modals[modals.length - 2] as HTMLDivElement;
+      modal.className = modalWrapperVariant.inactive;
+      return;
+    }
+
+    const inactiveModals = document.querySelectorAll(
+      `.${modalWrapperVariant.inactive.split(` `)[0]}`
+    );
+    if (!opened && inactiveModals.length > 0) {
+      const modal = inactiveModals[inactiveModals.length - 1] as HTMLDivElement;
+      modal.className = modalWrapperVariant.active;
+    }
+  }, [opened]);
+
   // lock body scrolling when modal is visible
   useEffect(() => {
     if (!loaded) return;
@@ -144,38 +218,42 @@ const Modal: FC<ModalProps> = ({
   return (
     <Portal>
       <animated.div
-        className={overlayVariants[opened ? 'visible' : 'hidden']}
+        className={overlayVariants[visible ? 'visible' : 'hidden']}
+        ref={maskElmRef}
         style={overlayStyle}
         tabIndex={-1}
       >
-        <animated.div
-          aria-labelledby={labelledBy}
-          aria-modal
-          className={modalStyle}
-          ref={modalElmRef}
-          role="dialog"
-          style={modalAnimationStyle}
-          tabIndex={0}
-        >
-          <div className={headerStyle}>
-            {title}
-            <button
-              aria-label="close"
-              className={closeButtonStyle}
-              onClick={closeModal}
-              type="button"
-            >
-              <Icon icon="carbon:close" />
-            </button>
-          </div>
-          <div className={bodyStyle}>{children}</div>
-          <div className={footerStyle}>
-            <SimpleButton onClick={closeModal}>Cancel</SimpleButton>
-            <SimpleButton onClick={onOk} type="primary">
-              OK
-            </SimpleButton>
-          </div>
-        </animated.div>
+        <div className={modalWrapperVariant.active}>
+          <animated.div
+            aria-labelledby={labelledBy}
+            aria-modal
+            className={modalStyle}
+            onClick={onModalClick}
+            ref={modalElmRef}
+            role="dialog"
+            style={modalAnimationStyle}
+            tabIndex={0}
+          >
+            <div className={headerStyle}>
+              {title}
+              <button
+                aria-label="close"
+                className={closeButtonStyle}
+                onClick={closeModal}
+                type="button"
+              >
+                <Icon icon="carbon:close" />
+              </button>
+            </div>
+            <div className={bodyStyle}>{children}</div>
+            <div className={footerStyle}>
+              <SimpleButton onClick={closeModal}>Cancel</SimpleButton>
+              <SimpleButton onClick={onOk} type="primary">
+                OK
+              </SimpleButton>
+            </div>
+          </animated.div>
+        </div>
       </animated.div>
     </Portal>
   );

@@ -4,7 +4,12 @@ import 'app.css';
 import '@fontsource/inter';
 
 const App = ({ Component, pageProps }: AppProps) => {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Component {...pageProps} />
+      <div id="modal-root" />
+    </>
+  );
 };
 
 export default App;

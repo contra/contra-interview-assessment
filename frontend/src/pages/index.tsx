@@ -5,6 +5,7 @@ import Modal from '@/components/Modal';
 
 const Index: NextPage = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [otherModalVisible, setOtherModalVisible] = useState(false);
   return (
     <>
       <h1>Welcome to Contra!</h1>
@@ -166,6 +167,7 @@ const Index: NextPage = () => {
       </p>
       <Modal
         onCancel={() => setModalVisible(false)}
+        onOk={() => setOtherModalVisible(true)}
         title="Basic Modal"
         visible={modalVisible}
       >
@@ -173,7 +175,15 @@ const Index: NextPage = () => {
         <p>Some contents...</p>
         <p>Some contents...</p>
       </Modal>
-      <button>Yah</button>
+      <Modal
+        escapable={false}
+        maskClosable={false}
+        onCancel={() => setOtherModalVisible(false)}
+        title="Another Basic Modal"
+        visible={otherModalVisible}
+      >
+        <p>MHMMM</p>
+      </Modal>
     </>
   );
 };

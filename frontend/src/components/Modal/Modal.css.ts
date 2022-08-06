@@ -18,13 +18,36 @@ export const overlayVariants = styleVariants({
   visible: [overlayStyle, { display: `flex` }],
 });
 
+const modalWrapperStyle = style({
+  '@media': {
+    'screen and (min-width: 560px)': {
+      padding: 0,
+      width: `520px`,
+    },
+  },
+  padding: variables.spacing[3],
+  transition: `transform 0.25s ease-in-out`,
+  width: `100%`,
+});
+
+export const modalWrapperVariant = styleVariants({
+  active: [modalWrapperStyle, { transform: `scale(1)` }],
+  inactive: [modalWrapperStyle, { transform: `scale(0.95)` }],
+});
+
 export const modalStyle = style({
+  '@media': {
+    'screen and (min-width: 560px)': {
+      borderRadius: `2px`,
+    },
+  },
   background: variables.colors.white,
   backgroundClip: `padding-box`,
-  borderRadius: `2px`,
   boxShadow: `0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d`,
-  minWidth: `520px`,
+  display: `flex`,
+  flexDirection: `column`,
   outline: `none`,
+  width: `100%`,
 });
 
 export const headerStyle = style({
