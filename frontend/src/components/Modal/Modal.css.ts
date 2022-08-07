@@ -25,6 +25,7 @@ export const modalWrapperStyle = style({
       width: `520px`,
     },
   },
+  maxWidth: `calc(100vw - (${variables.spacing[3]} * 2))`,
   padding: variables.spacing[3],
   selectors: {
     [`${overlayVariants.visible}.active &`]: {

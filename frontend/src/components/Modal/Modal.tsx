@@ -46,6 +46,7 @@ type ModalProps = {
   onOk?: () => void;
   title?: string;
   visible: boolean;
+  width?: string;
 };
 
 const Modal: FC<ModalProps> = ({
@@ -58,6 +59,7 @@ const Modal: FC<ModalProps> = ({
   cancelButtonText = `Cancel`,
   onOk,
   onCancel,
+  width,
 }: ModalProps) => {
   const [loaded, setLoaded] = useState(visible);
   const [opened, setOpened] = useState(visible);
@@ -83,7 +85,7 @@ const Modal: FC<ModalProps> = ({
             10
           );
           maskElmRef.current.style.zIndex = `9999`;
-          maskElmRef.current.removeAttribute(`aria-level`);
+          maskElmRef.current.setAttribute(`aria-level`, `1`);
           if (level) {
             const previousMask = document.querySelector(
               `.${overlayVariants.visible.split(` `)[0]}.inactive[aria-level="${
@@ -254,7 +256,7 @@ const Modal: FC<ModalProps> = ({
         style={overlayStyle}
         tabIndex={-1}
       >
-        <div className={modalWrapperStyle}>
+        <div className={modalWrapperStyle} style={{ width }}>
           <animated.div
             aria-labelledby={labelledBy}
             aria-modal
