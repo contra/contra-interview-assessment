@@ -37,6 +37,7 @@ const Portal: FC<PortalProps> = ({ children }) => {
 };
 
 type ModalProps = {
+  animate?: boolean;
   cancelButtonText?: string;
   children?: React.ReactNode;
   destroyOnClose?: boolean;
@@ -53,6 +54,7 @@ type ModalProps = {
 };
 
 const Modal: FC<ModalProps> = ({
+  animate = true,
   title,
   visible,
   children,
@@ -70,18 +72,15 @@ const Modal: FC<ModalProps> = ({
   const [destroyed, setDestroyed] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [opened, setOpened] = useState(visible);
-  const [maskVisible, setMaskVisible] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [maskVisible, setMaskVisible] = useState(visible);
+  const [modalVisible, setModalVisible] = useState(visible);
   const modalElmRef = useRef<HTMLDivElement | null>(null);
   const maskElmRef = useRef<HTMLDivElement | null>(null);
-  const labelledBy = useMemo(
-    () => (title ? title : `modal_${Date.now()}`),
-    [title]
-  );
+  const label = useMemo(() => (title ? title : `modal_${Date.now()}`), [title]);
 
   const overlayStyle = useSpring({
     config: {
-      duration: 100,
+      duration: animate ? 100 : 0,
     },
     onRest: () => {
       if (opened) {
@@ -150,6 +149,9 @@ const Modal: FC<ModalProps> = ({
     ...(modalVisible
       ? { opacity: 1, scale: 1, y: 0 }
       : { opacity: 0, scale: 0.9, y: 20 }),
+    config: {
+      duration: animate ? 200 : 0,
+    },
     onRest: () => {
       if (modalElmRef.current) {
         modalElmRef.current.focus();
@@ -272,13 +274,14 @@ const Modal: FC<ModalProps> = ({
         className={`${
           overlayVariants[maskVisible ? 'visible' : 'hidden']
         } active`}
+        data-testid="mask"
         ref={maskElmRef}
         style={overlayStyle}
         tabIndex={-1}
       >
         <div className={modalWrapperStyle} style={{ width }}>
           <animated.div
-            aria-labelledby={labelledBy}
+            aria-label={label}
             aria-modal
             className={modalStyle}
             onClick={onModalClick}
