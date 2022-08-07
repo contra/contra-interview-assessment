@@ -10,7 +10,7 @@ const overlayStyle = style({
   outline: `none`,
   overflow: `auto`,
   position: `fixed`,
-  zIndex: 999,
+  zIndex: 9_999,
 });
 
 export const overlayVariants = styleVariants({
@@ -18,7 +18,7 @@ export const overlayVariants = styleVariants({
   visible: [overlayStyle, { display: `flex` }],
 });
 
-const modalWrapperStyle = style({
+export const modalWrapperStyle = style({
   '@media': {
     'screen and (min-width: 560px)': {
       padding: 0,
@@ -26,13 +26,17 @@ const modalWrapperStyle = style({
     },
   },
   padding: variables.spacing[3],
+  selectors: {
+    [`${overlayVariants.visible}.active &`]: {
+      transform: `scale(1)`,
+    },
+    [`${overlayVariants.visible}.inactive &`]: {
+      transform: `scale(0.95)`,
+    },
+  },
+  transform: `scale(1)`,
   transition: `transform 0.25s ease-in-out`,
   width: `100%`,
-});
-
-export const modalWrapperVariant = styleVariants({
-  active: [modalWrapperStyle, { transform: `scale(1)` }],
-  inactive: [modalWrapperStyle, { transform: `scale(0.95)` }],
 });
 
 export const modalStyle = style({

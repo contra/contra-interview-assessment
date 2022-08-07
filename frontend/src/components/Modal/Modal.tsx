@@ -15,7 +15,7 @@ import {
   closeButtonStyle,
   headerStyle,
   footerStyle,
-  modalWrapperVariant,
+  modalWrapperStyle,
   modalStyle,
   overlayVariants,
 } from './modal.css';
@@ -37,9 +37,11 @@ const Portal: FC<PortalProps> = ({ children }) => {
 };
 
 type ModalProps = {
+  cancelButtonText?: string;
   children?: React.ReactNode;
   escapable?: boolean;
   maskClosable?: boolean;
+  okButtonText?: string;
   onCancel?: () => void;
   onOk?: () => void;
   title?: string;
@@ -52,6 +54,8 @@ const Modal: FC<ModalProps> = ({
   children,
   escapable = true,
   maskClosable = true,
+  okButtonText = `OK`,
+  cancelButtonText = `Cancel`,
   onOk,
   onCancel,
 }: ModalProps) => {
@@ -73,7 +77,46 @@ const Modal: FC<ModalProps> = ({
       if (opened) {
         setModalVisible(true);
       } else {
+        if (maskElmRef.current) {
+          const level = Number.parseInt(
+            maskElmRef.current.ariaLevel ?? `0`,
+            10
+          );
+          maskElmRef.current.style.zIndex = `9999`;
+          maskElmRef.current.removeAttribute(`aria-level`);
+          if (level) {
+            const previousMask = document.querySelector(
+              `.${overlayVariants.visible.split(` `)[0]}.inactive[aria-level="${
+                level - 1
+              }"]`
+            );
+            if (previousMask) {
+              previousMask.classList.remove(`inactive`);
+            }
+          }
+        }
+
         onCancel?.();
+      }
+    },
+    onStart: () => {
+      /* 
+        make sure that no matter where the modal is placed in the dom that it shows up
+        in the correct order in the stack when opened
+      */
+      const visibleMasks = Array.from(
+        document.querySelectorAll(`.${overlayVariants.visible.split(` `)[0]}`)
+      );
+      if (visibleMasks.length > 1 && maskElmRef.current) {
+        maskElmRef.current.setAttribute(`aria-level`, `${visibleMasks.length}`);
+        const zIndexArray = visibleMasks.map((mask) => {
+          const style = window.getComputedStyle(mask);
+          return Number.parseInt(style.zIndex, 10);
+        });
+        zIndexArray.sort((a, b) => (a > b ? 1 : -1));
+        maskElmRef.current.style.zIndex = zIndexArray[0]
+          ? `${zIndexArray[0] + 1}`
+          : `9999`;
       }
     },
     opacity: opened ? 1 : 0,
@@ -187,25 +230,12 @@ const Modal: FC<ModalProps> = ({
   }, [visible]);
 
   useEffect(() => {
-    const modals = Array.from(
-      document.querySelectorAll(
-        `.${overlayVariants.visible.split(` `)[0]} .${
-          modalWrapperVariant.active.split(` `)[0]
-        }`
+    if (opened) {
+      Array.from(
+        document.querySelectorAll(`.${overlayVariants.visible.split(` `)[0]}`)
       )
-    );
-    if (opened && modals.length > 1) {
-      const modal = modals[modals.length - 2] as HTMLDivElement;
-      modal.className = modalWrapperVariant.inactive;
-      return;
-    }
-
-    const inactiveModals = document.querySelectorAll(
-      `.${modalWrapperVariant.inactive.split(` `)[0]}`
-    );
-    if (!opened && inactiveModals.length > 0) {
-      const modal = inactiveModals[inactiveModals.length - 1] as HTMLDivElement;
-      modal.className = modalWrapperVariant.active;
+        .filter((elm) => elm !== maskElmRef.current)
+        .forEach((elm) => elm.classList.add(`inactive`));
     }
   }, [opened]);
 
@@ -218,12 +248,13 @@ const Modal: FC<ModalProps> = ({
   return (
     <Portal>
       <animated.div
-        className={overlayVariants[visible ? 'visible' : 'hidden']}
+        aria-level={1}
+        className={`${overlayVariants[visible ? 'visible' : 'hidden']} active`}
         ref={maskElmRef}
         style={overlayStyle}
         tabIndex={-1}
       >
-        <div className={modalWrapperVariant.active}>
+        <div className={modalWrapperStyle}>
           <animated.div
             aria-labelledby={labelledBy}
             aria-modal
@@ -247,9 +278,11 @@ const Modal: FC<ModalProps> = ({
             </div>
             <div className={bodyStyle}>{children}</div>
             <div className={footerStyle}>
-              <SimpleButton onClick={closeModal}>Cancel</SimpleButton>
+              <SimpleButton onClick={closeModal}>
+                {cancelButtonText}
+              </SimpleButton>
               <SimpleButton onClick={onOk} type="primary">
-                OK
+                {okButtonText}
               </SimpleButton>
             </div>
           </animated.div>

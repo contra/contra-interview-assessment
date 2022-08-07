@@ -16,6 +16,7 @@ export const button = recipe({
     display: `inline-block`,
     fontSize: variables.font.size.sm,
     minHeight: `32px`,
+    outline: `none`,
     padding: `${variables.spacing[1]} ${variables.spacing[4]}`,
     position: `relative`,
     textAlign: `center`,

@@ -76,6 +76,12 @@ export const variables = createGlobalTheme(':root', {
     /* 20px */
     5: `1.25rem`,
     /* 24px */
-    6: `1.5rem`,
+    6: `1.55rem`,
+    7: `1.75rem`,
+    8: `2rem`,
+    9: `2.25rem`,
+    10: `2.5rem`,
+    11: `2.75rem`,
+    12: `3rem`,
   },
 });
