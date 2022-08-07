@@ -9,7 +9,7 @@ import {
 
 type ExampleBoxProps = {
   children?: React.ReactNode;
-  description: string;
+  description: React.ReactNode;
   title: string;
 };
 

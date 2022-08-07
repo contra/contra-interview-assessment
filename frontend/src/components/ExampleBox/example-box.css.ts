@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { variables } from '@/theme.css';
 
 export const wrapperStyle = style({
@@ -21,6 +21,7 @@ export const infoWrapperStyle = style({
 
 export const infoTitleStyle = style({
   background: variables.colors.white,
+  color: variables.colors.slate[700],
   fontSize: variables.font.size.sm,
   fontWeight: `bold`,
   marginLeft: variables.spacing[4],
@@ -31,6 +32,13 @@ export const infoTitleStyle = style({
 
 export const infoDescriptionStyle = style({
   fontSize: variables.font.size.sm,
+  lineHeight: variables.spacing[5],
   margin: 0,
   padding: `${variables.spacing[6]}`,
+});
+
+globalStyle(`${infoDescriptionStyle} code`, {
+  background: variables.colors.sky[300],
+  borderRadius: `2px`,
+  padding: `0 ${variables.spacing[1]}`,
 });

@@ -2,6 +2,7 @@
 import { type AppProps } from 'next/app';
 import 'app.css';
 import '@fontsource/inter';
+import '@fontsource/inter/600.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (

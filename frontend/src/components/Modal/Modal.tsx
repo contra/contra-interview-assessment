@@ -39,7 +39,10 @@ const Portal: FC<PortalProps> = ({ children }) => {
 type ModalProps = {
   cancelButtonText?: string;
   children?: React.ReactNode;
+  destroyOnClose?: boolean;
   escapable?: boolean;
+  footer?: React.ReactNode;
+  header?: React.ReactNode;
   maskClosable?: boolean;
   okButtonText?: string;
   onCancel?: () => void;
@@ -53,7 +56,10 @@ const Modal: FC<ModalProps> = ({
   title,
   visible,
   children,
+  destroyOnClose = false,
   escapable = true,
+  footer,
+  header,
   maskClosable = true,
   okButtonText = `OK`,
   cancelButtonText = `Cancel`,
@@ -61,9 +67,11 @@ const Modal: FC<ModalProps> = ({
   onCancel,
   width,
 }: ModalProps) => {
-  const [loaded, setLoaded] = useState(visible);
+  const [destroyed, setDestroyed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [opened, setOpened] = useState(visible);
-  const [modalVisible, setModalVisible] = useState(visible);
+  const [maskVisible, setMaskVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const modalElmRef = useRef<HTMLDivElement | null>(null);
   const maskElmRef = useRef<HTMLDivElement | null>(null);
   const labelledBy = useMemo(
@@ -98,10 +106,24 @@ const Modal: FC<ModalProps> = ({
           }
         }
 
+        setMaskVisible(false);
+
+        if (destroyOnClose) {
+          setDestroyed(true);
+        }
+
         onCancel?.();
       }
     },
     onStart: () => {
+      if (opened && maskElmRef.current) {
+        Array.from(
+          document.querySelectorAll(`.${overlayVariants.visible.split(` `)[0]}`)
+        )
+          .filter((elm) => elm !== maskElmRef.current)
+          .forEach((elm) => elm.classList.add(`inactive`));
+      }
+
       /* 
         make sure that no matter where the modal is placed in the dom that it shows up
         in the correct order in the stack when opened
@@ -115,7 +137,7 @@ const Modal: FC<ModalProps> = ({
           const style = window.getComputedStyle(mask);
           return Number.parseInt(style.zIndex, 10);
         });
-        zIndexArray.sort((a, b) => (a > b ? 1 : -1));
+        zIndexArray.sort((a, b) => (a > b ? -1 : 1));
         maskElmRef.current.style.zIndex = zIndexArray[0]
           ? `${zIndexArray[0] + 1}`
           : `9999`;
@@ -227,19 +249,13 @@ const Modal: FC<ModalProps> = ({
 
   useEffect(() => {
     if (visible) {
-      setOpened(visible);
+      setOpened(true);
+      setDestroyed(false);
+      setMaskVisible(true);
+    } else {
+      closeModal();
     }
-  }, [visible]);
-
-  useEffect(() => {
-    if (opened) {
-      Array.from(
-        document.querySelectorAll(`.${overlayVariants.visible.split(` `)[0]}`)
-      )
-        .filter((elm) => elm !== maskElmRef.current)
-        .forEach((elm) => elm.classList.add(`inactive`));
-    }
-  }, [opened]);
+  }, [visible, closeModal]);
 
   // lock body scrolling when modal is visible
   useEffect(() => {
@@ -247,11 +263,15 @@ const Modal: FC<ModalProps> = ({
     document.body.style.overflowY = opened ? `hidden` : `auto`;
   }, [loaded, opened]);
 
+  if (destroyed) return null;
+
   return (
     <Portal>
       <animated.div
         aria-level={1}
-        className={`${overlayVariants[visible ? 'visible' : 'hidden']} active`}
+        className={`${
+          overlayVariants[maskVisible ? 'visible' : 'hidden']
+        } active`}
         ref={maskElmRef}
         style={overlayStyle}
         tabIndex={-1}
@@ -267,26 +287,30 @@ const Modal: FC<ModalProps> = ({
             style={modalAnimationStyle}
             tabIndex={0}
           >
-            <div className={headerStyle}>
-              {title}
-              <button
-                aria-label="close"
-                className={closeButtonStyle}
-                onClick={closeModal}
-                type="button"
-              >
-                <Icon icon="carbon:close" />
-              </button>
-            </div>
+            {header ?? (
+              <div className={headerStyle}>
+                {title}
+                <button
+                  aria-label="close"
+                  className={closeButtonStyle}
+                  onClick={closeModal}
+                  type="button"
+                >
+                  <Icon icon="carbon:close" />
+                </button>
+              </div>
+            )}
             <div className={bodyStyle}>{children}</div>
-            <div className={footerStyle}>
-              <SimpleButton onClick={closeModal}>
-                {cancelButtonText}
-              </SimpleButton>
-              <SimpleButton onClick={onOk} type="primary">
-                {okButtonText}
-              </SimpleButton>
-            </div>
+            {footer ?? (
+              <div className={footerStyle}>
+                <SimpleButton onClick={closeModal}>
+                  {cancelButtonText}
+                </SimpleButton>
+                <SimpleButton onClick={onOk} type="primary">
+                  {okButtonText}
+                </SimpleButton>
+              </div>
+            )}
           </animated.div>
         </div>
       </animated.div>
