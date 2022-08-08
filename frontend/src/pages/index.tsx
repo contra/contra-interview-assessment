@@ -60,7 +60,6 @@ const Index: NextPage = () => {
           </SimpleButton>
         </ExampleBox>
         <Modal
-          lazy
           onCancel={() => updateModal('basic', false)}
           onOk={() => updateModal('basic', false)}
           title="Basic Modal"

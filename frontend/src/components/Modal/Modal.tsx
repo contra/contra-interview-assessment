@@ -238,7 +238,7 @@ const Modal: FC<ModalProps> = ({
       }
     };
 
-    if (loaded && modalElmRef.current) {
+    if (loaded && modalElmRef.current && modalVisible) {
       const elms = Array.from(
         modalElmRef.current.querySelectorAll(
           `select, input, textarea, button, a`
@@ -265,7 +265,7 @@ const Modal: FC<ModalProps> = ({
         lastElm.removeEventListener(`keydown`, onLastElmKeyDown);
       }
     };
-  }, [modalElmRef, loaded]);
+  }, [modalElmRef, modalVisible, loaded]);
 
   useEffect(() => {
     if (visible) {
