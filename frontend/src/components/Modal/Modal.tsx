@@ -68,6 +68,7 @@ const Modal: FC<ModalProps> = ({
   onCancel,
   width,
 }: ModalProps) => {
+  const id = `modal_${Date.now()}`;
   const [destroyed, setDestroyed] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [opened, setOpened] = useState(visible);
@@ -75,7 +76,7 @@ const Modal: FC<ModalProps> = ({
   const [modalVisible, setModalVisible] = useState(visible);
   const modalElmRef = useRef<HTMLDivElement | null>(null);
   const maskElmRef = useRef<HTMLDivElement | null>(null);
-  const label = useMemo(() => (title ? title : `modal_${Date.now()}`), [title]);
+  const label = useMemo(() => (title ? title : id), [id, title]);
 
   const overlayStyle = useSpring({
     config: {
@@ -289,6 +290,7 @@ const Modal: FC<ModalProps> = ({
             aria-label={label}
             aria-modal
             className={modalStyle}
+            id={id}
             onClick={onModalClick}
             ref={modalElmRef}
             role="dialog"
