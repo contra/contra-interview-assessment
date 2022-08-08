@@ -9,6 +9,15 @@ describe(`Modals`, () => {
     expect(document.body).toHaveStyle({ overflowY: `hidden` });
   });
 
+  it(`should call onOpened when opened`, async () => {
+    expect.hasAssertions();
+    const onOpened = jest.fn();
+    render(<Modal animate={false} onOpened={onOpened} visible />);
+    await waitFor(() => {
+      expect(onOpened).toHaveBeenCalledTimes(1);
+    });
+  });
+
   it(`should close dialog`, async () => {
     expect.hasAssertions();
     const onCancel = jest.fn();

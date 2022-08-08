@@ -15,6 +15,7 @@ type Modals = {
   destroyOnClose: boolean;
   escapable: boolean;
   momma: boolean;
+  openedCallback: boolean;
   poppa: boolean;
 };
 
@@ -28,6 +29,7 @@ const Index: NextPage = () => {
     destroyOnClose: false,
     escapable: false,
     momma: false,
+    openedCallback: false,
     poppa: false,
   });
 
@@ -209,28 +211,50 @@ const Index: NextPage = () => {
         >
           <p>I did it my way again!!</p>
         </Modal>
-      </div>
 
-      {/* Custom Width */}
-      <ExampleBox
-        description="Maybe you want a wider or narrower modal. You can do that too while still keeping things responsive"
-        title="Custom Width"
-      >
-        <SimpleButton
-          onClick={() => updateModal('customWidth', true)}
-          type="primary"
+        {/* Custom Width */}
+        <ExampleBox
+          description="Maybe you want a wider or narrower modal. You can do that too while still keeping things responsive"
+          title="Custom Width"
         >
-          Open Wide Modal
-        </SimpleButton>
-      </ExampleBox>
-      <Modal
-        onCancel={() => updateModal('customFooter', false)}
-        title="Modal with Custom Footer"
-        visible={modals.customWidth}
-        width="1000px"
-      >
-        <p>I am about 1000px wide!</p>
-      </Modal>
+          <SimpleButton
+            onClick={() => updateModal('customWidth', true)}
+            type="primary"
+          >
+            Open Wide Modal
+          </SimpleButton>
+        </ExampleBox>
+        <Modal
+          onCancel={() => updateModal('customFooter', false)}
+          title="Modal with Custom Footer"
+          visible={modals.customWidth}
+          width="1000px"
+        >
+          <p>I am about 1000px wide!</p>
+        </Modal>
+
+        {/* On Opened */}
+        <ExampleBox
+          description="We let you know when a modal is opened as well"
+          title="Modal Opened Callback"
+        >
+          <SimpleButton
+            onClick={() => updateModal('openedCallback', true)}
+            type="primary"
+          >
+            Open Modal
+          </SimpleButton>
+        </ExampleBox>
+        <Modal
+          onCancel={() => updateModal('openedCallback', false)}
+          // eslint-disable-next-line no-alert
+          onOpened={() => alert(`Surprise 🎉`)}
+          title="Opened!"
+          visible={modals.openedCallback}
+        >
+          <p>I do stuff when I am opened</p>
+        </Modal>
+      </div>
     </div>
   );
 };

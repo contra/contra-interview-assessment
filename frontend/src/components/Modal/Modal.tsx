@@ -47,6 +47,7 @@ type ModalProps = {
   okButtonText?: string;
   onCancel?: () => void;
   onOk?: () => void;
+  onOpened?: () => void;
   title?: string;
   visible: boolean;
   width?: string;
@@ -66,6 +67,7 @@ const Modal: FC<ModalProps> = ({
   cancelButtonText = `Cancel`,
   onOk,
   onCancel,
+  onOpened,
   width,
 }: ModalProps) => {
   const id = `modal_${Date.now()}`;
@@ -174,6 +176,16 @@ const Modal: FC<ModalProps> = ({
   };
 
   useEffect(() => {
+    setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (loaded && onOpened && modalVisible) {
+      setTimeout(onOpened, animate ? 250 : 0);
+    }
+  }, [onOpened, loaded, modalVisible, animate]);
+
+  useEffect(() => {
     const maskElement = maskElmRef.current;
     const onEscape = (event: KeyboardEvent) => {
       event.stopPropagation();
@@ -243,8 +255,6 @@ const Modal: FC<ModalProps> = ({
         firstElm.addEventListener(`keydown`, onFirstElmKeyDown);
         lastElm.addEventListener('keydown', onLastElmKeyDown);
       }
-    } else {
-      setLoaded(true);
     }
 
     return () => {
