@@ -43,6 +43,7 @@ type ModalProps = {
   escapable?: boolean;
   footer?: React.ReactNode;
   header?: React.ReactNode;
+  lazy?: boolean;
   maskClosable?: boolean;
   okButtonText?: string;
   onCancel?: () => void;
@@ -62,6 +63,7 @@ const Modal: FC<ModalProps> = ({
   escapable = true,
   footer,
   header,
+  lazy = false,
   maskClosable = true,
   okButtonText = `OK`,
   cancelButtonText = `Cancel`,
@@ -281,7 +283,7 @@ const Modal: FC<ModalProps> = ({
     document.body.style.overflowY = opened ? `hidden` : `auto`;
   }, [loaded, opened]);
 
-  if (destroyed) return null;
+  if (destroyed || (lazy && !visible)) return null;
 
   return (
     <Portal>

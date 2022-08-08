@@ -61,13 +61,24 @@ describe(`Modals`, () => {
     });
   });
 
+  it(`should only add modal to dom when visible`, () => {
+    expect.hasAssertions();
+    const { rerender } = render(<Modal visible={false} />);
+    let modal = screen.queryByRole(`dialog`);
+    expect(modal).not.toBeInTheDocument();
+    rerender(<Modal visible />);
+    modal = screen.getByRole(`dialog`);
+    expect(modal).toBeInTheDocument();
+  });
+
   it(`should destroy modal when closed`, async () => {
     expect.hasAssertions();
     render(<Modal destroyOnClose visible />);
-    const mask = screen.getByTestId(`mask`);
-    fireEvent.click(mask);
+    const modal = screen.queryByRole(`dialog`);
+    const closeButton = screen.getByRole(`button`, { name: /close/i });
+    fireEvent.click(closeButton);
     await waitFor(() => {
-      expect(mask).not.toBeInTheDocument();
+      expect(modal).not.toBeInTheDocument();
     });
   });
 

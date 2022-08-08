@@ -14,6 +14,7 @@ type Modals = {
   customWidth: boolean;
   destroyOnClose: boolean;
   escapable: boolean;
+  lazy: boolean;
   momma: boolean;
   openedCallback: boolean;
   poppa: boolean;
@@ -28,6 +29,7 @@ const Index: NextPage = () => {
     customWidth: false,
     destroyOnClose: false,
     escapable: false,
+    lazy: false,
     momma: false,
     openedCallback: false,
     poppa: false,
@@ -58,6 +60,7 @@ const Index: NextPage = () => {
           </SimpleButton>
         </ExampleBox>
         <Modal
+          lazy
           onCancel={() => updateModal('basic', false)}
           onOk={() => updateModal('basic', false)}
           title="Basic Modal"
@@ -126,6 +129,27 @@ const Index: NextPage = () => {
           visible={modals.destroyOnClose}
         >
           <p>Bye Bye 😭</p>
+        </Modal>
+
+        {/* Lazy Modal */}
+        <ExampleBox
+          description="This modal is only added to the dom when it is visible"
+          title="Loads Lazily"
+        >
+          <SimpleButton
+            onClick={() => updateModal('lazy', true)}
+            type="primary"
+          >
+            Open Modal
+          </SimpleButton>
+        </ExampleBox>
+        <Modal
+          lazy
+          onCancel={() => updateModal('lazy', false)}
+          title="I'm kinda lazy 🥱"
+          visible={modals.lazy}
+        >
+          <p>I'll go back to bed when you leave</p>
         </Modal>
 
         {/* Escapable and MaskClosable */}
