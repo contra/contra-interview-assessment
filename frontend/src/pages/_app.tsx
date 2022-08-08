@@ -8,12 +8,7 @@ import '@fontsource/inter';
 import '@fontsource/inter/600.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
-  return (
-    <>
-      <Component {...pageProps} />
-      <div id="modal-root" />
-    </>
-  );
+  return <Component {...pageProps} />;
 };
 
 export default App;

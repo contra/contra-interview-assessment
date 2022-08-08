@@ -29,7 +29,6 @@ const Portal: FC<PortalProps> = ({ children }) => {
 
   useEffect(() => {
     setMounted(true);
-
     return () => setMounted(false);
   }, []);
 
