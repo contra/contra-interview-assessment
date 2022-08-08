@@ -88,7 +88,7 @@ const Modal: FC<ModalProps> = ({
       } else {
         if (maskElmRef.current) {
           const level = Number.parseInt(
-            maskElmRef.current.ariaLevel ?? `0`,
+            maskElmRef.current.getAttribute(`aria-level`) ?? `0`,
             10
           );
           maskElmRef.current.style.zIndex = `9999`;
@@ -186,18 +186,16 @@ const Modal: FC<ModalProps> = ({
     };
 
     if (maskElement && escapable) {
-      maskElement.addEventListener(`keydown`, onEscape);
+      document.addEventListener(`keydown`, onEscape);
     }
 
     if (maskElement && maskClosable) {
-      maskElement.addEventListener(`click`, onMaskClick);
+      document.addEventListener(`click`, onMaskClick);
     }
 
     return () => {
-      if (maskElement) {
-        maskElement.removeEventListener(`keydown`, onEscape);
-        maskElement.removeEventListener(`click`, onMaskClick);
-      }
+      document.removeEventListener(`keydown`, onEscape);
+      document.removeEventListener(`click`, onMaskClick);
     };
   }, [maskElmRef, loaded, escapable, maskClosable, closeModal]);
 

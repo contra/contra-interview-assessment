@@ -62,13 +62,83 @@ describe(`Modals`, () => {
     });
   });
 
-  it(`should keep focus in dialog`, async () => {
+  it(`should keep focus in dialog when tabbing`, async () => {
     expect.hasAssertions();
     render(<Modal animate={false} visible />);
     const closeButton = screen.getByRole(`button`, { name: /close/i });
     await userEvent.keyboard(`{Tab}{Tab}{Tab}{Tab}{Tab}`);
     await waitFor(() => {
       expect(closeButton).toHaveFocus();
+    });
+  });
+
+  it(`should keep focus in dialog when tabbing backwards`, async () => {
+    expect.hasAssertions();
+    render(<Modal animate={false} visible />);
+    const closeButton = screen.getByRole(`button`, { name: /close/i });
+    await userEvent.keyboard(`{Shift>}{Tab}{Tab}{Tab}{/Shift}`);
+    await waitFor(() => {
+      expect(closeButton).toHaveFocus();
+    });
+  });
+
+  it(`should go to first element in modal when tabbed from the last input element`, async () => {
+    expect.hasAssertions();
+    render(<Modal animate={false} visible />);
+    const okButton = screen.getByRole(`button`, { name: /ok/i });
+    okButton.focus();
+    await userEvent.keyboard(`{Tab}`);
+    const closeButton = screen.getByRole(`button`, { name: /close/i });
+    await waitFor(() => {
+      expect(closeButton).toHaveFocus();
+    });
+  });
+
+  it(`should go to last element in modal when back-tabbing from the first input element`, async () => {
+    expect.hasAssertions();
+    render(<Modal animate={false} visible />);
+    const closeButton = screen.getByRole(`button`, { name: /close/i });
+    closeButton.focus();
+    await userEvent.keyboard(`{Shift>}{Tab}{/Shift}`);
+    const okButton = screen.getByRole(`button`, { name: /ok/i });
+    await waitFor(() => {
+      expect(okButton).toHaveFocus();
+    });
+  });
+
+  it(`should stack dialogs`, async () => {
+    expect.hasAssertions();
+    const { rerender } = render(
+      <>
+        <Modal animate={false} title="Modal 1" visible />
+        <Modal animate={false} title="Modal 2" visible={false} />
+      </>
+    );
+    const modal1 = screen.getByRole('dialog', { name: /modal 1/i })
+      .parentElement?.parentElement;
+    expect(modal1).toHaveStyle({ zIndex: 9_999 });
+    expect(modal1).toHaveAttribute(`aria-level`, `1`);
+    rerender(
+      <>
+        <Modal animate={false} title="Modal 1" visible />
+        <Modal animate={false} title="Modal 2" visible />
+      </>
+    );
+    const modal2 = screen.getByRole('dialog', { name: /modal 2/i })
+      .parentElement?.parentElement;
+    await waitFor(() => {
+      expect(modal2).toHaveStyle({ zIndex: 10_000 });
+      expect(modal2).toHaveAttribute(`aria-level`, `2`);
+      expect(modal1).toHaveClass(`inactive`);
+    });
+    rerender(
+      <>
+        <Modal animate={false} title="Modal 1" visible />
+        <Modal animate={false} title="Modal 2" visible={false} />
+      </>
+    );
+    await waitFor(() => {
+      expect(modal1).not.toHaveClass(`inactive`);
     });
   });
 });
