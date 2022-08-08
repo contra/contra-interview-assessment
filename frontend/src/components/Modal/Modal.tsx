@@ -94,13 +94,16 @@ const Modal: FC<ModalProps> = ({
           maskElmRef.current.style.zIndex = `9999`;
           maskElmRef.current.setAttribute(`aria-level`, `1`);
           if (level) {
-            const previousMask = document.querySelector(
+            // get the previous modal and set it back to an active state
+            const previousMask: HTMLElement | null = document.querySelector(
               `.${overlayVariants.visible.split(` `)[0]}.inactive[aria-level="${
                 level - 1
               }"]`
             );
             if (previousMask) {
               previousMask.classList.remove(`inactive`);
+              // reset focus to the currently active modal
+              previousMask.focus();
             }
           }
         }
@@ -115,6 +118,7 @@ const Modal: FC<ModalProps> = ({
       }
     },
     onStart: () => {
+      // set all other modals to an inactive state
       if (opened && maskElmRef.current) {
         Array.from(
           document.querySelectorAll(`.${overlayVariants.visible.split(` `)[0]}`)
@@ -186,22 +190,26 @@ const Modal: FC<ModalProps> = ({
     };
 
     if (maskElement && escapable) {
-      document.addEventListener(`keydown`, onEscape);
+      maskElement.addEventListener(`keydown`, onEscape);
     }
 
     if (maskElement && maskClosable) {
-      document.addEventListener(`click`, onMaskClick);
+      maskElement.addEventListener(`click`, onMaskClick);
     }
 
     return () => {
-      document.removeEventListener(`keydown`, onEscape);
-      document.removeEventListener(`click`, onMaskClick);
+      if (maskElement) {
+        maskElement.removeEventListener(`keydown`, onEscape);
+        maskElement.removeEventListener(`click`, onMaskClick);
+      }
     };
   }, [maskElmRef, loaded, escapable, maskClosable, closeModal]);
 
   useEffect(() => {
     let firstElm: HTMLElement | null = null;
     let lastElm: HTMLElement | null = null;
+
+    // trap the tab to the inside of the modal
     const onFirstElmKeyDown = (event: KeyboardEvent) => {
       if (event.key === `Tab` && event.shiftKey) {
         event.preventDefault();

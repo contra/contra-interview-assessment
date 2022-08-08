@@ -3,9 +3,10 @@ import userEvent from '@testing-library/user-event';
 import Modal from './Modal';
 
 describe(`Modals`, () => {
-  it(`Should load component`, () => {
+  it(`should show modal and lock scrolling`, () => {
     render(<Modal visible />);
     expect(screen.queryByRole(`dialog`)).toBeInTheDocument();
+    expect(document.body).toHaveStyle({ overflowY: `hidden` });
   });
 
   it(`should close dialog`, async () => {
@@ -34,9 +35,8 @@ describe(`Modals`, () => {
   it(`should close modal by tapping escape`, async () => {
     expect.hasAssertions();
     render(<Modal visible />);
-    await userEvent.keyboard(`{Escape}`);
     const mask = screen.getByTestId(`mask`);
-    fireEvent.click(mask);
+    fireEvent.keyDown(mask, { key: `Escape` });
     await waitFor(() => {
       expect(mask).toHaveStyle({ opacity: 0 });
     });
@@ -139,6 +139,7 @@ describe(`Modals`, () => {
     );
     await waitFor(() => {
       expect(modal1).not.toHaveClass(`inactive`);
+      expect(modal1).toHaveStyle({ zIndex: 9_999 });
     });
   });
 });
