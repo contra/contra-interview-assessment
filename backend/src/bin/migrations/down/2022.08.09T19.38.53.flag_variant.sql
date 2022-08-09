@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS flag_variant CASCADE;
