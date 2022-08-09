@@ -7,14 +7,12 @@ import useModal from "../hooks/useModal";
 const Index: NextPage = () => {
   const { modalOpen, close, open } = useModal();
   return (
-    <div className={styles.App}>
-      <header className={styles.AppHeader}>
+    <div className={styles['app']}>
         <button onClick={open}>
           Click to Open Modal
         </button>
 
-        {modalOpen && <Modal title="sample modal" handleClose={close} isOpen={modalOpen}/>}
-      </header>
+        {modalOpen && <Modal handleClose={close} isOpen={modalOpen} title="Sample Modal"/>}
     </div>
   );
 };

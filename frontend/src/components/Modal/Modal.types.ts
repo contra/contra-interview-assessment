@@ -1,11 +1,9 @@
 export type ModalHeaderTypes = {
 	handleClose: () => void;
 	title: string;
-	header?: React.ReactNode;
 }
 
 export type ModalFooterTypes = {
-	footer?: React.ReactNode;
 	onSubmit?: () => void;
 	submitButtonText?: string
 }
@@ -22,4 +20,7 @@ export type ModalPropTypes = ModalHeaderTypes & ModalFooterTypes & ModalBodyType
 	submitButtonText?: string;
 	onClose?: () => void;
 	onOpen?: () => void;
+	header?: React.ReactNode;
+	footer?: React.ReactNode;
+	backdropClosable?: boolean
 };
