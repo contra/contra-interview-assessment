@@ -248,7 +248,7 @@ const Index: NextPage = () => {
           </SimpleButton>
         </ExampleBox>
         <Modal
-          onCancel={() => updateModal('customFooter', false)}
+          onCancel={() => updateModal('customWidth', false)}
           title="Modal with Custom Footer"
           visible={modals.customWidth}
           width="1000px"
