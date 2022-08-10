@@ -1,6 +1,6 @@
 export type ModalHeaderTypes = {
 	handleClose: () => void;
-	title: string;
+	title?: string;
 }
 
 export type ModalFooterTypes = {
@@ -14,7 +14,7 @@ export type ModalBodyTypes = {
 
 export type ModalPropTypes = ModalHeaderTypes & ModalFooterTypes & ModalBodyTypes & {
 	isOpen: boolean;
-	size?: string;
+	size?: ModalSizeTypes;
 	animate?: boolean;
 	escapable?: boolean;
 	submitButtonText?: string;
@@ -22,5 +22,12 @@ export type ModalPropTypes = ModalHeaderTypes & ModalFooterTypes & ModalBodyType
 	onOpen?: () => void;
 	header?: React.ReactNode;
 	footer?: React.ReactNode;
-	backdropClosable?: boolean
+	backdropClosable?: boolean;
+	keyboardEscapable?: boolean;
 };
+
+export enum ModalSizeTypes {
+	SMALL = 'SMALL',
+	MEDIUM = 'MEDIUM',
+	LARGE = 'LARGE'
+}

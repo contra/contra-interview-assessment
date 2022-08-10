@@ -1,7 +1,18 @@
-import React, { useEffect, useRef, useCallback, type FC } from 'react';
+import React, { 
+	useEffect, 
+	useRef, 
+	useCallback, 
+	type FC 
+} from 'react';
 import styles from './Modal.module.css';
 import ReactPortal from "../ReactPortal";
-import {ModalPropTypes, ModalHeaderTypes, ModalFooterTypes, ModalBodyTypes} from './Modal.types';
+import {
+	ModalPropTypes, 
+	ModalHeaderTypes, 
+	ModalFooterTypes, 
+	ModalBodyTypes, 
+	ModalSizeTypes
+} from './Modal.types';
 
 const Modal: FC<ModalPropTypes> = ({
 	isOpen,
@@ -12,32 +23,21 @@ const Modal: FC<ModalPropTypes> = ({
 	footer,
 	size,
 	animate = true,
-	escapable = true,
 	submitButtonText = "Submit",
 	onSubmit,
 	onClose,
 	onOpen,
-	backdropClosable = true
+	backdropClosable = true,
+	keyboardEscapable = true
   }: ModalPropTypes) => {
 
-	const wrapperRef = useRef(null);
+	const wrapperRef = useRef();
 
 	const customCloseHandler = useCallback(
 		() => {
 		handleClose();
 		onClose?.();
 	}, [onClose]);
-
-	const closeOnBackdropClick = useCallback(({target}) => {
-		if (
-			wrapperRef &&
-			wrapperRef.current &&
-			!wrapperRef.current.contains(target) &&
-			backdropClosable
-		  ) {
-			customCloseHandler();
-		  }
-	}, []);
 
 	if(!onSubmit) {
 		onSubmit = customCloseHandler;
@@ -48,12 +48,22 @@ const Modal: FC<ModalPropTypes> = ({
 			event.key === "Escape" && customCloseHandler();
 		};
 
-		document.addEventListener("keydown", closeOnEscapeKey);
-		document.addEventListener("click", closeOnBackdropClick, { capture: true });
+		const closeOnBackdropClick = (event : MouseEvent) => {
+			if (
+				wrapperRef &&
+				wrapperRef.current &&
+				!wrapperRef.current.contains(event.target)
+			  ) {
+				customCloseHandler();
+			  }
+		}
+
+		keyboardEscapable && document.addEventListener("keydown", closeOnEscapeKey);
+		backdropClosable && document.addEventListener("click", closeOnBackdropClick, { capture: true });
 
 		return () => {
-			document.removeEventListener("keydown", closeOnEscapeKey, );
-			document.removeEventListener("click", closeOnBackdropClick);
+			keyboardEscapable && document.removeEventListener("keydown", closeOnEscapeKey, );
+			backdropClosable && document.removeEventListener("click", closeOnBackdropClick);
 		};
 	}, [handleClose]);
 
@@ -69,7 +79,7 @@ const Modal: FC<ModalPropTypes> = ({
 					<div ref={wrapperRef} className={styles['modal']}>
 						<div className={styles['modalContent']}>
 							{header ?? <ModalHeader title={title} handleClose={customCloseHandler} />}
-							<ModalBody children={children} />
+							{children && <ModalBody children={children} />}
 							{footer ?? <ModalFooter onSubmit={onSubmit} submitButtonText={submitButtonText} />}
 						</div>
 					</div>
@@ -113,10 +123,8 @@ const ModalFooter: FC<ModalFooterTypes> = ({
 
 const ModalBody: FC<ModalBodyTypes> = ({children}: ModalBodyTypes) => (
 	<div className={styles['body']}>
-		{children ?? (<p className={styles['subtitle']}>{loremIpsum}</p>)}
+		{children}
 	</div>
 );
-
-const loremIpsum = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius laboriosam labore, totam expedita voluptates tempore asperiores sequi, alias cum veritatis, minima dolor iste similique eos id. Porro, culpa? Officiis, placeat?`;
 
 export default Modal;
