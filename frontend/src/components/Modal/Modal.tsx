@@ -31,7 +31,7 @@ const Modal: FC<ModalPropTypes> = ({
 	keyboardEscapable = true
   }: ModalPropTypes) => {
 
-	const wrapperRef = useRef();
+	const wrapperRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
 	const customCloseHandler = useCallback(
 		() => {
@@ -52,7 +52,7 @@ const Modal: FC<ModalPropTypes> = ({
 			if (
 				wrapperRef &&
 				wrapperRef.current &&
-				!wrapperRef.current.contains(event.target)
+				!wrapperRef.current.contains(event.target as Node)
 			  ) {
 				customCloseHandler();
 			  }

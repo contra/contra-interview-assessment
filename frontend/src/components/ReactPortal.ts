@@ -1,6 +1,9 @@
 import { createPortal } from 'react-dom';
-import { useState, useLayoutEffect } from 'react';
-
+import React, { useState, useLayoutEffect } from 'react';
+type ReactPortalTypes = {
+  children?: React.ReactNode;
+  wrapperId?: string
+} 
 function createWrapperAndAppendToBody(wrapperId: string) {
     const wrapperElement = document.createElement('div');
     wrapperElement.setAttribute("id", wrapperId);
@@ -8,8 +11,8 @@ function createWrapperAndAppendToBody(wrapperId: string) {
     return wrapperElement;
 }
 
-function ReactPortal({ children, wrapperId = "react-portal-wrapper" }) {
-    const [wrapperElement, setWrapperElement] = useState(null);
+function ReactPortal({ children, wrapperId = "react-portal-wrapper" }: ReactPortalTypes) {
+    const [wrapperElement, setWrapperElement] = useState(null as unknown as Element | DocumentFragment);
   
     useLayoutEffect(() => {
       let element = document.getElementById(wrapperId);
@@ -24,7 +27,7 @@ function ReactPortal({ children, wrapperId = "react-portal-wrapper" }) {
     
       return () => {
         // delete the programatically created element
-        if (systemCreated && element.parentNode) {
+        if (systemCreated && element?.parentNode) {
           element.parentNode.removeChild(element);
         }
       }
