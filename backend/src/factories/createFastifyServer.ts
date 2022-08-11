@@ -1,20 +1,15 @@
-import path from 'path';
+// eslint-disable-next-line import/no-unassigned-import
+import "reflect-metadata";
 import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from 'apollo-server-fastify';
 import fastify from 'fastify';
-import { importSchema } from 'graphql-import';
-import { makeExecutableSchema } from 'graphql-tools';
-// import type { CommonQueryMethodsType } from 'slonik';
-// @ts-ignore
-import { resolvers } from '../schema/resolvers';
+import { buildSchemaSync } from "type-graphql";
+import { SampleResolver } from '../schema/resolvers/sampleResolver';
 
 export const createFastifyServer = async (pool: PrismaClient) => {
-  const executableSchema = makeExecutableSchema({
-    inheritResolversFromInterfaces: true,
-    resolvers,
-    resolverValidationOptions: { requireResolversForResolveType: 'ignore' },
-    typeDefs: importSchema(path.resolve(__dirname, '../schema/schema.graphql')),
-  });
+  const schema = buildSchemaSync({
+    resolvers: [SampleResolver]
+  })
 
   const app = fastify();
 
@@ -24,7 +19,7 @@ export const createFastifyServer = async (pool: PrismaClient) => {
       reply,
       request,
     }),
-    schema: executableSchema,
+    schema,
   });
 
   await graphQLServer.start();
