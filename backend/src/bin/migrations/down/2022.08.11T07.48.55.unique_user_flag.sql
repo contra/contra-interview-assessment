@@ -1,1 +1,1 @@
-DROP  INDEX uq_user_flag;
+ALTER TABLE user_flag DROP CONSTRAINT uq_user_flag;

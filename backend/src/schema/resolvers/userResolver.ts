@@ -129,7 +129,7 @@ export class UserResolver {
     }
 
     @Mutation(() => [User])
-    async updateUsersFlag(@Arg("data") updateData: AddUsersFlagInput, @Ctx() context: ResolverContext): Promise<User[]> {
+    async addUsersFlag(@Arg("data") updateData: AddUsersFlagInput, @Ctx() context: ResolverContext): Promise<User[]> {
         const { userIds, flagId, variantId, isOn } = updateData;
         await context.pool.flag.findUniqueOrThrow({
             where: {
