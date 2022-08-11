@@ -1,5 +1,5 @@
-import { DatabasePoolType } from 'slonik';
+import { PrismaClient } from "@prisma/client";
 
 export type ResolverContext = {
-  readonly pool: DatabasePoolType;
+  readonly pool: PrismaClient;
 };
