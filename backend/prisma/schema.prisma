@@ -58,5 +58,6 @@ model UserFlag {
   userAccount User         @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_flag_user")
   flagVariant FlagVariant? @relation(fields: [variantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_flag_variant")
 
+  @@unique([userId, flagId], name: "uqUserFlag")
   @@map("user_flag")
 }
