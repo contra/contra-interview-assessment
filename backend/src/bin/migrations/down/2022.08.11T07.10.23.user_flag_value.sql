@@ -1,0 +1,1 @@
+ALTER TABLE user_flag DROP COLUMN is_on;

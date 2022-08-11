@@ -1,14 +1,14 @@
 /* eslint-disable fp/no-class */
-import { Query, Resolver, Root, Arg, Ctx, FieldResolver } from "type-graphql";
+import { Query, Resolver, Root, Arg, Ctx, FieldResolver, Mutation } from "type-graphql";
 import { ResolverContext } from "../../ResolverContextType";
-import { User, Flag, SearchUsersInput } from '../types';
+import { User, Flag, SearchUsersInput, UpdateUserFlagInput } from '../types';
 
 @Resolver(() => User)
 export class UserResolver {
     @FieldResolver(() => [Flag], { nullable: true })
     async flags(@Root() user: User, @Ctx() context: ResolverContext): Promise<Flag[] | null> {
         const flagIds = await context.pool.userFlag.findMany({
-            select: { flagId: true, variantId: true },
+            select: { flagId: true, isOn: true, variantId: true },
             where: {
                 userId: user.id
             }
@@ -33,7 +33,9 @@ export class UserResolver {
             }
         })).reduce((previous, current) => ({ ...previous, [current.flagId]: current.variantName }), {});
 
-        return flags.map((flag) => ({ ...flag, variant: variants[flag.id] }));
+        const userFlagValues: Record<number, boolean | null> = flagIds.reduce((previous, current) => ({ ...previous, [current.flagId]: current.isOn }), {});
+
+        return flags.map((flag) => ({ ...flag, isOn: userFlagValues[flag.id] ?? flag.isOn, variant: variants[flag.id] }));
     }
 
     @Query(() => [User])
@@ -88,5 +90,34 @@ export class UserResolver {
             orderBy: orderBy ?? { id: "asc" },
             skip: offset,
         });
+    }
+
+    @Mutation(() => User)
+    async updateUserFlag(@Arg("data") updateData: UpdateUserFlagInput, @Ctx() context: ResolverContext): Promise<User> {
+        const { userId, flagId, variantId, isOn } = updateData;
+        const userFlag = await context.pool.userFlag.findFirstOrThrow({
+            where: {
+                flagId,
+                userId
+            }
+        });
+        await context.pool.userFlag.update({
+            data: {
+                isOn,
+                variantId
+            },
+            where: {
+                id: userFlag.id
+            }
+        });
+
+        const user = await context.pool.user.findFirst({
+            where: {
+                id: userId
+            }
+        });
+        if (!user) throw new Error(`Error reading data for user ${userId}`);
+
+        return user;
     }
 }

@@ -1,0 +1,4 @@
+-- ALLOW OVERRIDE FEATURE FLAG VALUE BY USER
+
+ALTER TABLE user_flag ADD COLUMN 
+    is_on boolean;
