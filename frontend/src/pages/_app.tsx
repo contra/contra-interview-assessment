@@ -1,4 +1,4 @@
-import { AppProps } from 'next/app';
+import { type AppProps } from 'next/app';
 import 'uikit/dist/css/uikit.min.css';
 import './app.css';
 

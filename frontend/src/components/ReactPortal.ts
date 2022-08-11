@@ -1,5 +1,7 @@
+import type React from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
-import React, { useState, useLayoutEffect } from 'react';
+
 type ReactPortalTypes = {
   children?: React.ReactNode;
   wrapperId?: string
@@ -11,8 +13,8 @@ function createWrapperAndAppendToBody(wrapperId: string) {
     return wrapperElement;
 }
 
-function ReactPortal({ children, wrapperId = "react-portal-wrapper" }: ReactPortalTypes) {
-    const [wrapperElement, setWrapperElement] = useState(null as unknown as Element | DocumentFragment);
+const ReactPortal = ({ children, wrapperId = "react-portal-wrapper" }: ReactPortalTypes) => {
+    const [wrapperElement, setWrapperElement] = useState(null as unknown as DocumentFragment | Element);
   
     useLayoutEffect(() => {
       let element = document.getElementById(wrapperId);
@@ -23,6 +25,7 @@ function ReactPortal({ children, wrapperId = "react-portal-wrapper" }: ReactPort
         systemCreated = true;
         element = createWrapperAndAppendToBody(wrapperId);
       }
+
       setWrapperElement(element);
     
       return () => {

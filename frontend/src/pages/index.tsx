@@ -1,9 +1,10 @@
-import { NextPage } from 'next';
+
+import { type NextPage } from 'next';
 import React, { useState } from 'react';
-import styles from './index.module.css';
-import useModal from '../hooks/useModal';
 import Modal from '../components/Modal/Modal';
 import { ModalSizeTypes } from '../components/Modal/Modal.types';
+import useModal from '../hooks/useModal';
+import styles from './index.module.css';
 
 const loremIpsum = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius laboriosam labore, totam expedita voluptates tempore asperiores sequi, alias cum veritatis, minima dolor iste similique eos id. Porro, culpa? Officiis, placeat?`;
 
@@ -15,7 +16,7 @@ const Index: NextPage = () => {
 
   const [customTitle, setCustomTitle] = useState('');
   const [customSubmitText, setCustomSubmitText] = useState('');
-
+  const [customCancelText, setCustomCancelText] = useState('');
   const [backdropClosable, setBackdropClosable] = useState(true);
   const [keyboardEscapable, setKeyboardEscapable] = useState(true);
   const [animate, setAnimate] = useState(true);
@@ -44,8 +45,8 @@ const Index: NextPage = () => {
           <h3
             style={{
               background: 'gainsboro',
-              textAlign: 'center',
               padding: 10,
+              textAlign: 'center',
             }}
           >
             Custom Header JSX
@@ -53,31 +54,16 @@ const Index: NextPage = () => {
         );
         props = { header: customHeaderJSX };
         break;
-      case 'customBody':
-        const customBodyJSX = (
-          <div
-            style={{
-              background: 'gainsboro',
-              textAlign: 'center',
-              height: '100px',
-              paddingTop: '25px',
-            }}
-          >
-            This is Custom Body JSX passed from props
-          </div>
-        );
-        props = { body: customBodyJSX };
-        break;
       case 'customFooter':
         const customFooterJSX = (
           <div
             style={{
+              alignItems: 'center',
               background: 'whitesmoke',
-              textAlign: 'right',
-              padding: 10,
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'center',
+              padding: 10,
+              textAlign: 'right',
             }}
           >
             <div>Custom Footer JSX </div>
@@ -91,34 +77,50 @@ const Index: NextPage = () => {
       case 'submitButtonText':
         props = { submitButtonText: customSubmitText };
         break;
+      case 'cancelButtonText':
+        props = { cancelButtonText: customCancelText };
+        break;
       case 'callbackAfterOpen':
         props = {
           onOpen: () => {
-            setTimeout(() => alert('I am called after Modal Open'), 1000);
+            setTimeout(() => alert('I am called after Modal Open'), 1_000);
           },
         };
         break;
       case 'callbackAfterClose':
         props = {
           onClose: () => {
-            setTimeout(() => alert('I am called after Modal Close'), 1000);
+            setTimeout(() => alert('I am called after Modal Close'), 1_000);
           },
         };
         break;
       case 'callbackAfterSubmit':
-        props = { onSubmit: () => alert('I am called after Modal Submit') };
+        props = {
+          onSubmit: () => {
+            closeModal();
+            setTimeout(() => alert('I am called after Modal Submit'), 1_000);
+          }
+        };
+        break;
+      case 'callbackAfterCancel':
+        props = {
+          onCancel: () => {
+            closeModal();
+            setTimeout(() => alert('I am called after Modal Cancel'), 1_000);
+          }
+        };
         break;
       case 'backdropClosable':
-        props = { backdropClosable: backdropClosable };
+        props = { backdropClosable };
         break;
       case 'keyboardEscapable':
-        props = { keyboardEscapable: keyboardEscapable };
+        props = { keyboardEscapable };
         break;
       case 'customSize':
         props = { size: modalSize };
         break;
       case 'animatable':
-        props = { animate: animate };
+        props = { animate };
         break;
 
       default:
@@ -180,12 +182,12 @@ const Index: NextPage = () => {
               <td>
                 <label>
                   <input
-                    type="text"
-                    name="custom title"
-                    value={customTitle}
-                    placeholder="Enter here your Custom Text for Title"
-                    onChange={(event) => setCustomTitle(event.target.value)}
                     className={styles['input']}
+                    name="custom title"
+                    onChange={(event) => setCustomTitle(event.target.value)}
+                    placeholder="Enter here your Custom Text for Title"
+                    type="text"
+                    value={customTitle}
                   />
                 </label>
                 <br />
@@ -205,19 +207,6 @@ const Index: NextPage = () => {
                 <div
                   className={styles['button']}
                   onClick={() => getModalPropsByFeature('customHeader')}
-                >
-                  Open Modal
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>body</td>
-              <td>custom header for modal (optional)</td>
-              <td>React.ReactNode</td>
-              <td>
-                <div
-                  className={styles['button']}
-                  onClick={() => getModalPropsByFeature('customBody')}
                 >
                   Open Modal
                 </div>
@@ -246,17 +235,43 @@ const Index: NextPage = () => {
               <td>
                 <label>
                   <input
-                    type="text"
-                    name="custom submit"
-                    value={customSubmitText}
-                    onChange={(event) => setCustomSubmitText(event.target.value)}
                     className={styles['input']}
+                    name="custom submit"
+                    onChange={(event) => setCustomSubmitText(event.target.value)}
                     placeholder="Enter here Custom Text for Submit button"
+                    type="text"
+                    value={customSubmitText}
                   />
                 </label>
                 <div
                   className={styles['button']}
                   onClick={() => getModalPropsByFeature('submitButtonText')}
+                >
+                  Open Modal
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>cancelButtonText</td>
+              <td>
+                custom text for cancel button (default value : "Cancel")
+                (optional)
+              </td>
+              <td>string</td>
+              <td>
+                <label>
+                  <input
+                    className={styles['input']}
+                    name="custom cancel"
+                    onChange={(event) => setCustomCancelText(event.target.value)}
+                    placeholder="Enter here Custom Text for Cancel button"
+                    type="text"
+                    value={customCancelText}
+                  />
+                </label>
+                <div
+                  className={styles['button']}
+                  onClick={() => getModalPropsByFeature('cancelButtonText')}
                 >
                   Open Modal
                 </div>
@@ -270,6 +285,19 @@ const Index: NextPage = () => {
                 <div
                   className={styles['button']}
                   onClick={() => getModalPropsByFeature('callbackAfterSubmit')}
+                >
+                  Open Modal
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>onCancel</td>
+              <td>callback Function to run after cancel click (optional)</td>
+              <td>function</td>
+              <td>
+                <div
+                  className={styles['button']}
+                  onClick={() => getModalPropsByFeature('callbackAfterCancel')}
                 >
                   Open Modal
                 </div>
@@ -312,10 +340,10 @@ const Index: NextPage = () => {
                 <label>
                   Should modal close on clicking outside?
                   <input
-                    type="checkbox"
-                    name="backdropClosable"
                     checked={backdropClosable}
+                    name="backdropClosable"
                     onChange={(event) => setBackdropClosable(event.target.checked)}
+                    type="checkbox"
                   />
                 </label>
                 <div
@@ -337,10 +365,10 @@ const Index: NextPage = () => {
                 <label>
                   Should modal close on clicking Esc key?
                   <input
-                    type="checkbox"
-                    name="keyboardEscapable"
                     checked={keyboardEscapable}
+                    name="keyboardEscapable"
                     onChange={(event) => setKeyboardEscapable(event.target.checked)}
+                    type="checkbox"
                   />
                 </label>
                 <div
@@ -360,8 +388,8 @@ const Index: NextPage = () => {
                   Select a size for modal
                   <select
                     className={styles['selectSize']}
-                    value={modalSize}
                     onChange={handleModalSizeChange}
+                    value={modalSize}
                   >
                     <option value={ModalSizeTypes.SMALL}>
                       {ModalSizeTypes.SMALL}
@@ -390,10 +418,10 @@ const Index: NextPage = () => {
                 <label>
                   Should modal animate?
                   <input
-                    type="checkbox"
-                    name="animate"
                     checked={animate}
+                    name="animate"
                     onChange={(event) => setAnimate(event.target.checked)}
+                    type="checkbox"
                   />
                 </label>
                 <br />
@@ -413,15 +441,11 @@ const Index: NextPage = () => {
 
   return (
     <>
-      <div className={!isModalOpen ? styles['App'] : styles['AppScrollLocked']}>
+      <div
+        className={!isModalOpen ? styles['App'] : styles['AppScrollLocked']}>
         {renderApiDocumentation()}
       </div>
-      {isModalOpen &&
-        <Modal
-          isOpen={isModalOpen}
-          {...modalProps}>
-          {loremIpsum}
-        </Modal>}
+      {isModalOpen && <Modal isOpen={isModalOpen} {...modalProps}>{loremIpsum}</Modal>}
     </>
   );
 };

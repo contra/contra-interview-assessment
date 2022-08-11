@@ -1,38 +1,34 @@
+import type React from "react";
+
 export type ModalHeaderTypes = {
 	handleClose: () => void;
 	title?: string;
-  };
-  
-  export type ModalFooterTypes = {
+};
+
+export type ModalFooterTypes = {
+	cancelButtonText?: string;
+	onCancel?: () => void;
 	onSubmit?: () => void;
 	submitButtonText?: string;
-	closeButtonText?: string;
-  };
-  
-  export type ModalBodyTypes = {
-	children?: React.ReactNode;
-  };
-  
-  export type ModalPropTypes = ModalHeaderTypes &
-	ModalFooterTypes &
-	ModalBodyTypes & {
-	  isOpen: boolean;
-	  size?: ModalSizeTypes;
-	  animate?: boolean;
-	  escapable?: boolean;
-	  submitButtonText?: string;
-	  onClose?: () => void;
-	  onOpen?: () => void;
-	  header?: React.ReactNode;
-	  body?: React.ReactNode;
-	  footer?: React.ReactNode;
-	  backdropClosable?: boolean;
-	  keyboardEscapable?: boolean;
+};
+
+export type ModalPropertyTypes = ModalFooterTypes & ModalHeaderTypes & {
+		animate?: boolean;
+		backdropClosable?: boolean;
+		children?: React.ReactNode;
+		escapable?: boolean;
+		footer?: React.ReactNode;
+		header?: React.ReactNode;
+		isOpen: boolean;
+		keyboardEscapable?: boolean;
+		onClose?: () => void;
+		onOpen?: () => void;
+		size?: ModalSizeTypes;
+		submitButtonText?: string;
 	};
-  
-  export enum ModalSizeTypes {
-	SMALL = 'SMALL',
-	MEDIUM = 'MEDIUM',
+
+export enum ModalSizeTypes {
 	LARGE = 'LARGE',
-  }
-  
+	MEDIUM = 'MEDIUM',
+	SMALL = 'SMALL'
+}
