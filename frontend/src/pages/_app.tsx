@@ -1,8 +1,14 @@
-/* eslint-disable canonical/filename-match-exported */
-import { type AppProps } from 'next/app';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from '../styles/global';
+import { theme } from '../styles/theme';
 
-const App = ({ Component, pageProps }: AppProps) => {
-  return <Component {...pageProps} />;
-};
-
-export default App;
+export default function App({ Component, pageProps }) {
+  return (
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </>
+  );
+}
