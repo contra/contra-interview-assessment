@@ -3,39 +3,40 @@ import { Query, Resolver, Root, Arg, Ctx, FieldResolver, Mutation } from "type-g
 import { ResolverContext } from "../../ResolverContextType";
 import { User, Flag, SearchUsersInput, UpdateUserFlagInput, AddUsersFlagInput } from '../types';
 
+type FlagsQueryResult = {
+    id: number;
+    flag_name: string;
+    env: string;
+    description: string | null;
+    created_at: string | null;
+    updated_at: string | null;
+    is_on: boolean;
+    variant_name: string | null;
+};
+
 @Resolver(() => User)
 export class UserResolver {
     @FieldResolver(() => [Flag], { nullable: true })
     async flags(@Root() user: User, @Ctx() context: ResolverContext): Promise<Flag[] | null> {
-        const flagIds = await context.pool.userFlag.findMany({
-            select: { flagId: true, isOn: true, variantId: true },
-            where: {
-                userId: user.id
-            }
-        });
+        const result: FlagsQueryResult[] = await context.pool.$queryRaw`
+            SELECT  f.id, f.flag_name, f.env, f.description, f.created_at, f.updated_at,
+                    COALESCE(uf.is_on, f.is_on) is_on, fv.variant_name
+            FROM    user_account u
+            JOIN    user_flag uf ON uf.user_id = u.id
+            JOIN    flag f ON f.id = uf.flag_id
+            LEFT JOIN flag_variant fv ON fv.id = uf.variant_id
+            WHERE   u.id = ${user.id}`;
 
-        const flags = await context.pool.flag.findMany({
-            include: {
-                flagVariants: true
-            },
-            where: {
-                id: { in: flagIds.map((flag) => flag.flagId) }
-            }
-        });
-
-        const variants: Record<number, string> = (await context.pool.flagVariant.findMany({
-            select: {
-                flagId: true,
-                variantName: true
-            },
-            where: {
-                id: { in: flagIds.filter((flag) => Boolean(flag.variantId)).map((flag) => flag.variantId) as number[] }
-            }
-        })).reduce((previous, current) => ({ ...previous, [current.flagId]: current.variantName }), {});
-
-        const userFlagValues: Record<number, boolean | null> = flagIds.reduce((previous, current) => ({ ...previous, [current.flagId]: current.isOn }), {});
-
-        return flags.map((flag) => ({ ...flag, isOn: userFlagValues[flag.id] ?? flag.isOn, variant: variants[flag.id] }));
+        return result?.map((row: FlagsQueryResult) => ({
+            createdAt: row.created_at ? new Date(row.created_at) : null,
+            description: row.description,
+            env: row.env,
+            flagName: row.flag_name,
+            id: row.id,
+            isOn: row.is_on,
+            updatedAt: row.updated_at ? new Date(row.updated_at) : null,
+            variant: row.variant_name
+        }));
     }
 
     @Query(() => [User])
