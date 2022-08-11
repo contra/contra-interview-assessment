@@ -66,6 +66,9 @@ export class Flag extends DatabaseModel implements Partial<DatabaseFlag> {
 
     @Field(() => String)
     env?: string | null | undefined;
+
+    @Field(() => String)
+    variant?: string | null | undefined;
 }
 
 @InputType()

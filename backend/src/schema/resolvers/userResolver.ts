@@ -7,18 +7,33 @@ import { User, Flag, SearchUsersInput } from '../types';
 export class UserResolver {
     @FieldResolver(() => [Flag], { nullable: true })
     async flags(@Root() user: User, @Ctx() context: ResolverContext): Promise<Flag[] | null> {
-        const flagIds = Array.from(new Set((await context.pool.userFlag.findMany({
-            select: { flagId: true },
+        const flagIds = await context.pool.userFlag.findMany({
+            select: { flagId: true, variantId: true },
             where: {
                 userId: user.id
             }
-        }))?.map((userFlag) => userFlag.flagId)));
+        });
 
-        return context.pool.flag.findMany({
+        const flags = await context.pool.flag.findMany({
+            include: {
+                flagVariants: true
+            },
             where: {
-                id: { in: flagIds }
+                id: { in: flagIds.map((flag) => flag.flagId) }
             }
         });
+
+        const variants: Record<number, string> = (await context.pool.flagVariant.findMany({
+            select: {
+                flagId: true,
+                variantName: true
+            },
+            where: {
+                id: { in: flagIds.filter((flag) => Boolean(flag.variantId)).map((flag) => flag.variantId) as number[] }
+            }
+        })).reduce((previous, current) => ({ ...previous, [current.flagId]: current.variantName }), {});
+
+        return flags.map((flag) => ({ ...flag, variant: variants[flag.id] }));
     }
 
     @Query(() => [User])

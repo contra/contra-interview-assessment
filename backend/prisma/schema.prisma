@@ -24,7 +24,7 @@ model Flag {
 model FlagVariant {
   id          Int        @id @default(autoincrement())
   flagId      Int        @map("flag_id")
-  variantName String     @map("flag_name")
+  variantName String     @map("variant_name")
   description String?
   createdAt   DateTime?  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime?  @default(now()) @map("updated_at") @db.Timestamptz(6)
