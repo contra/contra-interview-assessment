@@ -1,17 +1,12 @@
-import React, { 
-	useEffect, 
-	useRef, 
-	useCallback, 
-	type FC 
-} from 'react';
+import React, { useEffect, useRef, useCallback, FC } from 'react';
+import ReactPortal from '../ReactPortal';
 import styles from './Modal.module.css';
-import ReactPortal from "../ReactPortal";
+
 import {
-	ModalPropTypes, 
-	ModalHeaderTypes, 
-	ModalFooterTypes, 
-	ModalBodyTypes, 
-	ModalSizeTypes
+	ModalPropTypes,
+	ModalHeaderTypes,
+	ModalFooterTypes,
+	ModalBodyTypes,
 } from './Modal.types';
 
 const Modal: FC<ModalPropTypes> = ({
@@ -19,68 +14,91 @@ const Modal: FC<ModalPropTypes> = ({
 	handleClose,
 	title,
 	header,
+	body,
 	children,
 	footer,
 	size,
 	animate = true,
-	submitButtonText = "Submit",
+	submitButtonText = 'Submit',
 	onSubmit,
 	onClose,
 	onOpen,
 	backdropClosable = true,
-	keyboardEscapable = true
-  }: ModalPropTypes) => {
-
+	keyboardEscapable = true,
+}: ModalPropTypes) => {
 	const wrapperRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-
-	const customCloseHandler = useCallback(
-		() => {
+	const customCloseHandler = useCallback(() => {
 		handleClose();
 		onClose?.();
 	}, [onClose]);
 
-	if(!onSubmit) {
+	if (!onSubmit) {
 		onSubmit = customCloseHandler;
 	}
 
 	useEffect(() => {
 		const closeOnEscapeKey = (event: KeyboardEvent) => {
-			event.key === "Escape" && customCloseHandler();
+			event.key === 'Escape' && customCloseHandler();
 		};
 
-		const closeOnBackdropClick = (event : MouseEvent) => {
+		const closeOnBackdropClick = (event: MouseEvent) => {
 			if (
 				wrapperRef &&
 				wrapperRef.current &&
 				!wrapperRef.current.contains(event.target as Node)
-			  ) {
+			) {
 				customCloseHandler();
-			  }
-		}
+			}
+		};
 
-		keyboardEscapable && document.addEventListener("keydown", closeOnEscapeKey);
-		backdropClosable && document.addEventListener("click", closeOnBackdropClick, { capture: true });
+		keyboardEscapable && document.addEventListener('keydown', closeOnEscapeKey);
+		backdropClosable &&
+			document.addEventListener('click', closeOnBackdropClick, {
+				capture: true,
+			});
 
 		return () => {
-			keyboardEscapable && document.removeEventListener("keydown", closeOnEscapeKey, );
-			backdropClosable && document.removeEventListener("click", closeOnBackdropClick);
+			keyboardEscapable &&
+				document.removeEventListener('keydown', closeOnEscapeKey);
+			backdropClosable &&
+				document.removeEventListener('click', closeOnBackdropClick);
 		};
 	}, [handleClose]);
 
 	useEffect(() => {
 		isOpen && onOpen?.();
-	}, [isOpen, onOpen])
+	}, [isOpen, onOpen]);
+
+	const getModalSize = (size: string = '') => {
+		const sizeMap = {
+			SMALL: '400px',
+			MEDIUM: '550px',
+			LARGE: '800px',
+		};
+		return sizeMap?.[size] ?? '550px';
+	};
 
 	return (
 		<ReactPortal wrapperId="react-portal-modal-container">
 			<div className={styles['overlay']} />
 			<div className={styles['windowContainer']}>
 				<div className={styles['modalContainer']}>
-					<div ref={wrapperRef} className={styles['modal']}>
-						<div className={styles['modalContent']}>
-							{header ?? <ModalHeader title={title} handleClose={customCloseHandler} />}
-							{children && <ModalBody children={children} />}
-							{footer ?? <ModalFooter onSubmit={onSubmit} submitButtonText={submitButtonText} />}
+					<div
+						ref={wrapperRef}
+						style={{ width: getModalSize(size) }}
+						className={styles['modal']}
+					>
+						<div data-testid="modal" className={styles['modalContent']}>
+							{header ?? (
+								<ModalHeader title={title} handleClose={customCloseHandler} />
+							)}
+							{body ?? (children && <ModalBody children={children} />)}
+							{footer ?? (
+								<ModalFooter
+									onSubmit={onSubmit}
+									submitButtonText={submitButtonText}
+								/>
+							)}
 						</div>
 					</div>
 				</div>
@@ -90,41 +108,53 @@ const Modal: FC<ModalPropTypes> = ({
 };
 
 const ModalHeader: FC<ModalHeaderTypes> = ({
-	title, 
-	handleClose 
-	}: ModalHeaderTypes) => {
-	return  (
-		<div className={styles['header']}>
-			{title}
+	title,
+	handleClose,
+}: ModalHeaderTypes) => {
+	return (
+		<div tabIndex={1} data-testid="header-title" className={styles['header']}>
+			{title === '' ? 'Modal title' : title}
 			<button
 				aria-label="close"
-				className="uk-modal-close-default"
+				className={styles['closeButton']}
 				onClick={handleClose}
-				type="button">
-			</button>
+				type="button"
+				data-testid="close-button"
+			></button>
 		</div>
 	);
-}
+};
 
 const ModalFooter: FC<ModalFooterTypes> = ({
-	onSubmit, 
-	submitButtonText
-	} :ModalFooterTypes) => (
+	onSubmit,
+	submitButtonText = 'Submit',
+	closeButtonText = 'Cancel',
+}: ModalFooterTypes) => (
 	<div className={styles['footer']}>
 		<button
+			tabIndex={3}
+			className={styles['button']}
 			aria-label="submit"
 			onClick={onSubmit}
 			type="button"
-			className='uk-button uk-button-danger uk-button-small'>
-		{submitButtonText}
+		>
+			{submitButtonText}
+		</button>
+		&nbsp; &nbsp;
+		<button
+			tabIndex={4}
+			className={styles['button']}
+			aria-label="submit"
+			onClick={onSubmit}
+			type="button"
+		>
+			{closeButtonText}
 		</button>
 	</div>
 );
 
-const ModalBody: FC<ModalBodyTypes> = ({children}: ModalBodyTypes) => (
-	<div className={styles['body']}>
-		{children}
-	</div>
+const ModalBody: FC<ModalBodyTypes> = ({ children }: ModalBodyTypes) => (
+	<div className={styles['body']}>{children}</div>
 );
 
 export default Modal;

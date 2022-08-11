@@ -1,4 +1,45 @@
-.app {
-    text-align: center;
-    margin-top: 20px;
+.App {
+    margin: 1rem 1rem;
+}
+
+.AppScrollLocked {
+    margin: 1rem 1rem;
+    position: fixed;
+    overflow: hidden;
+    /* width: 100%; */
+}
+
+.button {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.input {
+    width: 90%;
+    padding: 10px;
+    font-size: 16px !important;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    border: 1px solid gray;
+    background: inherit;
+    color: #686868;
+}
+
+.input:focus-visible {
+    outline: 1px solid gainsboro !important;
+}
+
+.selectSize {
+    padding: 5px;
+    border: 1px solid gainsboro;
+    margin: 0 10px;
+    border-radius: 5px;
+    padding-right: 10px;
+    font-size: 14px;
 }

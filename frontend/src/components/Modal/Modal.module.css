@@ -1,7 +1,6 @@
 .modal {
-    max-width: 600px;
+    width: 550px;
     max-height: calc(100% - 96px);
-    padding: 20px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -12,15 +11,16 @@
     -ms-flex-direction: column;
     flex-direction: column;
     -webkit-box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
-        0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+      0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
     box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
-        0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+      0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
     border-radius: 4px;
     background-color: #fff;
     text-align: left;
-}
-
-.modalContainer {
+    margin: 10px;
+  }
+  
+  .modalContainer {
     opacity: 1;
     -webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     -o-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -36,9 +36,9 @@
     justify-content: center;
     height: 100%;
     outline: none;
-}
-
-.overlay {
+  }
+  
+  .overlay {
     opacity: 1;
     -webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     -o-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -53,11 +53,11 @@
     touch-action: none;
     background-color: rgba(0, 0, 0, 0.5);
     -webkit-tap-highlight-color: transparent;
-}
-
-.windowContainer {
+  }
+  
+  .windowContainer {
     text-align: center;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
@@ -67,22 +67,48 @@
     -webkit-animation: fade-in 200ms 0s ease-in-out forwards;
     animation: fade-in 200ms 0s ease-in-out forwards;
     z-index: 100;
-}
-
-.subtitle {
+  }
+  
+  .subtitle {
     margin: 0;
     text-align: center;
     font-weight: bold;
-}
-
-.header {
+  }
+  .header {
+    background: whitesmoke;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  .body {
+    padding: 20px;
+  }
+  .footer {
     text-align: center;
     padding: 1rem 0rem;
-    margin: 1rem 0rem;
-}
-
-.footer {
-    text-align: center;
-    padding: 1rem 0rem;
-    margin: 1rem 0rem;
-}
+    background: whitesmoke;
+  }
+  .button {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px,
+      rgb(60 64 67 / 15%) 0px 1px 3px 1px;
+    font-size: 16px;
+    padding: 7px 14px;
+  }
+  
+  .closeButton {
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid gray;
+  }
+  
+  .closeButton:after {
+    content: '\00d7';
+  }
+  
