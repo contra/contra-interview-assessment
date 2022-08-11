@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_CONNECTION_STRING")
+}
+
+model Flag {
+  id           Int           @id @default(autoincrement())
+  flagName     String        @map("flag_name")
+  isOn         Boolean       @map("is_on")
+  env          String?
+  description  String?
+  createdAt    DateTime?     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime?     @default(now()) @map("updated_at") @db.Timestamptz(6)
+  flagVariants FlagVariant[]
+  userFlags    UserFlag[]
+
+  @@map("flag")
+}
+
+model FlagVariant {
+  id          Int        @id @default(autoincrement())
+  flagId      Int        @map("flag_id")
+  variantName String     @map("flag_name")
+  description String?
+  createdAt   DateTime?  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime?  @default(now()) @map("updated_at") @db.Timestamptz(6)
+  flag        Flag       @relation(fields: [flagId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "flag_variant_flag")
+  userFlags   UserFlag[]
+
+  @@map("flag_variant")
+}
+
+model UserAccount {
+  id           Int        @id @default(autoincrement())
+  givenName    String     @map("given_name")
+  familyName   String     @map("family_name")
+  emailAddress String     @map("email_address")
+  createdAt    DateTime?  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime?  @default(now()) @map("updated_at") @db.Timestamptz(6)
+  userFlags    UserFlag[]
+
+  @@map("user_account")
+}
+
+model UserFlag {
+  id          Int          @id @default(autoincrement())
+  userId      Int          @map("user_id")
+  flagId      Int          @map("flag_id")
+  variantId   Int?         @map("variant_id")
+  createdAt   DateTime?    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime?    @default(now()) @map("updated_at") @db.Timestamptz(6)
+  flag        Flag         @relation(fields: [flagId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_flag_flag")
+  userAccount UserAccount  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_flag_user")
+  flagVariant FlagVariant? @relation(fields: [variantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_flag_variant")
+
+  @@map("user_flag")
+}
