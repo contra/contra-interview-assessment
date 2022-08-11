@@ -67,7 +67,7 @@ export class Flag extends DatabaseModel implements Partial<DatabaseFlag> {
     @Field(() => String)
     env?: string | null | undefined;
 
-    @Field(() => String)
+    @Field(() => String, { nullable: true })
     variant?: string | null | undefined;
 }
 
@@ -90,6 +90,21 @@ export class SearchUsersInput extends SearchInput {
 export class UpdateUserFlagInput {
     @Field(() => Int)
     userId!: number;
+
+    @Field(() => Int)
+    flagId!: number;
+
+    @Field(() => Int, { nullable: true })
+    variantId?: number | undefined | null;
+
+    @Field(() => Boolean, { nullable: true })
+    isOn?: boolean | undefined | null;
+}
+
+@InputType()
+export class AddUsersFlagInput {
+    @Field(() => [Int])
+    userIds!: number[];
 
     @Field(() => Int)
     flagId!: number;

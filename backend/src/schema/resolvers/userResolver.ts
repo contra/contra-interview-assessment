@@ -1,7 +1,7 @@
 /* eslint-disable fp/no-class */
 import { Query, Resolver, Root, Arg, Ctx, FieldResolver, Mutation } from "type-graphql";
 import { ResolverContext } from "../../ResolverContextType";
-import { User, Flag, SearchUsersInput, UpdateUserFlagInput } from '../types';
+import { User, Flag, SearchUsersInput, UpdateUserFlagInput, AddUsersFlagInput } from '../types';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -101,6 +101,12 @@ export class UserResolver {
                 userId
             }
         });
+        const flagVariants = await context.pool.flagVariant.findMany({
+            where: {
+                flagId
+            }
+        });
+        if (flagVariants?.length && !(variantId || userFlag.variantId)) throw new Error(`You must supply a variant for flag id ${flagId}`);
         await context.pool.userFlag.update({
             data: {
                 isOn,
@@ -119,5 +125,47 @@ export class UserResolver {
         if (!user) throw new Error(`Error reading data for user ${userId}`);
 
         return user;
+    }
+
+    @Mutation(() => [User])
+    async updateUsersFlag(@Arg("data") updateData: AddUsersFlagInput, @Ctx() context: ResolverContext): Promise<User[]> {
+        const { userIds, flagId, variantId, isOn } = updateData;
+        await context.pool.flag.findUniqueOrThrow({
+            where: {
+                id: flagId
+            }
+        });
+        const flagVariants = await context.pool.flagVariant.findMany({
+            where: {
+                flagId
+            }
+        });
+        if (flagVariants?.length && !variantId) throw new Error(`You must supply a variant for flag id ${flagId}`);
+
+        await context.pool.$transaction(
+            userIds.map((userId) => {
+                return context.pool.userFlag.upsert({
+                    create: {
+                        flagId,
+                        isOn,
+                        userId,
+                        variantId
+                    },
+                    update: {
+                        isOn,
+                        variantId
+                    },
+                    where: {
+                        uqUserFlag: {
+                            flagId,
+                            userId
+                        }
+                    }
+                });
+            })
+        );
+
+        // eslint-disable-next-line fp/no-this
+        return this.users({ ids: userIds }, context);
     }
 }
