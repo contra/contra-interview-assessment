@@ -24,7 +24,7 @@ model Flag {
 model FlagVariant {
   id          Int        @id @default(autoincrement())
   flagId      Int        @map("flag_id")
-  variantName String     @map("flag_name")
+  variantName String     @map("variant_name")
   description String?
   createdAt   DateTime?  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime?  @default(now()) @map("updated_at") @db.Timestamptz(6)
@@ -34,7 +34,7 @@ model FlagVariant {
   @@map("flag_variant")
 }
 
-model UserAccount {
+model User {
   id           Int        @id @default(autoincrement())
   givenName    String     @map("given_name")
   familyName   String     @map("family_name")
@@ -54,7 +54,7 @@ model UserFlag {
   createdAt   DateTime?    @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime?    @default(now()) @map("updated_at") @db.Timestamptz(6)
   flag        Flag         @relation(fields: [flagId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_flag_flag")
-  userAccount UserAccount  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_flag_user")
+  userAccount User         @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_flag_user")
   flagVariant FlagVariant? @relation(fields: [variantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_flag_variant")
 
   @@map("user_flag")
