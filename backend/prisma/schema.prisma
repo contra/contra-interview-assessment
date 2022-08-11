@@ -51,6 +51,7 @@ model UserFlag {
   userId      Int          @map("user_id")
   flagId      Int          @map("flag_id")
   variantId   Int?         @map("variant_id")
+  isOn        Boolean?     @map("is_on")
   createdAt   DateTime?    @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime?    @default(now()) @map("updated_at") @db.Timestamptz(6)
   flag        Flag         @relation(fields: [flagId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_flag_flag")

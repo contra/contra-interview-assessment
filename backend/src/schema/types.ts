@@ -85,3 +85,18 @@ export class SearchUsersInput extends SearchInput {
     @Field(() => [String], { nullable: true })
     emailAddresses?: string[] | undefined;
 }
+
+@InputType()
+export class UpdateUserFlagInput {
+    @Field(() => Int)
+    userId!: number;
+
+    @Field(() => Int)
+    flagId!: number;
+
+    @Field(() => Int, { nullable: true })
+    variantId?: number | undefined | null;
+
+    @Field(() => Boolean, { nullable: true })
+    isOn?: boolean | undefined | null;
+}
