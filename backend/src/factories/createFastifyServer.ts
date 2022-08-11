@@ -5,10 +5,11 @@ import { ApolloServer } from 'apollo-server-fastify';
 import fastify from 'fastify';
 import { buildSchemaSync } from "type-graphql";
 import { SampleResolver } from '../schema/resolvers/sampleResolver';
+import { UserResolver } from "../schema/resolvers/userResolver";
 
 export const createFastifyServer = async (pool: PrismaClient) => {
   const schema = buildSchemaSync({
-    resolvers: [SampleResolver]
+    resolvers: [SampleResolver, UserResolver]
   })
 
   const app = fastify();
