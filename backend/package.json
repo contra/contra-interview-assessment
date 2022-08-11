@@ -38,6 +38,7 @@
     "@prisma/client": "^4.2.1",
     "@roarr/cli": "^3.2.2",
     "apollo-server-fastify": "3.6.3",
+    "class-validator": "^0.13.2",
     "fast-safe-stringify": "^2.1.1",
     "fastify": "^3.14.0",
     "fastify-cookie": "^5.4.0",
@@ -45,10 +46,12 @@
     "graphql": "^15.4.0",
     "graphql-import": "^1.0.2",
     "graphql-tools": "^7.0.2",
+    "reflect-metadata": "^0.1.13",
     "roarr": "^3.2.0",
     "slonik": "^23.5.1",
     "slonik-interceptor-field-name-transformation": "^1.5.3",
     "slonik-interceptor-preset": "^1.2.10",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "type-graphql": "^1.1.1"
   }
 }
