@@ -4,9 +4,7 @@
 
 .AppScrollLocked {
     margin: 1rem 1rem;
-    position: fixed;
     overflow: hidden;
-    /* width: 100%; */
 }
 
 .button {

@@ -8,6 +8,7 @@ import {
 	ModalSizeTypes,
 } from './Modal.types';
 
+// default modal sizes
 const sizeMap = {
 	LARGE: '800px',
 	MEDIUM: '550px',
@@ -23,10 +24,9 @@ const ModalHeader: FC<ModalHeaderTypes> = ({
 	handleClose,
 }: ModalHeaderTypes) => {
 	return (
-		<div 
-			className={styles['header']} 
-			data-testid="header-title" 
-			tabIndex={-2}>
+		<div
+			className={styles['header']}
+			data-testid="header-title">
 			{title === '' ? 'Modal title' : title}
 			<button
 				aria-label="close"
@@ -48,9 +48,9 @@ const ModalFooter: FC<ModalFooterTypes> = ({
 	<div className={styles['footer']}>
 		<button
 			aria-label="submit"
+			autoFocus
 			className={styles['button']}
 			onClick={onSubmit}
-			tabIndex={-1}
 			type="button">
 			{submitButtonText}
 		</button>
@@ -59,7 +59,6 @@ const ModalFooter: FC<ModalFooterTypes> = ({
 			aria-label="cancel"
 			className={styles['button']}
 			onClick={onCancel}
-			tabIndex={0}
 			type="button">
 			{cancelButtonText}
 		</button>
@@ -81,74 +80,102 @@ const Modal: FC<ModalPropertyTypes> = ({
 	onClose,
 	onOpen,
 	onCancel,
-	backdropClosable = true,
-	keyboardEscapable = true,
+	backdropClosable = false,
+	keyboardEscapable = false,
 }: ModalPropertyTypes) => {
-	const wrapperRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+	const modalRef = useRef<HTMLDivElement | null>(null);
 	const customCloseHandler = useCallback(() => {
 		handleClose();
 		onClose?.();
 	}, [onClose, handleClose]);
 
 	useEffect(() => {
+		// close modal on ESC keypress if keyboardEscapable enabled
 		const closeOnEscapeKey = (event: KeyboardEvent) => {
 			event.key === 'Escape' && customCloseHandler();
 		};
 
+		keyboardEscapable && document.addEventListener('keydown', closeOnEscapeKey);
+		return () => {
+			keyboardEscapable && document.removeEventListener('keydown', closeOnEscapeKey);
+		};
+	}, [keyboardEscapable]);
+
+	useEffect(() => {
+		// close modal on click outside modal if backdropClosable enabled
 		const closeOnBackdropClick = (event: MouseEvent) => {
 			if (
-				wrapperRef &&
-				wrapperRef.current &&
-				!wrapperRef.current.contains(event.target as Node)
+				modalRef &&
+				modalRef.current &&
+				!modalRef.current.contains(event.target as Node)
 			) {
 				customCloseHandler();
 			}
 		};
 
-		keyboardEscapable && document.addEventListener('keydown', closeOnEscapeKey);
-		backdropClosable &&
-			document.addEventListener('click', closeOnBackdropClick, {
-				capture: true,
-			});
-
+		backdropClosable && document.addEventListener('click', closeOnBackdropClick, { capture: true, });
 		return () => {
-			keyboardEscapable &&
-				document.removeEventListener('keydown', closeOnEscapeKey);
-			backdropClosable &&
-				document.removeEventListener('click', closeOnBackdropClick);
+			backdropClosable && document.removeEventListener('click', closeOnBackdropClick);
 		};
-	}, [handleClose, keyboardEscapable, backdropClosable]);
+	}, [backdropClosable]);
 
 	useEffect(() => {
+		const KEYCODE_TAB = 9;
+		// trap tab navigation inside modal
+		const handleTab = (event: KeyboardEvent) => {
+			const elements = modalRef.current?.querySelectorAll('a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])');
+			const firstElement = elements?.[0] as HTMLElement;
+			const lastElement = elements?.[elements.length - 1] as HTMLElement;
+			if (event.key === 'Tab' || event.keyCode === KEYCODE_TAB) {
+				if (event.shiftKey) /* shift + tab */ {
+					if (document.activeElement === firstElement) {
+						lastElement.focus();
+						event.preventDefault();
+					}
+				} else /* tab */ if (document.activeElement === lastElement) {
+					firstElement.focus();
+					event.preventDefault();
+				}
+			}
+		}
+
+		document.body.addEventListener('keydown', handleTab);
+		return () => {
+			document.body.removeEventListener('keydown', handleTab);
+		}
+	}, []);
+
+	useEffect(() => {
+		// onOpen callback if passed
 		isOpen && onOpen?.();
-	}, [isOpen, onOpen]);
+	}, [onOpen]);
 
 	return (
 		<ReactPortal wrapperId="react-portal-modal-container">
-			<div className={styles['overlay']} data-testid="overlay"/>
-			<div className={styles['windowContainer']}>
-				<div className={styles['modalContainer']}>
-					<div
-						aria-label={title}
-						aria-modal
-						className={styles['modal']}
-						data-testid="modal"
-						ref={wrapperRef}
-						style={{ width: getModalSize(size) }}>
-						<div className={styles['modalContent']}>
-							{header ?? (
-								<ModalHeader handleClose={customCloseHandler} title={title} />
-							)}
-							{children && <div className={styles['body']}>{children}</div>}
-							{footer ?? (
-								<ModalFooter
-									cancelButtonText={cancelButtonText}
-									onCancel={onCancel ?? customCloseHandler}
-									onSubmit={onSubmit ?? customCloseHandler}
-									submitButtonText={submitButtonText}
-								/>
-							)}
-						</div>
+			<div className={styles['overlay']} data-testid="overlay" />
+			<div className={styles['modalContainer']}>
+				<div
+					aria-label={title}
+					aria-modal
+					className={`${styles['modal']} ${animate ? styles['animate'] : false}`}
+					data-testid="modal"
+					ref={modalRef}
+					role="dialog"
+					style={{ width: getModalSize(size) }}
+					tabIndex={-1}>
+					<div className={styles['modalContent']} tabIndex={0}>
+						{header ?? (
+							<ModalHeader handleClose={customCloseHandler} title={title} />
+						)}
+						{children && <div className={styles['body']}>{children}</div>}
+						{footer ?? (
+							<ModalFooter
+								cancelButtonText={cancelButtonText}
+								onCancel={onCancel ?? customCloseHandler}
+								onSubmit={onSubmit ?? customCloseHandler}
+								submitButtonText={submitButtonText}
+							/>
+						)}
 					</div>
 				</div>
 			</div>

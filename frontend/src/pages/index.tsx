@@ -1,25 +1,33 @@
-
 import { type NextPage } from 'next';
 import React, { useState } from 'react';
 import Modal from '../components/Modal/Modal';
 import { ModalSizeTypes } from '../components/Modal/Modal.types';
+import ModalStack from '../components/ModalStack/ModalStack';
 import useModal from '../hooks/useModal';
 import styles from './index.module.css';
 
 const loremIpsum = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius laboriosam labore, totam expedita voluptates tempore asperiores sequi, alias cum veritatis, minima dolor iste similique eos id. Porro, culpa? Officiis, placeat?`;
 
 const Index: NextPage = () => {
+  const closeModalFunction = (pos: number = 0) => {
+    closeModal();
+    setTimeout(() => {
+      window.scrollBy(0, pos);
+    }, 100);
+  };
+
   const [isModalOpen, closeModal, openModal] = useModal();
   const [modalProps, setmodalProps] = useState({
-    handleClose: closeModal,
+    handleClose: closeModalFunction,
   });
 
   const [customTitle, setCustomTitle] = useState('');
   const [customSubmitText, setCustomSubmitText] = useState('');
   const [customCancelText, setCustomCancelText] = useState('');
-  const [backdropClosable, setBackdropClosable] = useState(true);
-  const [keyboardEscapable, setKeyboardEscapable] = useState(true);
+  const [backdropClosable, setBackdropClosable] = useState(false);
+  const [keyboardEscapable, setKeyboardEscapable] = useState(false);
   const [animate, setAnimate] = useState(true);
+  const [modalContent, setModalContent] = useState(loremIpsum);
   const [modalSize, setModalSize] = useState(ModalSizeTypes.MEDIUM);
 
   const handleModalSizeChange = (event: React.FormEvent) => {
@@ -28,8 +36,9 @@ const Index: NextPage = () => {
 
   const getModalPropsByFeature = (feature: string) => {
     let props = {};
+    const scrollPos = window.scrollY;
     const defaultProps = {
-      handleClose: closeModal,
+      handleClose: () => closeModalFunction(scrollPos),
       title: 'Modal Title',
     };
 
@@ -67,7 +76,10 @@ const Index: NextPage = () => {
             }}
           >
             <div>Custom Footer JSX </div>
-            <div className={styles['button']} onClick={closeModal}>
+            <div
+              className={styles['button']}
+              onClick={() => closeModalFunction(window.scrollY)}
+            >
               Close Modal
             </div>
           </div>
@@ -97,17 +109,17 @@ const Index: NextPage = () => {
       case 'callbackAfterSubmit':
         props = {
           onSubmit: () => {
-            closeModal();
+            closeModalFunction();
             setTimeout(() => alert('I am called after Modal Submit'), 1_000);
-          }
+          },
         };
         break;
       case 'callbackAfterCancel':
         props = {
           onCancel: () => {
-            closeModal();
+            closeModalFunction();
             setTimeout(() => alert('I am called after Modal Cancel'), 1_000);
-          }
+          },
         };
         break;
       case 'backdropClosable':
@@ -121,6 +133,13 @@ const Index: NextPage = () => {
         break;
       case 'animatable':
         props = { animate };
+        break;
+      case 'ModalStack':
+        setModalContent('ModalStack');
+        props = {
+          footer: <div />,
+          title: 'Modal Stack',
+        };
         break;
 
       default:
@@ -237,7 +256,9 @@ const Index: NextPage = () => {
                   <input
                     className={styles['input']}
                     name="custom submit"
-                    onChange={(event) => setCustomSubmitText(event.target.value)}
+                    onChange={(event) =>
+                      setCustomSubmitText(event.target.value)
+                    }
                     placeholder="Enter here Custom Text for Submit button"
                     type="text"
                     value={customSubmitText}
@@ -263,7 +284,9 @@ const Index: NextPage = () => {
                   <input
                     className={styles['input']}
                     name="custom cancel"
-                    onChange={(event) => setCustomCancelText(event.target.value)}
+                    onChange={(event) =>
+                      setCustomCancelText(event.target.value)
+                    }
                     placeholder="Enter here Custom Text for Cancel button"
                     type="text"
                     value={customCancelText}
@@ -333,7 +356,7 @@ const Index: NextPage = () => {
               <td>backdropClosable</td>
               <td>
                 allows modal to be closed if clicked outside the modal (default
-                value : true) (optional)
+                value : false) (optional)
               </td>
               <td>boolean</td>
               <td>
@@ -342,7 +365,9 @@ const Index: NextPage = () => {
                   <input
                     checked={backdropClosable}
                     name="backdropClosable"
-                    onChange={(event) => setBackdropClosable(event.target.checked)}
+                    onChange={(event) =>
+                      setBackdropClosable(event.target.checked)
+                    }
                     type="checkbox"
                   />
                 </label>
@@ -358,7 +383,7 @@ const Index: NextPage = () => {
               <td>keyboardEscapable</td>
               <td>
                 allows modal to be closed if Esc key is pressed (default value :
-                true) (optional)
+                false) (optional)
               </td>
               <td>boolean</td>
               <td>
@@ -367,7 +392,9 @@ const Index: NextPage = () => {
                   <input
                     checked={keyboardEscapable}
                     name="keyboardEscapable"
-                    onChange={(event) => setKeyboardEscapable(event.target.checked)}
+                    onChange={(event) =>
+                      setKeyboardEscapable(event.target.checked)
+                    }
                     type="checkbox"
                   />
                 </label>
@@ -433,6 +460,19 @@ const Index: NextPage = () => {
                 </div>
               </td>
             </tr>
+            <tr>
+              <td>stacked</td>
+              <td>PS: this is not a property just a reference to show stacked modals</td>
+              <td>children</td>
+              <td>
+                <div
+                  className={styles['button']}
+                  onClick={() => getModalPropsByFeature('ModalStack')}
+                >
+                  Open Modal
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </>
@@ -442,10 +482,16 @@ const Index: NextPage = () => {
   return (
     <>
       <div
-        className={!isModalOpen ? styles['App'] : styles['AppScrollLocked']}>
+        className={!isModalOpen ? styles['App'] : styles['AppScrollLocked']}
+        style={{ height: isModalOpen ? `${window.innerHeight - 40}px` : '' }}
+      >
         {renderApiDocumentation()}
       </div>
-      {isModalOpen && <Modal isOpen={isModalOpen} {...modalProps}>{loremIpsum}</Modal>}
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} {...modalProps}>
+          {modalContent !== 'ModalStack' ? modalContent : <ModalStack />}
+        </Modal>
+      )}
     </>
   );
 };
