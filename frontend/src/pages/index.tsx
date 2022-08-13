@@ -41,6 +41,7 @@ const Index: NextPage = () => {
       handleClose: () => closeModalFunction(scrollPos),
       title: 'Modal Title',
     };
+    setModalContent(loremIpsum);
 
     switch (feature) {
       case 'basic':
