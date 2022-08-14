@@ -4,7 +4,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development ROARR_LOG=true ts-node-dev --respawn ./src/bin/server.ts | roarr pretty-print",
+    "dev": "ts-node-dev --respawn ./src/bin/server.ts | roarr pretty-print",
     "format-graphql-schema": "format-graphql --write true ./src/schema/schema.graphql",
     "build": "tsc --project ./",
     "lint": "eslint --fix src . && prettier --write src . && tsc --noEmit && format-graphql --write true src/schema/schema.graphql",
@@ -33,6 +33,7 @@
   "dependencies": {
     "@roarr/cli": "^3.2.2",
     "apollo-server-fastify": "3.6.3",
+    "dotenv": "^16.0.1",
     "fast-safe-stringify": "^2.1.1",
     "fastify": "^3.14.0",
     "fastify-cookie": "^5.4.0",

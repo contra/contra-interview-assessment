@@ -1,7 +1,62 @@
+type FeatureFlag {
+  flagKey: String!
+  flagValue: String!
+  id: ID!
+  users: [User]
+}
+
+input FeatureFlagData {
+  key: String!
+  value: String!
+}
+
 type Mutation {
+  createUser(userData: UserData!): SetUserResponse
   sampleMutation: String!
+  setUserFeatureFlag(flagData: FeatureFlagData!, userEmail: String!): UpdateResponse
+  setUsersBasedOnFeatureFlag(flagKey: String!, updateData: SetUserData!): SetUserResponse
 }
 
 type Query {
+  getAllUsers: [User!]!
   hello: String!
+}
+
+type SetFeatureFlagResponse {
+  rowCount: Int!
+}
+
+input SetUserData {
+  familyName: String
+  flagValue: String
+  givenName: String
+}
+
+type SetUserResponse {
+  rowCount: Int!
+}
+
+type UpdateResponse {
+  success: Boolean!
+}
+
+type User {
+  email: String!
+  familyName: String!
+  flags: [FeatureFlag]
+  givenName: String!
+  id: ID!
+}
+
+input UserData {
+  email: String!
+  familyName: String!
+  givenName: String!
+}
+
+input UserQueryInput {
+  email_address: String
+  family_name: String
+  given_name: String
+  id: ID
 }

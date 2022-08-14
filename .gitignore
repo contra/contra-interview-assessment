@@ -1,3 +1,5 @@
+!.env.sample
+.env
 .DS_Store
 dist
 build
