@@ -1,0 +1,117 @@
+/* App */
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+/* Nav & Heading styles */
+.heading {
+  margin: 0;
+  padding: 15px;
+  border-bottom: 5px solid blueviolet;
+  background-color: white;
+}
+
+.nav {
+  padding: 10px 0px 10px 0px;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+}
+
+/* Container Styles */
+.container {
+  height: 100%;
+}
+
+.container-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 85vh;
+  border-top: 5px solid blueviolet;
+  border-bottom: 10px solid blueviolet;
+}
+
+/* Modal Styles */
+.modal--mask {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 9998;
+  overflow: hidden;
+}
+
+/* Modal Window */
+.modal-window {
+  background-color: rgb(255, 255, 255);
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 7px;
+  position: absolute;
+  border: 2px solid rebeccapurple;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 2px solid rebeccapurple;
+}
+
+.modal-content {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.modal-title {
+  margin: 0;
+  margin-top: 5px;
+  color: rebeccapurple;
+}
+
+.modal-form {
+  width: 100%;
+}
+
+.modal-footer {
+  border-top: 2px solid rebeccapurple;
+  padding: 10px;
+}
+
+.text-area {
+  width: 98%;
+  height: 133px;
+  resize: none;
+}
+
+/* Button */
+.button {
+  background: white;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  color: rebeccapurple;
+  border: 2px solid rebeccapurple;
+}
+
+.small {
+  padding: 0px 5px;
+}
