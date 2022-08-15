@@ -8,6 +8,7 @@ export type ModalProps = {
   modalFooter?: boolean;
   modalHeader?: string;
   modalName: string;
+  submitAction?: () => void;
   type?: string;
 };
 
@@ -19,6 +20,7 @@ const Modal = ({
   type,
   modalHeader,
   modalFooter,
+  submitAction,
 }: ModalProps) => {
   useEffect(() => {
     function keyListener(event: KeyboardEvent) {
@@ -70,12 +72,12 @@ const Modal = ({
           <p>{modalContent}</p>
         )}
       </div>
-      {modalFooter ? (
+      {modalFooter && submitAction ? (
         <div className="modal-footer">
           <button
             autoFocus
             className="button small"
-            onClick={() => alert('callback function to submit action')}
+            onClick={submitAction}
             type="button"
           >
             Submit

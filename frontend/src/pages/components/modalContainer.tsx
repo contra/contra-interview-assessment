@@ -77,6 +77,7 @@ const ModalContainer = ({
           modalFooter={modalFooter}
           modalHeader={modalHeader}
           modalName="test-modal"
+          submitAction={() => alert('Submit')}
           type={type}
         />
       )}
