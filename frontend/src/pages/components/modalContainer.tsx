@@ -12,6 +12,7 @@ const ModalContainer = ({
   modalFooter,
   submitAction,
   handleClose,
+  modalContent,
 }: ModalContainerType) => {
   const [modalArray, setModalArray] = useState(modalArrayData);
   const [scroll, setScroll] = useState(false);
@@ -68,7 +69,7 @@ const ModalContainer = ({
             <Modal
               buttonText={buttonText}
               closeModal={closeModal}
-              modalContent="This Content will be in the modal"
+              modalContent={modalContent}
               modalFooter={modalFooter}
               modalHeader={modalHeader}
               modalName="test-modal"
