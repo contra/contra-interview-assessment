@@ -130,9 +130,11 @@ const Carousel = () => {
       </div>
       {Boolean(openModal) && (
         <ModalContainer
+          buttonText="Submit"
           handleToggleModal={handleToggleModal}
           modalFooter
           modalHeader="Text Modal"
+          submitAction={() => alert('submit your text')}
           type="text"
         />
       )}

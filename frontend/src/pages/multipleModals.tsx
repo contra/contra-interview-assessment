@@ -1,34 +1,14 @@
 /* eslint-disable canonical/filename-match-exported */
 import { useState } from 'react';
 import { ModalContainer } from './components/modalContainer';
+import { multipleModal } from './components/modalData';
 import { Navigation } from './components/nav';
-
-const multipleModal = [
-  {
-    modalContent: 'Last modal',
-    modalHeader: 'Multiple Modal One',
-    modalName: 'multi modal 1',
-    type: 'dialog',
-  },
-  {
-    modalContent: 'When you close one the rest will remain',
-    modalHeader: 'Multiple Modal Two',
-    modalName: 'multi modal 2',
-    type: 'dialog',
-  },
-  {
-    modalContent: 'These Modals are stacked on top of each other',
-    modalFooter: true,
-    modalHeader: 'Multiple Modal Three',
-    modalName: 'multi modal 3',
-    type: 'dialog',
-  },
-];
 
 const Settings = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleToggleModals = () => {
+    // turning scroll lock on and off
     if (openModal) {
       document.body.classList.remove('no-scroll');
     } else {
@@ -43,9 +23,6 @@ const Settings = () => {
       <h1 className="heading">Multiple Modals</h1>
       <Navigation navLinks={[{ name: 'Back', path: '/' }]} />
       <div className="container-body">
-        <button className="button" onClick={handleToggleModals} type="button">
-          Open Multiple Modals
-        </button>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id
           magna in lorem sodales maximus aliquet sit amet ipsum. Fusce finibus
@@ -87,6 +64,9 @@ const Settings = () => {
           ac elementum ante tempor id. Vivamus sed ante a leo eleifend
           scelerisque.
         </p>
+        <button className="button" onClick={handleToggleModals} type="button">
+          Open Multiple Modals
+        </button>
         <p>
           Donec non vestibulum massa. Curabitur nec felis lacus. Integer ut leo
           ut est imperdiet eleifend vel at ante. Morbi eget vulputate lacus, in

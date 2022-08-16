@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 
 export type ModalProps = {
+  buttonText?: string;
   closeModal: () => void;
   closeModalId?: (modalName: string, isEc?: boolean) => void;
   modalContent: string;
@@ -13,6 +14,7 @@ export type ModalProps = {
 };
 
 const Modal = ({
+  buttonText,
   closeModal,
   modalName,
   modalContent,
@@ -72,7 +74,7 @@ const Modal = ({
           <p>{modalContent}</p>
         )}
       </div>
-      {modalFooter && submitAction ? (
+      {modalFooter && submitAction && buttonText ? (
         <div className="modal-footer">
           <button
             autoFocus
@@ -80,7 +82,7 @@ const Modal = ({
             onClick={submitAction}
             type="button"
           >
-            Submit
+            {buttonText}
           </button>
         </div>
       ) : null}

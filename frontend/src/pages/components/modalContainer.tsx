@@ -1,29 +1,17 @@
 import { useState } from 'react';
 import ReactDom from 'react-dom';
 import { Modal } from './modal';
+import { type ModalContainerType } from './types';
 
-type modalData = {
-  modalContent: string;
-  modalFooter?: boolean;
-  modalHeader?: string;
-  modalName: string;
-  type: string;
-};
-
-type ModalContainer = {
-  handleToggleModal: (event?: Event) => void;
-  modalArrayData?: modalData[];
-  modalFooter: boolean;
-  modalHeader?: string;
-  type?: 'dialog' | 'text';
-};
 const ModalContainer = ({
+  buttonText,
   handleToggleModal,
   modalArrayData,
   modalHeader,
   type,
   modalFooter,
-}: ModalContainer) => {
+  submitAction,
+}: ModalContainerType) => {
   const [modalArray, setModalArray] = useState(modalArrayData);
 
   const closeModalId = (modalName: string, isEc = false) => {
@@ -55,10 +43,12 @@ const ModalContainer = ({
 
   return ReactDom.createPortal(
     <div aria-hidden className="modal--mask">
+      {/* This Container is able to render multiple modals with different purposes */}
       {modalArray?.length ? (
         <>
           {modalArray.map((modal) => (
             <Modal
+              buttonText={modal.buttonText}
               closeModal={handleToggleModal}
               closeModalId={closeModalId}
               key={modal.modalName}
@@ -66,18 +56,21 @@ const ModalContainer = ({
               modalFooter={modal.modalFooter}
               modalHeader={modal.modalHeader}
               modalName={modal.modalName}
+              submitAction={modal.submitAction}
               type={modal.type}
             />
           ))}
         </>
       ) : (
+        // can also render a single modal
         <Modal
+          buttonText={buttonText}
           closeModal={handleToggleModal}
           modalContent="This Content will be in the modal"
           modalFooter={modalFooter}
           modalHeader={modalHeader}
           modalName="test-modal"
-          submitAction={() => alert('Submit')}
+          submitAction={submitAction}
           type={type}
         />
       )}
