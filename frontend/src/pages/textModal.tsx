@@ -6,13 +6,7 @@ import { Navigation } from './components/nav';
 const Carousel = () => {
   const [openModal, setOpenModal] = useState(false);
 
-  const handleToggleModal = () => {
-    if (openModal) {
-      document.body.classList.remove('no-scroll');
-    } else {
-      document.body.classList.add('no-scroll');
-    }
-
+  const handleClose = () => {
     setOpenModal(!openModal);
   };
 
@@ -65,7 +59,7 @@ const Carousel = () => {
           scelerisque.
         </p>
 
-        <button className="button" onClick={handleToggleModal} type="button">
+        <button className="button" onClick={handleClose} type="button">
           Open Text Modal
         </button>
         <p>
@@ -128,10 +122,12 @@ const Carousel = () => {
           Phasellus imperdiet nibh felis, auctor dictum purus ultricies ac.
         </p>
       </div>
+
       {Boolean(openModal) && (
         <ModalContainer
           buttonText="Submit"
-          handleToggleModal={handleToggleModal}
+          handleClose={handleClose}
+          isOpen={openModal}
           modalFooter
           modalHeader="Text Modal"
           submitAction={() => alert('submit your text')}

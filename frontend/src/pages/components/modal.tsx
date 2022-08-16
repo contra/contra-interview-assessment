@@ -48,6 +48,13 @@ const Modal = ({
     }
   };
 
+  const handleSubmit = () => {
+    if (submitAction) {
+      submitAction();
+      handleCloseModalId();
+    }
+  };
+
   return (
     <div className="modal-window" id={modalName} role="dialog">
       <div className="modal-header">
@@ -79,7 +86,7 @@ const Modal = ({
           <button
             autoFocus
             className="button small"
-            onClick={submitAction}
+            onClick={handleSubmit}
             type="button"
           >
             {buttonText}

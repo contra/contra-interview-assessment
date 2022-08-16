@@ -7,14 +7,7 @@ import { Navigation } from './components/nav';
 const Settings = () => {
   const [openModal, setOpenModal] = useState(false);
 
-  const handleToggleModals = () => {
-    // turning scroll lock on and off
-    if (openModal) {
-      document.body.classList.remove('no-scroll');
-    } else {
-      document.body.classList.add('no-scroll');
-    }
-
+  const handleClose = () => {
     setOpenModal(!openModal);
   };
 
@@ -64,7 +57,7 @@ const Settings = () => {
           ac elementum ante tempor id. Vivamus sed ante a leo eleifend
           scelerisque.
         </p>
-        <button className="button" onClick={handleToggleModals} type="button">
+        <button className="button" onClick={handleClose} type="button">
           Open Multiple Modals
         </button>
         <p>
@@ -129,9 +122,9 @@ const Settings = () => {
       </div>
       {Boolean(openModal) && (
         <ModalContainer
-          handleToggleModal={handleToggleModals}
+          handleClose={handleClose}
+          isOpen={openModal}
           modalArrayData={multipleModal}
-          modalFooter
         />
       )}
     </div>

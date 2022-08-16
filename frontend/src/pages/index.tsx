@@ -7,15 +7,7 @@ import { Navigation } from './components/nav';
 const Index: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
 
-  const handleToggleModal = () => {
-    if (openModal) {
-      // remove lock on scroll
-      document.body.classList.remove('no-scroll');
-    } else {
-      // locks scroll on body
-      document.body.classList.add('no-scroll');
-    }
-
+  const handleClose = () => {
     setOpenModal(!openModal);
   };
 
@@ -29,7 +21,6 @@ const Index: NextPage = () => {
       path: '/textModal',
     },
   ];
-
   return (
     <div className="container">
       <h1 className="heading">Everyone Loves Modal</h1>
@@ -76,7 +67,7 @@ const Index: NextPage = () => {
           ac elementum ante tempor id. Vivamus sed ante a leo eleifend
           scelerisque.
         </p>
-        <button className="button" onClick={handleToggleModal} type="button">
+        <button className="button" onClick={handleClose} type="button">
           Open single modal
         </button>
         <p>
@@ -141,7 +132,9 @@ const Index: NextPage = () => {
       </div>
       {Boolean(openModal) && (
         <ModalContainer
-          handleToggleModal={handleToggleModal}
+          handleClose={handleClose}
+          isOpen={openModal}
+          modalContent="Modal Content"
           modalFooter={false}
           modalHeader="Single Modal"
         />

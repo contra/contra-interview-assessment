@@ -1,5 +1,4 @@
 /* eslint-disable func-style */
-// import { useEffect } from 'react';
 
 import Link from 'next/link';
 

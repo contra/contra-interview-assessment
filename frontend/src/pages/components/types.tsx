@@ -10,9 +10,11 @@ export type modalData = {
 
 export type ModalContainerType = {
   buttonText?: string;
-  handleToggleModal: (event?: Event) => void;
+  handleClose: () => void;
+  isOpen: boolean;
   modalArrayData?: modalData[];
-  modalFooter: boolean;
+  modalContent?: string;
+  modalFooter?: boolean;
   modalHeader?: string;
   submitAction?: () => void;
   type?: 'dialog' | 'text';

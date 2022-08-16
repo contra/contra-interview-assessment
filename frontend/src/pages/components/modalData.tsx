@@ -12,12 +12,12 @@ export const multipleModal = [
     type: 'dialog',
   },
   {
-    buttonText: 'This works',
+    buttonText: 'Send',
     modalContent: 'These Modals are stacked on top of each other',
     modalFooter: true,
     modalHeader: 'Multiple Modal Three',
     modalName: 'multi modal 3',
-    submitAction: () => alert('call back to some fn'),
+    submitAction: () => alert('callback to some fn'),
     type: 'dialog',
   },
 ];
