@@ -35,9 +35,6 @@ const Index: NextPage = () => {
       <h1 className="heading">Everyone Loves Modal</h1>
       <Navigation navLinks={navLink} />
       <div className="container-body">
-        <button className="button" onClick={handleToggleModal} type="button">
-          Open single modal
-        </button>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id
           magna in lorem sodales maximus aliquet sit amet ipsum. Fusce finibus
@@ -79,6 +76,9 @@ const Index: NextPage = () => {
           ac elementum ante tempor id. Vivamus sed ante a leo eleifend
           scelerisque.
         </p>
+        <button className="button" onClick={handleToggleModal} type="button">
+          Open single modal
+        </button>
         <p>
           Donec non vestibulum massa. Curabitur nec felis lacus. Integer ut leo
           ut est imperdiet eleifend vel at ante. Morbi eget vulputate lacus, in
