@@ -13,7 +13,7 @@ export type ModalContainerType = {
   handleClose: () => void;
   isOpen: boolean;
   modalArrayData?: modalData[];
-  modalContent: string;
+  modalContent?: string | undefined;
   modalFooter?: boolean;
   modalHeader?: string;
   submitAction?: () => void;

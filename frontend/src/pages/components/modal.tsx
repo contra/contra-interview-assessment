@@ -5,7 +5,7 @@ export type ModalProps = {
   buttonText?: string;
   closeModal: () => void;
   closeModalId?: (modalName: string, isEc?: boolean) => void;
-  modalContent: string;
+  modalContent?: string;
   modalFooter?: boolean;
   modalHeader?: string;
   modalName: string;
@@ -69,6 +69,7 @@ const Modal = ({
         </button>
       </div>
       <div className="modal-content">
+        {/* Modal can have text element */}
         {type === 'text' ? (
           <form className="modal-form">
             <textarea
@@ -78,6 +79,7 @@ const Modal = ({
             />
           </form>
         ) : (
+          // or just used for dialog
           <p>{modalContent}</p>
         )}
       </div>

@@ -17,13 +17,16 @@ const ModalContainer = ({
   const [modalArray, setModalArray] = useState(modalArrayData);
   const [scroll, setScroll] = useState(false);
 
+  // locking scroll on component open with no-scroll class
   useEffect(() => {
     document.body.classList.add('no-scroll');
     return () => {
+      // removing no-scroll to remove lock
       document.body.classList.remove('no-scroll');
     };
   }, [scroll]);
 
+  // Closed modal by Ids for multiple modals
   const closeModalId = (modalName: string) => {
     if (modalArray?.length === 1) {
       handleClose();

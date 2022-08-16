@@ -21,6 +21,7 @@ const Index: NextPage = () => {
       path: '/textModal',
     },
   ];
+
   return (
     <div className="container">
       <h1 className="heading">Everyone Loves Modal</h1>
