@@ -27,10 +27,24 @@ const ModalContainer = ({
   }, [scroll]);
 
   // Closed modal by Ids for multiple modals
-  const closeModalId = (modalName: string) => {
+  const closeModalId = (modalName: string, isEc = false) => {
+    if (isEc && modalArray) {
+      if (modalArray.length === 1) {
+        handleClose();
+      }
+
+      // lastElement of the modal array
+      const last = [...modalArray.slice(-1)];
+      // filter array and remove the last element which on the top of stack
+      const filteredArray = modalArray.filter(
+        (element) => element.modalName !== last[0]?.modalName
+      );
+      setModalArray(filteredArray);
+      return;
+    }
+
     if (modalArray?.length === 1) {
       handleClose();
-      setScroll(!scroll);
     } else {
       // filter array by modalName
       const filteredArray = modalArray?.filter(

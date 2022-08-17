@@ -42,7 +42,7 @@ const Modal = ({
 
   const handleCloseModalId = () => {
     if (closeModalId) {
-      closeModalId(modalName);
+      closeModalId(modalName, true);
     } else {
       closeModal();
     }
