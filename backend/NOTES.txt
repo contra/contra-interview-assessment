@@ -1,0 +1,30 @@
+Requirements
+------------
+(1) Boolean FF
+(2) Multivariant FF
+(3) Many-to-one-to-many User-FFvalue-FF relationship
+
+
+Criteria
+--------
+(1) Correct
+(2) DevX
+(3) Tests
+(4) Performance & Scaleability
+(5) Code style
+
+
+TODO
+----
+[X] Design db schema
+[X] Make migration to create schema
+[ ] Dig into GraphQL to better understand needs for this list
+
+
+Random Thoughts
+---------------
+I haven't done anything with GraphQL before besides reading a bit of the docs
+in the past.
+
+I attempted to make my required changes while following the current project
+structure as much as possible.
