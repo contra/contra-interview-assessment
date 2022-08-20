@@ -5,6 +5,7 @@ type Mutation {
 type Query {
   hello: String!
   featureFlags: [FeatureFlag!]
+  users: [User!]
 }
 
 type FeatureFlag {
@@ -17,4 +18,12 @@ type FeatureFlagUserValue {
   flagKey: String!
   flagType: String!
   flagValue: String!
+}
+
+type User {
+  userId: Int!
+  givenName: String!
+  familyName: String!
+  emailAddress: String!
+  #featureFlags: [FeatureFlagUserValue!]!
 }

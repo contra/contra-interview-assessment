@@ -22,6 +22,7 @@ export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
   featureFlags?: Maybe<Array<FeatureFlag>>;
+  users?: Maybe<Array<User>>;
 };
 
 export type FeatureFlag = {
@@ -36,6 +37,14 @@ export type FeatureFlagUserValue = {
   flagKey: Scalars['String'];
   flagType: Scalars['String'];
   flagValue: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  userId: Scalars['Int'];
+  givenName: Scalars['String'];
+  familyName: Scalars['String'];
+  emailAddress: Scalars['String'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -109,6 +118,8 @@ export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
   FeatureFlagUserValue: ResolverTypeWrapper<FeatureFlagUserValue>;
+  User: ResolverTypeWrapper<User>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -119,6 +130,8 @@ export type ResolversParentTypes = ResolversObject<{
   Query: {};
   FeatureFlag: FeatureFlag;
   FeatureFlagUserValue: FeatureFlagUserValue;
+  User: User;
+  Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
 }>;
 
@@ -129,6 +142,7 @@ export type MutationResolvers<ContextType = ResolverContext, ParentType = Resolv
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   featureFlags?: Resolver<Maybe<Array<ResolversTypes['FeatureFlag']>>, ParentType, ContextType>;
+  users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
 }>;
 
 export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
@@ -145,11 +159,20 @@ export type FeatureFlagUserValueResolvers<ContextType = ResolverContext, ParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['User']> = ResolversObject<{
+  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  givenName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  familyName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  emailAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   FeatureFlag?: FeatureFlagResolvers<ContextType>;
   FeatureFlagUserValue?: FeatureFlagUserValueResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
 }>;
 
 
