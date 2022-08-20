@@ -21,6 +21,21 @@ export type Mutation = {
 export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
+  featureFlags?: Maybe<Array<FeatureFlag>>;
+};
+
+export type FeatureFlag = {
+  __typename?: 'FeatureFlag';
+  flagKey: Scalars['String'];
+  flagType: Scalars['String'];
+  defaultValue?: Maybe<Scalars['String']>;
+};
+
+export type FeatureFlagUserValue = {
+  __typename?: 'FeatureFlagUserValue';
+  flagKey: Scalars['String'];
+  flagType: Scalars['String'];
+  flagValue: Scalars['String'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -92,6 +107,8 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Query: ResolverTypeWrapper<{}>;
+  FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
+  FeatureFlagUserValue: ResolverTypeWrapper<FeatureFlagUserValue>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -100,6 +117,8 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
   String: Scalars['String'];
   Query: {};
+  FeatureFlag: FeatureFlag;
+  FeatureFlagUserValue: FeatureFlagUserValue;
   Boolean: Scalars['Boolean'];
 }>;
 
@@ -109,11 +128,28 @@ export type MutationResolvers<ContextType = ResolverContext, ParentType = Resolv
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  featureFlags?: Resolver<Maybe<Array<ResolversTypes['FeatureFlag']>>, ParentType, ContextType>;
+}>;
+
+export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
+  flagKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  flagType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  defaultValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type FeatureFlagUserValueResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlagUserValue']> = ResolversObject<{
+  flagKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  flagType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  flagValue?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  FeatureFlag?: FeatureFlagResolvers<ContextType>;
+  FeatureFlagUserValue?: FeatureFlagUserValueResolvers<ContextType>;
 }>;
 
 
