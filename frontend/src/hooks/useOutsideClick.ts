@@ -6,7 +6,7 @@ export const useOutsideClick = (
 ) => {
   const checkIfClickedOutside = useCallback(
     ({ target }: MouseEvent) => {
-      if (!ref.current?.contains(target as Node)) {
+      if (ref.current && ref.current === (target as Node)) {
         closeModal();
       }
     },

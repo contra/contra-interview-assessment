@@ -33,13 +33,12 @@ export const Modal = ({
   if (!showModal) return null;
   return (
     <Portal selector="#portal">
-      <div className={styles['modalOverlay']}>
+      <div className={styles['modalOverlay']} ref={overlayRef}>
         <FocusTrap>
           <div
             aria-hidden={!showModal}
             aria-modal="true"
             className={styles['modal']}
-            ref={overlayRef}
             role="dialog"
             tabIndex={-1}
           >
