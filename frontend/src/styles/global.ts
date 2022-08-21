@@ -29,6 +29,7 @@ export const globalStyles = globalCss({
     borderRadius: '0.3rem',
     margin: '0rem 0.3rem',
     padding: '0.1rem 0.3rem',
+    whiteSpace: 'nowrap',
   },
   html: {
     height: '100%',
