@@ -27,7 +27,7 @@ TODO
 [X] Make migration to create schema
 [X] Seed db with users / FFs
 [X] Make Query to list all FFs
-[ ] Make Query to return all users and their FF values
+[X] Make Query to return all users and their FF values
 [ ] Make Mutation to set FF value on N users
 [ ] Make Mutation to remove FF value from N users
 
@@ -40,13 +40,14 @@ in the past.
 I attempted to make my required changes while following the current project
 structure as much as possible.
 
+I through the seeded users and features right into migrations for simplicity.
+
 The existing project did not have zod installed, so I did not go down the path
 of using zod runtime validation.
 
 Even though it's usually not a good idea to expose an incrementing table id
 publically, I used the UserAccount id as the exposed identifier as to not change
-the underlying UserAccount model.
-
+the underlying UserAccount model. (Assuming this isn't just an internal API).
 
 INSERT INTO feature_flag_value(feature_flag_fk, user_account_fk, "value")
 VALUES

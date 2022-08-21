@@ -34,6 +34,7 @@ export type FeatureFlag = {
 
 export type FeatureFlagUserValue = {
   __typename?: 'FeatureFlagUserValue';
+  userId: Scalars['String'];
   flagKey: Scalars['String'];
   flagType: Scalars['String'];
   flagValue: Scalars['String'];
@@ -45,6 +46,7 @@ export type User = {
   givenName: Scalars['String'];
   familyName: Scalars['String'];
   emailAddress: Scalars['String'];
+  featureFlags?: Maybe<Array<Maybe<FeatureFlagUserValue>>>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -153,6 +155,7 @@ export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = Res
 }>;
 
 export type FeatureFlagUserValueResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlagUserValue']> = ResolversObject<{
+  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   flagKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   flagType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   flagValue?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -164,6 +167,7 @@ export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversP
   givenName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   familyName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   emailAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  featureFlags?: Resolver<Maybe<Array<Maybe<ResolversTypes['FeatureFlagUserValue']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

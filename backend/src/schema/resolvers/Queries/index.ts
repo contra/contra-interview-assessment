@@ -1,9 +1,14 @@
-import { resolve as featureFlags } from './featureFlags';
+import { resolve as featureFlagsResolver } from './featureFlags';
 import { resolve as hello } from './hello';
-import { resolve as users } from './users';
+import { resolve as usersResolver } from './users';
+import { resolve as featureFlagUserValuesResolver } from './featureFlagUserValues';
 
 export const Query = {
-  featureFlags,
+  featureFlags: featureFlagsResolver,
   hello,
-  users,
+  users: usersResolver,
+}
+
+export const User = {
+  featureFlags: featureFlagUserValuesResolver,
 }

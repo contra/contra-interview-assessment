@@ -17,5 +17,5 @@ export const resolve: QueryResolvers['users'] = async (
   const userQueryPromise = pool.many(queryString)
     .then(queryResult => [...queryResult]);
 
-  return userQueryPromise
+  return userQueryPromise;
 };
