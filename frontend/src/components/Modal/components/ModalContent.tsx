@@ -252,7 +252,9 @@ const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
       }
 
       return () => {
-        unlockBodyScroll();
+        if (!(modalStack.length() > 0)) {
+          unlockBodyScroll();
+        }
       };
     }, [isModalOpen, lockBodyScroll, unlockBodyScroll]);
 

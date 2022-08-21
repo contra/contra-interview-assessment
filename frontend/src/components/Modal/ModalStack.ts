@@ -47,6 +47,10 @@ class ModalStack {
     return this.modalStack[0] === item;
   }
 
+  public length() {
+    return this.modalStack.length;
+  }
+
   public onTopChange(subscriberFunction: SubscriberFunction) {
     this.subscribers.push(subscriberFunction);
     return () => {
