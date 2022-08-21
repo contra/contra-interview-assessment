@@ -1,11 +1,5 @@
 import FocusTrap from 'focus-trap-react';
-import React, {
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import React, { useRef } from 'react';
 import { useEscapeKeyPressed } from '@/hooks/useEscapeKeyPressed';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { useRemoveScrollWhenModalOpen } from '@/hooks/useRemoveScrollWhenModalOpen';
@@ -15,63 +9,63 @@ import styles from './style.module.css';
 
 type ModalProps = {
   children?: React.ReactNode;
+  setShowModal: (argument: boolean) => void;
+  showModal: boolean;
   title?: string;
 };
 
-export type ModalHandles = {
-  openModal: () => void;
-};
+export const Modal = ({
+  children,
+  showModal,
+  setShowModal,
+  title,
+}: ModalProps) => {
+  const overlayRef = useRef<HTMLDivElement>(null);
 
-export const Modal = forwardRef<ModalHandles, ModalProps>(
-  ({ children, title }, ref) => {
-    const [visible, setVisible] = useState(false);
-    const overlayRef = useRef<HTMLDivElement>(null);
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
-    const openModal = useCallback(() => {
-      setVisible(true);
-    }, []);
+  useRemoveScrollWhenModalOpen(showModal);
+  useEscapeKeyPressed(closeModal);
+  useOutsideClick(closeModal, overlayRef);
 
-    const closeModal = useCallback(() => {
-      setVisible(false);
-    }, []);
-
-    // Passing function from children to parent through ref
-    useImperativeHandle(ref, () => {
-      return { openModal };
-    });
-
-    useRemoveScrollWhenModalOpen(visible);
-    useEscapeKeyPressed(closeModal);
-    useOutsideClick(closeModal, overlayRef);
-
-    if (!visible) return null;
-    return (
-      <Portal selector="#portal">
-        <div className={styles['modalOverlay']}>
-          <FocusTrap>
-            <div className={styles['modal']} ref={overlayRef} role="dialog">
-              <div className={styles['modalHeader']}>
-                <h4 className={styles['modalTitle']}>{title}</h4>
-                <button
-                  aria-label="close"
-                  className={styles['closeButton']}
-                  onClick={closeModal}
-                  type="button"
-                >
-                  X
-                </button>
-              </div>
-              <hr />
-              {children}
-              <hr />
-              <div className={styles['modalFooter']}>
-                <Button onClick={closeModal} text="Cancel" />
-                <Button onClick={closeModal} text="Ok" />
-              </div>
+  if (!showModal) return null;
+  return (
+    <Portal selector="#portal">
+      <div className={styles['modalOverlay']}>
+        <FocusTrap>
+          <div
+            aria-hidden={!showModal}
+            aria-modal="true"
+            className={styles['modal']}
+            ref={overlayRef}
+            role="dialog"
+            tabIndex={-1}
+          >
+            <div className={styles['modalHeader']}>
+              <h4 className={styles['modalTitle']}>{title}</h4>
+              <button
+                aria-label="close"
+                className={styles['closeButton']}
+                data-dismiss="modal"
+                onClick={closeModal}
+                title="Close modal"
+                type="button"
+              >
+                X
+              </button>
             </div>
-          </FocusTrap>
-        </div>
-      </Portal>
-    );
-  }
-);
+            <hr />
+            {children}
+            <hr />
+            <div className={styles['modalFooter']}>
+              <Button onClick={closeModal} text="Cancel" />
+              <Button onClick={closeModal} text="Ok" />
+            </div>
+          </div>
+        </FocusTrap>
+      </div>
+    </Portal>
+  );
+};
