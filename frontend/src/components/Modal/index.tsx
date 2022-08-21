@@ -2,11 +2,13 @@ import FocusTrap from 'focus-trap-react';
 import React, {
   forwardRef,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
+import { useEscapeKeyPressed } from '@/hooks/useEscapeKeyPressed';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
+import { useRemoveScrollWhenModalOpen } from '@/hooks/useRemoveScrollWhenModalOpen';
 import { Button } from '../Button';
 import { Portal } from '../Portal';
 import styles from './style.module.css';
@@ -25,15 +27,6 @@ export const Modal = forwardRef<ModalHandles, ModalProps>(
     const [visible, setVisible] = useState(false);
     const overlayRef = useRef<HTMLDivElement>(null);
 
-    // Removes scrolling from body
-    useEffect(() => {
-      if (visible) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = 'unset';
-      }
-    }, [visible]);
-
     const openModal = useCallback(() => {
       setVisible(true);
     }, []);
@@ -47,33 +40,9 @@ export const Modal = forwardRef<ModalHandles, ModalProps>(
       return { openModal };
     });
 
-    // useEffect(() => {
-    //   const checkIfClickedOutside = ({ target }: MouseEvent) => {
-    //     if (!overlayRef.current?.contains(target as Node)) {
-    //       setVisible(false);
-    //     }
-    //   };
-
-    //   window.addEventListener('mousedown', checkIfClickedOutside);
-    //   return () =>
-    //     window.removeEventListener('mousedown', checkIfClickedOutside);
-    // }, []);
-
-    // Close modal when user press ESC button
-
-    const close = useCallback(
-      (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-          closeModal();
-        }
-      },
-      [closeModal]
-    );
-
-    useEffect(() => {
-      window.addEventListener('keydown', close);
-      return () => window.removeEventListener('keydown', close);
-    }, [close]);
+    useRemoveScrollWhenModalOpen(visible);
+    useEscapeKeyPressed(closeModal);
+    useOutsideClick(closeModal, overlayRef);
 
     if (!visible) return null;
     return (
