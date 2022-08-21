@@ -8,14 +8,18 @@ import { Portal } from '../Portal';
 import styles from './style.module.css';
 
 type ModalProps = {
+  cancel: (argument?: unknown) => void;
   children?: React.ReactNode;
+  confirm: (argument?: unknown) => void;
   setShowModal: (argument: boolean) => void;
   showModal: boolean;
   title?: string;
 };
 
 export const Modal = ({
+  cancel,
   children,
+  confirm,
   showModal,
   setShowModal,
   title,
@@ -59,8 +63,8 @@ export const Modal = ({
             {children}
             <hr />
             <div className={styles['modalFooter']}>
-              <Button onClick={closeModal} text="Cancel" />
-              <Button onClick={closeModal} text="Ok" />
+              <Button onClick={cancel} text="Cancel" />
+              <Button onClick={confirm} text="Ok" />
             </div>
           </div>
         </FocusTrap>

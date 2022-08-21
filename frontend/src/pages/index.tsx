@@ -18,12 +18,22 @@ const Index: NextPage = () => {
     setShowSecondModal(true);
   };
 
+  const closeFirstModal = () => {
+    setShowSimpleModal(false);
+  };
+
+  const closeSecondModal = () => {
+    setShowSecondModal(false);
+  };
+
   return (
     <>
       <Head>
         <title>Modal Playground</title>
       </Head>
       <Modal
+        cancel={closeFirstModal}
+        confirm={closeFirstModal}
         setShowModal={setShowSimpleModal}
         showModal={showSimpleModal}
         title="Simple Modal"
@@ -35,6 +45,8 @@ const Index: NextPage = () => {
       </Modal>
 
       <Modal
+        cancel={closeSecondModal}
+        confirm={closeSecondModal}
         setShowModal={setShowSecondModal}
         showModal={showSecondModal}
         title="Stacked Modal"

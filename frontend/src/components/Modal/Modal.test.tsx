@@ -6,7 +6,13 @@ describe('Modal behavior', () => {
     const setModal = jest.fn;
     const title = 'Modal testing';
     const { getByText } = render(
-      <Modal title={title} setShowModal={setModal} showModal />
+      <Modal
+        cancel={setModal}
+        confirm={setModal}
+        title={title}
+        setShowModal={setModal}
+        showModal
+      />
     );
     expect(getByText(title)).toBeTruthy();
   });
