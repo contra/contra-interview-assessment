@@ -48,7 +48,7 @@ const Index: NextPage = () => {
         <Button onClick={openFirstModal} text="Open Modal" />
         <Button onClick={openSecondModal} text="Open Stacked Modal" />
       </div>
-
+      <p>Just a long text to make sure this screen has scroll ;)</p>
       <p>{placeholderText}</p>
       <p>{placeholderText}</p>
       <p>{placeholderText}</p>
