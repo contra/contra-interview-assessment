@@ -54,14 +54,14 @@ export const useModal = (
     [onClose],
   )
 
-  useCloseOnOutsideClick(
+useCloseOnOutsideClick(
     dialogRef,
     backdropRef,
     closeOnOutsideClick ? handleModalClose : noop
   );
 
-  useHotKeys({
-    key: "h",
+useHotKeys({
+    key: "Escape",
     action: closeOnEsc ? handleModalClose : noop,
   })
 

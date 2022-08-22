@@ -117,7 +117,7 @@ describe('Modal', () => {
     expect(onClose).toHaveBeenCalled();
   })
 
-  it('should call onClose when h key is pressed', () => {
+  it('should call onClose when escape key is pressed', () => {
     const onClose = jest.fn();
     const { getByTestId } = render(
       <Modal isOpen onClose={onClose}>
@@ -133,11 +133,11 @@ describe('Modal', () => {
     </Modal>
     );
     const closeButton = getByTestId("modal-header-close-button");
-    fireEvent.keyDown(closeButton, { key: "h", code: "KeyH" });
+    fireEvent.keyDown(closeButton, { key: "Escape", code: "Escape" });
     expect(onClose).toHaveBeenCalled();
   })
 
-  it('should not call onClose when h key is pressed and closeOnEsc is false', () => {
+  it('should not call onClose when escape key is pressed and closeOnEsc is false', () => {
     const onClose = jest.fn();
     const { getByTestId } = render(
       <Modal isOpen onClose={onClose} closeOnEsc={false}>
@@ -153,7 +153,7 @@ describe('Modal', () => {
     </Modal>
     );
     const closeButton = getByTestId("modal-header-close-button");
-    fireEvent.keyDown(closeButton, { key: "h", code: "KeyH" });
+    fireEvent.keyDown(closeButton, { key: "esc", code: "KeyEscape" });
     expect(onClose).not.toHaveBeenCalled();
   })
 
