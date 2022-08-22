@@ -1,6 +1,6 @@
-import React, { createContext } from "react";
+import { createContext } from "react";
 
 interface ModalContextProps {
-  handleModalClose: (event:React.MouseEvent) => void;
+  handleModalClose: ( event: MouseEvent | KeyboardEvent | TouchEvent) => void;
 }
 export const ModalContext = createContext({} as ModalContextProps);
