@@ -1,5 +1,6 @@
 type Mutation {
   sampleMutation: String!
+  setUsersFeatureFlag(userIds: [String!]!, featureFlagData: UserFeatureFlagData!): [SetUserFeatureFlagResponse!]!
 }
 
 type Query {
@@ -8,17 +9,25 @@ type Query {
   users: [User!]
 }
 
+scalar FeatureFlagValue
+scalar FeatureFlagType
+
 type FeatureFlag {
   flagKey: String!
-  flagType: String!
-  defaultValue: String
+  flagType: FeatureFlagType!
+  defaultValue: FeatureFlagValue
 }
 
 type FeatureFlagUserValue {
   userId: String!
   flagKey: String!
-  flagType: String!
-  flagValue: String!
+  flagType: FeatureFlagType!
+  flagValue: FeatureFlagValue
+}
+
+type SetUserFeatureFlagResponse {
+  userId: String!
+  result: String!
 }
 
 type User {
@@ -27,4 +36,9 @@ type User {
   familyName: String!
   emailAddress: String!
   featureFlags: [FeatureFlagUserValue]
+}
+
+input UserFeatureFlagData {
+  flagKey: String!
+  flagValue: FeatureFlagValue
 }

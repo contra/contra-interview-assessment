@@ -28,7 +28,7 @@ TODO
 [X] Seed db with users / FFs
 [X] Make Query to list all FFs
 [X] Make Query to return all users and their FF values
-[ ] Make Mutation to set FF value on N users
+[X] Make Mutation to set FF value on N users
 [ ] Make Mutation to remove FF value from N users
 
 
@@ -48,6 +48,8 @@ of using zod runtime validation.
 Even though it's usually not a good idea to expose an incrementing table id
 publically, I used the UserAccount id as the exposed identifier as to not change
 the underlying UserAccount model. (Assuming this isn't just an internal API).
+
+FeatureFlagValue type must be nullable to allow setting null value
 
 INSERT INTO feature_flag_value(feature_flag_fk, user_account_fk, "value")
 VALUES

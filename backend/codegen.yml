@@ -5,6 +5,8 @@ generates:
     plugins:
       - typescript
       - typescript-resolvers
+      - add:
+          content: "import { FeatureFlagValue, FeatureFlagType } from '../schema/resolvers/Scalars/featureFlagScalars'"
     config:
       allowParentTypeOverride: true
       contextType: '../ResolverContextType#ResolverContext'
@@ -15,5 +17,7 @@ generates:
       useIndexSignature: true
       scalars:
         ID: 'string | number'
+        FeatureFlagValue: FeatureFlagValue
+        FeatureFlagType: FeatureFlagType
       useTypeImports: true
       mappers:

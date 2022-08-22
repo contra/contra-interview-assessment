@@ -1,9 +1,11 @@
-import type { GraphQLResolveInfo } from 'graphql';
+import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import type { ResolverContext } from '../ResolverContextType';
+import { FeatureFlagValue, FeatureFlagType } from '../schema/resolvers/Scalars/featureFlagScalars'
 export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -11,11 +13,20 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  FeatureFlagValue: FeatureFlagValue;
+  FeatureFlagType: FeatureFlagType;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   sampleMutation: Scalars['String'];
+  setUsersFeatureFlag: Array<SetUserFeatureFlagResponse>;
+};
+
+
+export type MutationSetUsersFeatureFlagArgs = {
+  userIds: Array<Scalars['String']>;
+  featureFlagData: UserFeatureFlagData;
 };
 
 export type Query = {
@@ -23,21 +34,35 @@ export type Query = {
   hello: Scalars['String'];
   featureFlags?: Maybe<Array<FeatureFlag>>;
   users?: Maybe<Array<User>>;
+  featureFlagValueTest?: Maybe<Scalars['FeatureFlagType']>;
 };
+
+
+export type QueryFeatureFlagValueTestArgs = {
+  value?: Maybe<Scalars['FeatureFlagValue']>;
+};
+
+
 
 export type FeatureFlag = {
   __typename?: 'FeatureFlag';
   flagKey: Scalars['String'];
-  flagType: Scalars['String'];
-  defaultValue?: Maybe<Scalars['String']>;
+  flagType: Scalars['FeatureFlagType'];
+  defaultValue?: Maybe<Scalars['FeatureFlagValue']>;
 };
 
 export type FeatureFlagUserValue = {
   __typename?: 'FeatureFlagUserValue';
   userId: Scalars['String'];
   flagKey: Scalars['String'];
-  flagType: Scalars['String'];
-  flagValue: Scalars['String'];
+  flagType: Scalars['FeatureFlagType'];
+  flagValue?: Maybe<Scalars['FeatureFlagValue']>;
+};
+
+export type SetUserFeatureFlagResponse = {
+  __typename?: 'SetUserFeatureFlagResponse';
+  userId: Scalars['String'];
+  result: Scalars['String'];
 };
 
 export type User = {
@@ -47,6 +72,11 @@ export type User = {
   familyName: Scalars['String'];
   emailAddress: Scalars['String'];
   featureFlags?: Maybe<Array<Maybe<FeatureFlagUserValue>>>;
+};
+
+export type UserFeatureFlagData = {
+  flagKey: Scalars['String'];
+  flagValue?: Maybe<Scalars['FeatureFlagValue']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -118,10 +148,14 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Query: ResolverTypeWrapper<{}>;
+  FeatureFlagValue: ResolverTypeWrapper<Scalars['FeatureFlagValue']>;
+  FeatureFlagType: ResolverTypeWrapper<Scalars['FeatureFlagType']>;
   FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
   FeatureFlagUserValue: ResolverTypeWrapper<FeatureFlagUserValue>;
+  SetUserFeatureFlagResponse: ResolverTypeWrapper<SetUserFeatureFlagResponse>;
   User: ResolverTypeWrapper<User>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  UserFeatureFlagData: UserFeatureFlagData;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -130,35 +164,55 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
   String: Scalars['String'];
   Query: {};
+  FeatureFlagValue: Scalars['FeatureFlagValue'];
+  FeatureFlagType: Scalars['FeatureFlagType'];
   FeatureFlag: FeatureFlag;
   FeatureFlagUserValue: FeatureFlagUserValue;
+  SetUserFeatureFlagResponse: SetUserFeatureFlagResponse;
   User: User;
   Int: Scalars['Int'];
+  UserFeatureFlagData: UserFeatureFlagData;
   Boolean: Scalars['Boolean'];
 }>;
 
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
   sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  setUsersFeatureFlag?: Resolver<Array<ResolversTypes['SetUserFeatureFlagResponse']>, ParentType, ContextType, RequireFields<MutationSetUsersFeatureFlagArgs, 'userIds' | 'featureFlagData'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   featureFlags?: Resolver<Maybe<Array<ResolversTypes['FeatureFlag']>>, ParentType, ContextType>;
   users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
+  featureFlagValueTest?: Resolver<Maybe<ResolversTypes['FeatureFlagType']>, ParentType, ContextType, RequireFields<QueryFeatureFlagValueTestArgs, never>>;
 }>;
+
+export interface FeatureFlagValueScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['FeatureFlagValue'], any> {
+  name: 'FeatureFlagValue';
+}
+
+export interface FeatureFlagTypeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['FeatureFlagType'], any> {
+  name: 'FeatureFlagType';
+}
 
 export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
   flagKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  flagType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  defaultValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  flagType?: Resolver<ResolversTypes['FeatureFlagType'], ParentType, ContextType>;
+  defaultValue?: Resolver<Maybe<ResolversTypes['FeatureFlagValue']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type FeatureFlagUserValueResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlagUserValue']> = ResolversObject<{
   userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   flagKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  flagType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  flagValue?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  flagType?: Resolver<ResolversTypes['FeatureFlagType'], ParentType, ContextType>;
+  flagValue?: Resolver<Maybe<ResolversTypes['FeatureFlagValue']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SetUserFeatureFlagResponseResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['SetUserFeatureFlagResponse']> = ResolversObject<{
+  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  result?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -174,8 +228,11 @@ export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversP
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  FeatureFlagValue?: GraphQLScalarType;
+  FeatureFlagType?: GraphQLScalarType;
   FeatureFlag?: FeatureFlagResolvers<ContextType>;
   FeatureFlagUserValue?: FeatureFlagUserValueResolvers<ContextType>;
+  SetUserFeatureFlagResponse?: SetUserFeatureFlagResponseResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 }>;
 
