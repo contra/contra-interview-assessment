@@ -1,6 +1,7 @@
 type Mutation {
   sampleMutation: String!
   setUsersFeatureFlag(userIds: [String!]!, featureFlagData: UserFeatureFlagData!): [SetUserFeatureFlagResponse!]!
+  removeUsersFeatureFlag(userIds: [String!]!, featureFlagKey: String!): [RemoveUserFeatureFlagResponse!]!
 }
 
 type Query {
@@ -26,6 +27,11 @@ type FeatureFlagUserValue {
 }
 
 type SetUserFeatureFlagResponse {
+  userId: String!
+  result: String!
+}
+
+type RemoveUserFeatureFlagResponse {
   userId: String!
   result: String!
 }

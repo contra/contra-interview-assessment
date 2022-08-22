@@ -29,7 +29,7 @@ TODO
 [X] Make Query to list all FFs
 [X] Make Query to return all users and their FF values
 [X] Make Mutation to set FF value on N users
-[ ] Make Mutation to remove FF value from N users
+[X] Make Mutation to remove FF value from N users
 
 
 Random Thoughts
