@@ -47,7 +47,7 @@ export const useModal = (
   }
 
   const handleModalClose = useCallback(
-    (event?: React.MouseEvent | React.KeyboardEvent) => {
+    (event?: MouseEvent | KeyboardEvent | TouchEvent) => {
       event && event.stopPropagation();
       close();
     },
