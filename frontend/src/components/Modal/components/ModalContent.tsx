@@ -108,6 +108,11 @@ const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
         } else {
           setIsModalAtTop(false);
         }
+
+        if (!item) {
+          // This means that there are no more items in the stack, so we can remove the body scroll without having to worry about edge cases
+          unlockBodyScroll();
+        }
       });
 
       modalStack.add(node);
@@ -117,7 +122,7 @@ const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
         modalStack.remove(node);
         unsubscribe();
       };
-    }, [node]);
+    }, [node, unlockBodyScroll]);
 
     /**
      * This useEffect handles the case where the focus is shifted programatically
@@ -250,13 +255,7 @@ const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
       if (isModalOpen) {
         lockBodyScroll();
       }
-
-      return () => {
-        if (!(modalStack.length() > 0)) {
-          unlockBodyScroll();
-        }
-      };
-    }, [isModalOpen, lockBodyScroll, unlockBodyScroll]);
+    }, [isModalOpen, lockBodyScroll]);
 
     useEffect(() => {
       if (node) {
