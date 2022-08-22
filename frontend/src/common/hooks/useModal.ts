@@ -94,8 +94,9 @@ useHotKeys({
   } , [manager.modals]);
 
   useEffect(() => {
-    if (!isOpen) {
-      close();
+    if (!isOpen && !manager.hasModals()) {
+      returnFocusToPreviousActiveElement();
+      onClose?.()
     }
   } , [isOpen]);
 

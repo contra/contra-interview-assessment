@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 interface useHotKeyProps {
   key: string;
@@ -6,7 +6,7 @@ interface useHotKeyProps {
   useAltKey?: boolean;
   dependencies?: any[];
   useShiftKey?: boolean;
-  action: (e: React.KeyboardEvent) => void;
+  action: (e: KeyboardEvent) => void;
 }
 
 const useHotKey = ({
@@ -17,7 +17,7 @@ const useHotKey = ({
   useCmdKey = false,
   useAltKey = false,
 } : useHotKeyProps) => {
-  const handleKeyDown = (e : React.KeyboardEvent) => {
+  const handleKeyDown = (e : KeyboardEvent) => {
     if (useShiftKey && !e.shiftKey) return;
 
     if (useCmdKey && !e.metaKey) return;
