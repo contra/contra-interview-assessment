@@ -16,14 +16,14 @@ scalar FeatureFlagType
 type FeatureFlag {
   flagKey: String!
   flagType: FeatureFlagType!
-  defaultValue: FeatureFlagValue!
+  defaultValue: FeatureFlagValue
 }
 
 type FeatureFlagUserValue {
   userId: String!
   flagKey: String!
   flagType: FeatureFlagType!
-  flagValue: FeatureFlagValue
+  flagValue: FeatureFlagValue!
 }
 
 type SetUserFeatureFlagResponse {

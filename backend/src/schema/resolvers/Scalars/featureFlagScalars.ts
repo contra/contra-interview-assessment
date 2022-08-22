@@ -8,6 +8,19 @@ type FeatureFlagObject = {
   flagValue: FeatureFlagValue
 }
 
+export function unstringifyFeatureFlagValue(jsonString: string): FeatureFlagValue {
+  const parsedJson = JSON.parse(jsonString);
+  return parseFeatureFlagValue(parsedJson)
+}
+
+export function unstringifyNullableFeatureFlagValue(jsonString: string): FeatureFlagValue | null {
+  const parsedJson = JSON.parse(jsonString);
+  if (parsedJson === null) {
+    return null;
+  }
+  return parseFeatureFlagValue(parsedJson)
+}
+
 export function isFeatureFlagValue(value: unknown): value is FeatureFlagValue {
   return getFeatureFlagValue(value) !== undefined;
 }
@@ -91,7 +104,7 @@ function getFeatureFlagObject(value: unknown): FeatureFlagObject | undefined {
   }
 }
 
-function parseFeatureFlagValue(value: unknown): FeatureFlagValue {
+export function parseFeatureFlagValue(value: unknown): FeatureFlagValue {
   const featureFlagObject = getFeatureFlagObject(value);
     if (featureFlagObject !== undefined) {
       return featureFlagObject.flagValue;
@@ -121,7 +134,7 @@ export const FeatureFlagValue = new GraphQLScalarType({
   },
 });
 
-function parseFeatureFlagType(value: unknown): FeatureFlagType {
+export function parseFeatureFlagType(value: unknown): FeatureFlagType {
   if (isFeatureFlagType(value)) {
     return value;
   }

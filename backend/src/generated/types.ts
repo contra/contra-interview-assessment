@@ -49,7 +49,7 @@ export type FeatureFlag = {
   __typename?: 'FeatureFlag';
   flagKey: Scalars['String'];
   flagType: Scalars['FeatureFlagType'];
-  defaultValue: Scalars['FeatureFlagValue'];
+  defaultValue?: Maybe<Scalars['FeatureFlagValue']>;
 };
 
 export type FeatureFlagUserValue = {
@@ -57,7 +57,7 @@ export type FeatureFlagUserValue = {
   userId: Scalars['String'];
   flagKey: Scalars['String'];
   flagType: Scalars['FeatureFlagType'];
-  flagValue?: Maybe<Scalars['FeatureFlagValue']>;
+  flagValue: Scalars['FeatureFlagValue'];
 };
 
 export type SetUserFeatureFlagResponse = {
@@ -207,7 +207,7 @@ export interface FeatureFlagTypeScalarConfig extends GraphQLScalarTypeConfig<Res
 export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
   flagKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   flagType?: Resolver<ResolversTypes['FeatureFlagType'], ParentType, ContextType>;
-  defaultValue?: Resolver<ResolversTypes['FeatureFlagValue'], ParentType, ContextType>;
+  defaultValue?: Resolver<Maybe<ResolversTypes['FeatureFlagValue']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -215,7 +215,7 @@ export type FeatureFlagUserValueResolvers<ContextType = ResolverContext, ParentT
   userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   flagKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   flagType?: Resolver<ResolversTypes['FeatureFlagType'], ParentType, ContextType>;
-  flagValue?: Resolver<Maybe<ResolversTypes['FeatureFlagValue']>, ParentType, ContextType>;
+  flagValue?: Resolver<ResolversTypes['FeatureFlagValue'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
