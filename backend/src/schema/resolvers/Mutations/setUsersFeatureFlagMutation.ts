@@ -34,7 +34,7 @@ export const resolve: MutationResolvers['setUsersFeatureFlag'] = async (
       LEFT JOIN feature_flag ff ON ff.flag_key = ${flagKey}
     WHERE
       ua.id IN (${sql.join(userIds, sql`, `)})
-      AND (ff.flag_type = ${flagType} OR ${flagType} = 'any')
+      AND ff.flag_type = ${flagType}
     ON CONFLICT (feature_flag_fk, user_account_fk)
     DO UPDATE SET flag_value = ${flagValueString}
     RETURNING

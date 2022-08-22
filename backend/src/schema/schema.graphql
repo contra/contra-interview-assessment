@@ -16,7 +16,7 @@ scalar FeatureFlagType
 type FeatureFlag {
   flagKey: String!
   flagType: FeatureFlagType!
-  defaultValue: FeatureFlagValue
+  defaultValue: FeatureFlagValue!
 }
 
 type FeatureFlagUserValue {
@@ -46,5 +46,5 @@ type User {
 
 input UserFeatureFlagData {
   flagKey: String!
-  flagValue: FeatureFlagValue
+  flagValue: FeatureFlagValue!
 }

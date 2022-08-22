@@ -49,7 +49,7 @@ export type FeatureFlag = {
   __typename?: 'FeatureFlag';
   flagKey: Scalars['String'];
   flagType: Scalars['FeatureFlagType'];
-  defaultValue?: Maybe<Scalars['FeatureFlagValue']>;
+  defaultValue: Scalars['FeatureFlagValue'];
 };
 
 export type FeatureFlagUserValue = {
@@ -83,7 +83,7 @@ export type User = {
 
 export type UserFeatureFlagData = {
   flagKey: Scalars['String'];
-  flagValue?: Maybe<Scalars['FeatureFlagValue']>;
+  flagValue: Scalars['FeatureFlagValue'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -207,7 +207,7 @@ export interface FeatureFlagTypeScalarConfig extends GraphQLScalarTypeConfig<Res
 export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
   flagKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   flagType?: Resolver<ResolversTypes['FeatureFlagType'], ParentType, ContextType>;
-  defaultValue?: Resolver<Maybe<ResolversTypes['FeatureFlagValue']>, ParentType, ContextType>;
+  defaultValue?: Resolver<ResolversTypes['FeatureFlagValue'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

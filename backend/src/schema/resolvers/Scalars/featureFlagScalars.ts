@@ -1,8 +1,8 @@
 import { GraphQLScalarType, Kind } from 'graphql';
 
-const featureFlagTypeStrings = ['boolean', 'string', 'number', 'array', 'object', 'any'];
+const featureFlagTypeStrings = ['boolean', 'string', 'number', 'array', 'object'];
 export type FeatureFlagType = typeof featureFlagTypeStrings[number];
-export type FeatureFlagValue = boolean | string | number | any[] | object | null
+export type FeatureFlagValue = boolean | string | number | any[] | object
 type FeatureFlagObject = {
   flagType: FeatureFlagType
   flagValue: FeatureFlagValue
@@ -17,8 +17,7 @@ export function isFeatureFlagType(type: unknown): type is FeatureFlagType {
 }
 
 export function getFeatureFlagValue(value: unknown): FeatureFlagValue | undefined {
-  if (value === undefined) { return undefined; }
-  if (value === null) { return null; }
+  if (value === undefined || value === null) { return undefined; }
   switch(typeof value) {
     case 'boolean':
       return value;
@@ -30,7 +29,7 @@ export function getFeatureFlagValue(value: unknown): FeatureFlagValue | undefine
       if (Array.isArray(value)) {
         return value;
       } else {
-        return value;
+        return value!; // Assert that value cannot be null, due to type guard
       }
     default:
       return undefined;
@@ -58,8 +57,7 @@ export function getFeatureFlagType(value: FeatureFlagValue): FeatureFlagType {
 }
 
 function getFeatureFlagObject(value: unknown): FeatureFlagObject | undefined {
-  if (value === undefined) { return undefined; }
-  if (value === null) { return { flagType: 'any', flagValue: null }  }
+  if (value === undefined || value === null) { return undefined; }
   switch(typeof value) {
     case 'boolean':
       return {
@@ -85,7 +83,7 @@ function getFeatureFlagObject(value: unknown): FeatureFlagObject | undefined {
       } else {
         return {
           flagType: 'object',
-          flagValue: value,
+          flagValue: value!,  // Assert value cannot be null, due to type guard
         };
       }
     default:
@@ -93,13 +91,9 @@ function getFeatureFlagObject(value: unknown): FeatureFlagObject | undefined {
   }
 }
 
-function isNotUndefined<T>(value: T | undefined): value is T {
-  return value !== undefined;
-}
-
 function parseFeatureFlagValue(value: unknown): FeatureFlagValue {
   const featureFlagObject = getFeatureFlagObject(value);
-    if (isNotUndefined(featureFlagObject)) {
+    if (featureFlagObject !== undefined) {
       return featureFlagObject.flagValue;
     }
     throw new Error("Provided value is not a valid Feature Flag Value");
