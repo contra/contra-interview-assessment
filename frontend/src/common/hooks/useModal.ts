@@ -40,12 +40,16 @@ export const useModal = (
     } else focusElementsInModal(dialogRef, true)
   }
 
+  const close = () => {
+    if (!manager.isTopModal(dialogRef)) return;
+      returnFocusToPreviousActiveElement();
+      onClose?.()
+  }
+
   const handleModalClose = useCallback(
     (event?: React.MouseEvent | React.KeyboardEvent) => {
       event && event.stopPropagation();
-      if (!manager.isTopModal(dialogRef)) return;
-      returnFocusToPreviousActiveElement();
-      onClose?.()
+      close();
     },
     [onClose],
   )
@@ -91,8 +95,7 @@ export const useModal = (
 
   useEffect(() => {
     if (!isOpen) {
-      returnFocusToPreviousActiveElement();
-      onClose?.()
+      close();
     }
   } , [isOpen]);
 

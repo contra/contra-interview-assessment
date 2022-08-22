@@ -36,11 +36,11 @@ const Index: NextPage = () => {
         isOpen={isMyProfileModalOpen}
         onClose={() => setIsMyProfileModalOpen(false)}
         // size="full"
-        initialFocusRef={inputRef}
+        // initialFocusRef={inputRef}
         // finalFocusRef={buttonRef}
         // blockScrollOnMount={false}
-        closeOnOutsideClick={false}
-        closeOnEsc={false}
+        // closeOnOutsideClick={false}
+        // closeOnEsc={false}
       >
         <Modal.Header>
           <h1 className="text-lg text-gray-800">My Profile</h1>
