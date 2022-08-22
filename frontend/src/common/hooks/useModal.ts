@@ -1,4 +1,4 @@
-import {useRef, useCallback, useEffect} from 'react';
+import {useRef, useCallback, useEffect, MouseEventHandler} from 'react';
 
 import { noop } from '../utils/noop';
 import useHotKeys from './useHotKeys';
