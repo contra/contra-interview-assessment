@@ -11,7 +11,7 @@ import { InternalStyledModalDescription } from './Modal.styles';
 
 export type ModalDescriptionProps = ComponentProps<
   typeof InternalStyledModalDescription
-> & { children: ReactNode };
+> & { as?: keyof JSX.IntrinsicElements; children: ReactNode };
 
 const ModalDescription = forwardRef<HTMLHeadingElement, ModalDescriptionProps>(
   (props, ref) => {
