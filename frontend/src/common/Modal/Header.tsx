@@ -1,4 +1,4 @@
-import { MouseEventHandler, useContext } from "react";
+import { useContext } from "react";
 import classnames from "classnames";
 
 import { ModalContext } from "./ModalContext";
