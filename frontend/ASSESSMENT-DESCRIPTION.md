@@ -3,6 +3,7 @@ An implementation of a lightweight, customisable Modal component from scratch. T
 ## Loom Video
 
 Please watch the following loom video to understand the structure, working, and UI of the modal component. 
+Ref Loom Video Link - https://www.loom.com/share/a566509947074b88a3982b680839f80b
 
 ## Component Structure
 
