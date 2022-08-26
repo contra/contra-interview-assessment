@@ -1,22 +1,27 @@
 /* eslint-disable canonical/filename-match-exported */
-import Button from '../components/Button';
-import Modal from '../components/Modal';
-import { styles } from '../styles';
+import Modal from '@/components/Modal';
+import Button from '@/components/Button';
+import { styles } from '@/styles';
 import { type NextPage } from 'next';
 import { useState } from 'react';
 
-const Index: NextPage = () => {
+const LotsOfInputs: NextPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   function handleModalClose() {
     setModalOpen(false);
   }
+
   return (
     <>
       <h1>Welcome to Contra!</h1>
-      <h2>Basic Demo</h2>
-      <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
-      <Button>Useless button for focus trap</Button>
+      <h2>Demo: Performance on many background tabbable elements</h2>
+      <div>
+        <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
+        {[...Array(1000).keys()].map((i) => (
+          <Button key={i}>Useless button for focus trap</Button>
+        ))}
+      </div>
 
       <Modal
         containerId="modal-container"
@@ -28,15 +33,15 @@ const Index: NextPage = () => {
           <form onSubmit={handleModalClose} style={styles['modalForm']}>
             <label>
               Name:
-              <input type="text" name="name" />
+              <input type="text" />
             </label>
             <label>
               Email:
-              <input type="text" name="email" />
+              <input type="text" />
             </label>
             <Button type="submit">Submit</Button>
           </form>
-          <Button onClick={handleModalClose}>Cancel</Button>
+          <Button onClick={handleModalClose}>Close Modal</Button>
         </div>
       </Modal>
 
@@ -45,4 +50,4 @@ const Index: NextPage = () => {
   );
 };
 
-export default Index;
+export default LotsOfInputs;
