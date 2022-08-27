@@ -23,6 +23,7 @@ export const createFastifyServer = async (pool: CommonQueryMethodsType) => {
       reply,
       request,
     }),
+    introspection: true,
     schema: executableSchema,
   });
 

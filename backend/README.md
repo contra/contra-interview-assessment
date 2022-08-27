@@ -1,4 +1,4 @@
-# Contra Backend Technical Asessment
+# Contra Backend Technical Assessment
 
 ## Requirements
 
@@ -75,7 +75,7 @@ $ yarn dev
 
 and the application should come alive at `localhost:8080/graphql`
 
-This project comes with Apollo Explorer, a handy GUI to execute operations your GraphQL server. A `hello` query comes ready for you out of the box -- try it out:
+This project comes with Apollo Explorer, a handy GUI to execute operations on your GraphQL server. A `hello` query comes ready for you out of the box -- try it out:
 
 ```graphql
 {
@@ -129,4 +129,18 @@ $ yarn migrate up
 $ yarn migrate down
 ```
 
-- A sample migration for a `user_account` table has provided for your convenience.
+- A sample migration for a `user_account` table has been provided for your convenience.
+
+
+## Troubleshooting
+
+```
+ERROR: for postgres  Cannot start service postgresql: driver failed programming external connectivity on endpoint postgres (bCreating feature_flag ... done
+nd: address already in use
+```
+
+It may occur when you have another container running or a local DB running with postgres. Try:
+```shell
+systemctl stop postgresql #stop postgresql
+```
+The ```#stop postgresql``` it's just an alias for you to remember it (or search it with ```ctrl+r``` in the terminal)
