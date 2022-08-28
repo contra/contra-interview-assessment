@@ -9,6 +9,7 @@ const ruleOverrides = {
   'canonical/import-specifier-newline': 0,
   'default-case': 0,
   'default-case-last': 0,
+  'func-style': 0,
   'import/extensions': 0,
   'jest/prefer-strict-equal': 0,
   'jsx-a11y/anchor-is-valid': 0,

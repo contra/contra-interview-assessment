@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@/packages/button/Button';
+import { Button } from '@/packages/button';
 import styles from './ModalDemo.module.css';
 
 export const ModalDemo = () => {
