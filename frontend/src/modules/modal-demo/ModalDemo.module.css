@@ -7,12 +7,17 @@
   margin: auto;
 
   max-width: 1280px;
-  height: 100vh;
 
-  gap: 8px;
+  gap: 12px;
 }
 
 .header {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+.scrollable {
+  height: 100vh;
+  background-color: goldenrod;
+  padding: 12px;
 }

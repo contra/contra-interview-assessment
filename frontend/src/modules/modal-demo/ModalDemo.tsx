@@ -21,6 +21,10 @@ export const ModalDemo = () => {
         Open modal async
       </Button>
 
+      <div className={styles['scrollable']}>
+        I'm a div that makes the window to be scrollable
+      </div>
+
       {isFirstModalOpen && (
         <Modal onBackdropClick={closeFirstModal}>
           <h2>First modal</h2>

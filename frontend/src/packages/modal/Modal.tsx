@@ -4,6 +4,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { type PropsWithChildren } from 'react';
 import { Button } from '@/packages/button';
+import { usePreventScroll } from '@/packages/hooks/use-prevent-scroll';
 import { Portal } from '@/packages/portal';
 import styles from './Modal.module.css';
 
@@ -12,6 +13,8 @@ type ModalProps = {
 };
 
 export const Modal = (props: PropsWithChildren<ModalProps>) => {
+  usePreventScroll();
+
   return (
     <Portal>
       <dialog
