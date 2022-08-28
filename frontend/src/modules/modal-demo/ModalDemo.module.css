@@ -1,0 +1,18 @@
+.modalDemo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+
+  max-width: 1280px;
+  height: 100vh;
+
+  gap: 8px;
+}
+
+.header {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
