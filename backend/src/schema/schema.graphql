@@ -1,7 +1,31 @@
+type FeatureFlag {
+  createdDate: String
+  description: String!
+  id: ID!
+  name: String!
+  updatedDate: String
+}
+
 type Mutation {
   sampleMutation: String!
 }
 
 type Query {
+  getFeatureFlags: [FeatureFlag]
+  getUserFeatureFlags: [UserFeatureFlag]
+  getUsers: [User]
   hello: String!
+}
+
+type User {
+  createdDate: String
+  email: String
+  id: ID
+  name: String
+  updatedDate: String
+}
+
+type UserFeatureFlag {
+  featureFlagId: ID!
+  userId: ID!
 }

@@ -47,3 +47,15 @@ connect:
 
 connect-db:
 	@docker network connect bridge postgres:14.5
+
+db-seed-undo:
+	npx sequelize-cli db:seed:undo:all
+
+db-seed:
+	npx sequelize-cli db:seed:all
+
+db-migrate:
+	npx sequelize-cli db:migrate
+
+db-migrate-undo:
+	npx sequelize-cli db:migrate:undo

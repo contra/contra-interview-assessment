@@ -1,14 +1,19 @@
-import { sql } from 'slonik';
+import Logger from "roarr";
+import {getAll} from "../../../db/services/userService";
 import { QueryResolvers } from '../../../generated/types';
+
+const log = Logger.child({ context: 'bin/server' });
 
 export const resolve: QueryResolvers['hello'] = async (
   _parent,
   _args,
-  { pool },
+  // @ts-ignore
+  { models },
 ) => {
-  const result = await pool.one<{ phrase: string }>(
-    sql`SELECT 'world' as phrase;`,
-  );
+  const all = await getAll()
+  log.info(JSON.stringify(all));
 
-  return result.phrase;
+  return 'it works';
+
+
 };
