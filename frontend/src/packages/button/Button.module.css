@@ -20,3 +20,8 @@
 .button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+.iconButton {
+  background-color: inherit;
+  color: inherit;
+}

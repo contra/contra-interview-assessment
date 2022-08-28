@@ -1,0 +1,47 @@
+.dialog {
+  max-width: 80vw;
+  min-width: 40vw;
+
+  padding: 0;
+
+  background-color: #ffff;
+  color: darkslategrey;
+
+  box-shadow: rgb(0 0 0 / 4%) 0px 0px 40px;
+  border-radius: 20px;
+}
+
+.dialog::backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-color: rgba(0, 0, 0, 0.4);
+
+  overflow: auto;
+  padding: 48px;
+
+  display: flex;
+  place-content: center;
+}
+
+.content {
+  position: relative;
+  padding: 40px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: darkslategrey;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
