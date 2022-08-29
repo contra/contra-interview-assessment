@@ -1,0 +1,21 @@
+.Button {
+  background: var(--blue);
+  border: 0.2rem solid var(--blue);
+  border-radius: 0.5rem;
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  color: var(--white);
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.25rem;
+  text-transform: uppercase;
+  text-align: center;
+  transition: all 0.2s;
+}
+.Button:hover {
+  color: var(--blue);
+  background-color: unset;
+  border: 0.2rem solid var(--white);
+}

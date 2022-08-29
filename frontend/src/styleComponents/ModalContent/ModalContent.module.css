@@ -1,0 +1,17 @@
+.ModalContent {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  height: 400px;
+  overflow: hidden;
+  padding: 2rem;
+  position: relative;
+  width: 65%;
+  z-index: 1010;
+}
+
+.ModalContent-inner {
+  height: 100%;
+  overflow: scroll;
+  width: 100%;
+}

@@ -1,0 +1,36 @@
+.modal {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+.modal-overlay {
+  animation: containerAnimation 100ms linear forwards;
+  background: rgb(32, 32, 32);
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1005;
+}
+
+.modal-closed {
+  display: none;
+}
+
+@keyframes containerAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
+}

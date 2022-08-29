@@ -1,0 +1,15 @@
+.CloseButton {
+  background: none;
+  display: flex;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  outline: inherit;
+  font-size: 2rem;
+  color: var(--blue);
+  justify-content: flex-end;
+}
