@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Modal } from '@/packages/modal';
 
 describe('Modal', () => {
   it('should render a dialog', () => {
     const modalContent = 'My modal content';
-    const showModalSpy = jest.spyOn(HTMLDialogElement.prototype, 'showModal');
 
     render(
       <Modal onBackdropClick={() => {}}>
@@ -14,7 +14,6 @@ describe('Modal', () => {
 
     expect(dialogSelector()).toBeInTheDocument();
     expect(screen.getByText(modalContent)).toBeInTheDocument();
-    expect(showModalSpy).toHaveBeenCalledWith(undefined);
   });
 
   it('should call on backdrop click callback', () => {
@@ -31,6 +30,28 @@ describe('Modal', () => {
   it('should lock background scroll', () => {
     render(<Modal onBackdropClick={() => {}}>My modal content</Modal>);
     expect(document.documentElement).toHaveStyle('overflow: hidden');
+  });
+
+  it('should trap focus inside modal', async () => {
+    expect.hasAssertions();
+    render(
+      <>
+        <input />
+        <Modal onBackdropClick={() => {}}>
+          <input autoFocus data-testid="insideInput1" />
+          <input data-testid="insideInput2" />
+        </Modal>
+      </>
+    );
+
+    const insideInput1 = screen.getByTestId('insideInput1');
+    const insideInput2 = screen.getByTestId('insideInput2');
+
+    expect(document.activeElement).toBe(insideInput1);
+    await userEvent.tab();
+    expect(document.activeElement).toBe(insideInput2);
+    await userEvent.tab();
+    expect(document.activeElement).toBe(insideInput1);
   });
 });
 

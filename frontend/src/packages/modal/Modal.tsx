@@ -4,6 +4,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { type PropsWithChildren } from 'react';
 import { Button } from '@/packages/button';
+import { useFocusScope } from '@/packages/hooks/use-focus-scope';
 import { usePreventScroll } from '@/packages/hooks/use-prevent-scroll';
 import { Portal } from '@/packages/portal';
 import styles from './Modal.module.css';
@@ -13,6 +14,7 @@ type ModalProps = {
 };
 
 export const Modal = (props: PropsWithChildren<ModalProps>) => {
+  const { createFocusScope } = useFocusScope();
   usePreventScroll();
 
   return (
@@ -25,6 +27,7 @@ export const Modal = (props: PropsWithChildren<ModalProps>) => {
         }}
         ref={(node) => {
           if (node?.open === false) node.showModal();
+          createFocusScope(node);
         }}
       >
         <div className={styles['content']}>{props.children}</div>
