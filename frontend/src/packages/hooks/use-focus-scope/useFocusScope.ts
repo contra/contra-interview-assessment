@@ -55,10 +55,13 @@ export function useFocusScope() {
     [tabKeyHandler]
   );
 
-  useEffect(() => () => {
-    previousFocusedElement.current.focus();
-    document.removeEventListener('keydown', tabKeyHandler);
-  });
+  useEffect(
+    () => () => {
+      previousFocusedElement.current.focus();
+      document.removeEventListener('keydown', tabKeyHandler);
+    },
+    [tabKeyHandler]
+  );
 
   return { createFocusScope: setRef };
 }
