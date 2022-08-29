@@ -10,7 +10,7 @@ import { Portal } from '@/packages/portal';
 import styles from './Modal.module.css';
 
 type ModalProps = {
-  onBackdropClick: () => void;
+  onClose: () => void;
 };
 
 export const Modal = (props: PropsWithChildren<ModalProps>) => {
@@ -22,11 +22,11 @@ export const Modal = (props: PropsWithChildren<ModalProps>) => {
       <dialog
         className={styles['dialog']}
         onClick={({ target }) => {
-          if ((target as HTMLElement).nodeName === 'DIALOG')
-            props.onBackdropClick();
+          if ((target as HTMLElement).nodeName === 'DIALOG') props.onClose();
         }}
         ref={(node) => {
           if (node?.open === false) node.showModal();
+          node?.addEventListener('close', () => props.onClose());
           createFocusScope(node);
         }}
       >

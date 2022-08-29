@@ -7,7 +7,7 @@ describe('Modal', () => {
     const modalContent = 'My modal content';
 
     render(
-      <Modal onBackdropClick={() => {}}>
+      <Modal onClose={() => {}}>
         <h2>{modalContent}</h2>
       </Modal>
     );
@@ -16,19 +16,26 @@ describe('Modal', () => {
     expect(screen.getByText(modalContent)).toBeInTheDocument();
   });
 
-  it('should call on backdrop click callback', () => {
-    const onBackdropClickSpy = jest.fn();
-    render(
-      <Modal onBackdropClick={onBackdropClickSpy}>My modal content</Modal>
-    );
+  it('should call onClose when backdrop clicked ', () => {
+    const onCloseSpy = jest.fn();
+    render(<Modal onClose={onCloseSpy}>My modal content</Modal>);
 
-    expect(onBackdropClickSpy).toHaveBeenCalledTimes(0);
+    expect(onCloseSpy).toHaveBeenCalledTimes(0);
     fireEvent.click(dialogSelector());
-    expect(onBackdropClickSpy).toHaveBeenCalledTimes(1);
+    expect(onCloseSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call onClose when native dialog is closed ', () => {
+    const onCloseSpy = jest.fn();
+    render(<Modal onClose={onCloseSpy}>My modal content</Modal>);
+
+    expect(onCloseSpy).toHaveBeenCalledTimes(0);
+    dialogSelector().dispatchEvent(new Event('close'));
+    expect(onCloseSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should lock background scroll', () => {
-    render(<Modal onBackdropClick={() => {}}>My modal content</Modal>);
+    render(<Modal onClose={() => {}}>My modal content</Modal>);
     expect(document.documentElement).toHaveStyle('overflow: hidden');
   });
 
@@ -37,7 +44,7 @@ describe('Modal', () => {
     render(
       <>
         <input />
-        <Modal onBackdropClick={() => {}}>
+        <Modal onClose={() => {}}>
           <input autoFocus data-testid="insideInput1" />
           <input data-testid="insideInput2" />
         </Modal>
@@ -60,5 +67,5 @@ describe('Modal', () => {
  * Hidden true is needed because dialog.showModal is mocked in the test environment.
  */
 function dialogSelector() {
-  return screen.getByRole('dialog', { hidden: true });
+  return screen.getByRole<HTMLDialogElement>('dialog', { hidden: true });
 }

@@ -26,7 +26,7 @@ export const ModalDemo = () => {
       </div>
 
       {isFirstModalOpen && (
-        <Modal onBackdropClick={closeFirstModal}>
+        <Modal onClose={closeFirstModal}>
           <h2>First modal</h2>
           <Modal.XButton onClick={closeFirstModal} />
           <Modal.Footer>
@@ -36,7 +36,7 @@ export const ModalDemo = () => {
         </Modal>
       )}
       {isSecondModalOpen && (
-        <Modal onBackdropClick={closeSecondModal}>
+        <Modal onClose={closeSecondModal}>
           <h2>Hello there from async modal</h2>
           <Modal.Footer>
             <Button onClick={closeSecondModal}>Cool</Button>
