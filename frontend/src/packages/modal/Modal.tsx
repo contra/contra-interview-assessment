@@ -24,9 +24,9 @@ export const Modal = (props: PropsWithChildren<ModalProps>) => {
         onClick={({ target }) => {
           if ((target as HTMLElement).nodeName === 'DIALOG') props.onClose();
         }}
+        onClose={props.onClose}
         ref={(node) => {
           if (node?.open === false) node.showModal();
-          node?.addEventListener('close', () => props.onClose());
           createFocusScope(node);
         }}
       >
