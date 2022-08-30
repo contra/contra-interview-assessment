@@ -28,6 +28,7 @@ src/types/api.ts
 !.github
 !.lintstagedrc.js
 !.nvmrc
+!.mergify.yml
 
 !.gitattributes
 !.npmignore
