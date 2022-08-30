@@ -2,7 +2,7 @@
 import { type NextPage } from 'next';
 
 const Index: NextPage = () => {
-  return <h1>Welcome to Contra!</h1>;
+  return <h1 className="text-3xl font-bold underline">Welcome to Contra!</h1>;
 };
 
 export default Index;
