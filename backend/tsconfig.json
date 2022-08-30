@@ -27,7 +27,11 @@
     "forceConsistentCasingInFileNames": true,
     "useUnknownInCatchVariables": false
   },
-  "include": ["src", "test"],
+  "include": [
+    "src",
+    "test",
+    "node_modules/ts-jest/globals.d.ts"
+  ],
   "exclude": [
     "src/db/seeders",
     "src/db/migrations",

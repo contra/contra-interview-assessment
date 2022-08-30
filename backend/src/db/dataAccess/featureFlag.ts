@@ -5,7 +5,7 @@ export const getAll = async (): Promise<FeatureFlagOutput[]> => {
     return FeatureFlag.findAll({raw:true})
 }
 
-export const getById = async (id: number): Promise<FeatureFlagOutput> => {
+export const getById = async (id: string): Promise<FeatureFlagOutput> => {
     const featureFlag = await FeatureFlag.findByPk(id)
 
     if (!featureFlag) {

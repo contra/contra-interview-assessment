@@ -12,7 +12,7 @@ interface UserFeatureFlagAttributes {
     updatedDate: Date;
 }
 
-export type UserFeatureFlagInput = Optional<UserFeatureFlagAttributes, 'userId' | 'featureFlagId'>
+export type UserFeatureFlagInput = Optional<UserFeatureFlagAttributes, 'createdDate' | 'updatedDate'>
 
 export type UserFeatureFlagOutput = Required<UserFeatureFlagAttributes>
 

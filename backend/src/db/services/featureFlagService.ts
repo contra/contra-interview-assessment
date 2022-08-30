@@ -1,7 +1,7 @@
 import * as featureFlagDataAccess from '../dataAccess/featureFlag'
 import {FeatureFlagOutput} from '../models/FeatureFlag'
 
-export const getById = (id: number): Promise<FeatureFlagOutput> => {
+export const getById = (id: string): Promise<FeatureFlagOutput> => {
     return featureFlagDataAccess.getById(id)
 }
 

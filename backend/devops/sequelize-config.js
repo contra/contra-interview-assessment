@@ -1,8 +1,7 @@
 const { env } = process;
-console.log(env.DB_CONNECTION)
 
 const {username, password, host, port, database} = JSON.parse(env.DB_CONNECTION)
-console.log(username)
+
 module.exports = {
   username: username,
   password: password,

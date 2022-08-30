@@ -12,11 +12,14 @@
     "migrate": "ts-node ./src/bin/migrate.ts"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-typescript": "^7.18.6",
     "@graphql-codegen/cli": "1.21.2",
     "@graphql-codegen/core": "1.17.9",
     "@graphql-codegen/typescript": "1.21.1",
     "@graphql-codegen/typescript-operations": "1.17.15",
     "@graphql-codegen/typescript-resolvers": "1.19.0",
+    "@jest/globals": "^29.0.1",
     "@slonik/migrator": "0.11.2",
     "@types/node": "^18.7.13",
     "@typescript-eslint/parser": "5.12.0",
@@ -24,10 +27,13 @@
     "eslint-config-canonical": "25.9.1",
     "eslint-config-prettier": "7.2.0",
     "eslint-plugin-import": "2.22.1",
+    "faker": "^6.6.6",
     "format-graphql": "1.4.0",
+    "jest": "^29.0.1",
     "lint-staged": "10.5.4",
     "nyc": "15.1.0",
     "prettier": "2.2.1",
+    "ts-jest": "^28.0.8",
     "ts-node-dev": "1.1.6",
     "typescript": "4.5.5"
   },

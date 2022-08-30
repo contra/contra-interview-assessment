@@ -13,8 +13,14 @@ type Mutation {
 type Query {
   getFeatureFlags: [FeatureFlag]
   getUserFeatureFlags: [UserFeatureFlag]
+  getUserFeatureFlagsByUser(
+    userId: ID!
+  ): [UserFeatureFlag]
+  getUserFeatureFlagsByFeatureFlag(
+    featureFlagId: ID!
+  ): [UserFeatureFlag]
+  getUserFeatureFlagsByFeatureFlag: [UserFeatureFlag]
   getUsers: [User]
-  hello: String!
 }
 
 type User {
