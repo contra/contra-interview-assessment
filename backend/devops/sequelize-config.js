@@ -1,5 +1,5 @@
+require('dotenv').config()
 const { env } = process;
-
 const {username, password, host, port, database} = JSON.parse(env.DB_CONNECTION)
 
 module.exports = {

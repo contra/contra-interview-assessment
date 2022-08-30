@@ -37,6 +37,7 @@ UserFeatureFlag.init({
         },
         featureFlagId: {
             allowNull: false,
+            field:'featureFlagId',
             references: {
                 key: "featureFlagId",
                 model: "FeatureFlag"
@@ -50,6 +51,7 @@ UserFeatureFlag.init({
         },
         userId: {
             allowNull: false,
+            field:'userId',
             references: {
                 key: "userId",
                 model: "User"
@@ -69,6 +71,7 @@ UserFeatureFlag.belongsTo(User, {
     foreignKey: {
         allowNull: false,
         field: 'userId',
+        name: 'userId'
     },
 })
 
@@ -76,6 +79,7 @@ UserFeatureFlag.belongsTo(FeatureFlag, {
     foreignKey: {
         allowNull: false,
         field: 'featureFlagId',
+        name: 'featureFlagId',
     },
 })
 

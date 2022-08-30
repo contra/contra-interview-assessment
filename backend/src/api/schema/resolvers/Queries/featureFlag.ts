@@ -1,5 +1,5 @@
-import {getAll} from "../../../db/services/featureFlagService";
-import {FeatureFlag, QueryResolvers} from '../../../generated/types';
+import {getAll} from "../../../../db/services/featureFlagService";
+import {FeatureFlag, QueryResolvers} from '../../../../generated/types';
 
 export const resolve: QueryResolvers['getFeatureFlags'] = async (
 ) => {

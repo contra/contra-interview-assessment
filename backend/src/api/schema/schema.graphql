@@ -1,0 +1,50 @@
+type FeatureFlag {
+    createdDate: String
+    description: String!
+    id: ID!
+    name: String!
+    updatedDate: String
+}
+
+type Mutation {
+    addFeatureFlagToUserM(
+        userId: ID!
+        featureFlagId: ID!
+    ): UserFeatureFlag
+    addFeatureFlagToUsersM(
+        userIds: [ID!]
+        featureFlagId: ID!
+    ): [UserFeatureFlag]
+    removeFeatureFlagFromUserM(
+        userId: ID!
+    ): [UserFeatureFlag]
+    removeUsersFromFeatureFlag(
+        featureFlagId: ID!
+    ): [UserFeatureFlag]
+}
+
+type Query {
+    getFeatureFlags: [FeatureFlag]
+    getUserFeatureFlags: [UserFeatureFlag]
+    getUserFeatureFlagsByUser(
+        userId: ID!
+    ): [UserFeatureFlag]
+    getUserFeatureFlagsByFeatureFlag(
+        featureFlagId: ID!
+    ): [UserFeatureFlag]
+    getUserFeatureFlagsByFeatureFlag: [UserFeatureFlag]
+    getUsers: [User]
+}
+
+type User {
+    createdDate: String
+    email: String
+    id: ID
+    name: String
+    updatedDate: String
+}
+
+type UserFeatureFlag {
+    featureFlagId: ID!
+    userId: ID!
+}

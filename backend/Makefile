@@ -17,7 +17,7 @@ clean-all-docker:
 	sh docker-clean.sh;
 
 docker-start: copy-env-file
-	$(DOCKER_COMPOSE) up -d && docker ps -a && echo "Yoy should be able to use http://0.0.0.0:$(PORT)"
+	$(DOCKER_COMPOSE) up -d && docker ps -a
 
 
 docker-inspect:
@@ -48,14 +48,18 @@ connect:
 connect-db:
 	@docker network connect bridge postgres:14.5
 
-db-seed-undo:
+export-db-env:
+	export DB_CONNECTION=$(DB_CONNECTION)
+
+db-seed-undo: export-db-env
 	npx sequelize-cli db:seed:undo:all
 
-db-seed:
+db-seed: export-db-env
 	npx sequelize-cli db:seed:all
 
-db-migrate:
+db-migrate: export-db-env
 	npx sequelize-cli db:migrate
 
-db-migrate-undo:
+db-migrate-undo: export-db-env
 	npx sequelize-cli db:migrate:undo
+

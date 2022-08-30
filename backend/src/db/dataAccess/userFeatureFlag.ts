@@ -40,11 +40,55 @@ export const addFeatureFlagToUser = async (payload: UserFeatureFlagInput): Promi
             raw: true,
             where: {userId:payload.userId}
         })
-        if (userFeatureFlag) {
+        if (userFeatureFlag.length !== 0) {
             throw new Error('User already has an active Feature flag')
         }
 
-        return UserFeatureFlag.create(payload)
+        const result =  await UserFeatureFlag.create(payload)
+        const userFeatureFlagResult = JSON.stringify(result)
+
+        return JSON.parse(userFeatureFlagResult)
+    } catch (error) {
+        throw new Error('Error assigning feature flag to user: '+error.message)
+    }
+}
+
+export const addFeatureFlagToUsers = async (payload: UserFeatureFlagInput[]): Promise<UserFeatureFlagOutput[]> => {
+    try{
+        const result =  await UserFeatureFlag.bulkCreate(payload)
+        const userFeatureFlagResult = JSON.stringify(result)
+
+        return JSON.parse(userFeatureFlagResult)
+
+    } catch (error) {
+        throw new Error('Error assigning feature flag to user: '+error.message)
+    }
+
+}
+
+export const removeFeatureFlagFromUser = async (id: string): Promise<UserFeatureFlagOutput[]> => {
+    try{
+       await UserFeatureFlag.destroy({
+            where: {userId:id}
+        })
+
+        return UserFeatureFlag.findAll({raw: true})
+
+    } catch (error) {
+        throw new Error('Error assigning feature flag to user: '+error.message)
+
+    }
+
+}
+
+export const removeFeatureFlag = async (id: string): Promise<UserFeatureFlagOutput[]> => {
+    try{
+       await UserFeatureFlag.destroy({
+            where: {featureFlagId:id}
+        })
+
+        return UserFeatureFlag.findAll({raw: true})
+
     } catch (error) {
         throw new Error('Error assigning feature flag to user: '+error.message)
 

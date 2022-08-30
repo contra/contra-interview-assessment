@@ -16,3 +16,15 @@ export const getByUserId = (id: string): Promise<UserFeatureFlagOutput[]> => {
 export const addFeatureFlagToUser = async (payload: UserFeatureFlagInput): Promise<UserFeatureFlagOutput> => {
     return userFeatureFlagDataAccess.addFeatureFlagToUser(payload);
 }
+
+export const addFeatureFlagToUsers = async (payload: UserFeatureFlagInput[]): Promise<UserFeatureFlagOutput[]> => {
+    return userFeatureFlagDataAccess.addFeatureFlagToUsers(payload);
+}
+
+export const removeFeatureFlagFromUser = async (id: string): Promise<UserFeatureFlagOutput[]> => {
+    return userFeatureFlagDataAccess.removeFeatureFlagFromUser(id);
+}
+
+export const removeFeatureFlag = async (id: string): Promise<UserFeatureFlagOutput[]> => {
+    return userFeatureFlagDataAccess.removeFeatureFlag(id);
+}

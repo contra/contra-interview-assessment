@@ -1003,7 +1003,7 @@
     "@babel/helper-create-regexp-features-plugin" "^7.18.6"
     "@babel/helper-plugin-utils" "^7.18.6"
 
-"@babel/preset-env@^7.18.10":
+"@babel/preset-env@7.18.10":
   version "7.18.10"
   resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.18.10.tgz#83b8dfe70d7eea1aae5a10635ab0a5fe60dfc0f4"
   integrity sha512-wVxs1yjFdW3Z/XkNfXKoblxoHgbtUF7/l3PvvP4m02Qz9TZ6uZGxRVYjSQeR87oQmHco9zWitW5J82DJ7sCjvA==
@@ -1095,7 +1095,7 @@
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
 
-"@babel/preset-typescript@^7.18.6":
+"@babel/preset-typescript@7.18.6":
   version "7.18.6"
   resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.18.6.tgz#ce64be3e63eddc44240c6358daefac17b3186399"
   integrity sha512-s9ik86kXBAnD760aybBucdpnLsAt0jK1xqJn2juOn9lkOvSHV60os5hxoVJsPzMQxvnUJFAlkont2DvvaYEBtQ==
@@ -1991,7 +1991,7 @@
     jest-mock "^29.0.1"
     jest-util "^29.0.1"
 
-"@jest/globals@^29.0.1":
+"@jest/globals@29.0.1", "@jest/globals@^29.0.1":
   version "29.0.1"
   resolved "https://registry.yarnpkg.com/@jest/globals/-/globals-29.0.1.tgz#764135ad31408fb632b3126793ab3aaed933095f"
   integrity sha512-BtZWrVrKRKNUt7T1H2S8Mz31PN7ItROCmH+V5pn10hJDUfjOCTIUwb0WtLZzm0f1tJ3Uvx+5lVZrF/VTKqNaFg==
@@ -2503,7 +2503,7 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node@*", "@types/node@^18.7.13":
+"@types/node@*", "@types/node@18.7.13":
   version "18.7.13"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.13.tgz#23e6c5168333480d454243378b69e861ab5c011a"
   integrity sha512-46yIhxSe5xEaJZXWdIBP7GU4HDTG8/eo0qd9atdiL+lFpA03y8KS+lkTN834TWJj5767GbWv4n/P6efyTFt1Dw==
@@ -3349,7 +3349,7 @@ babel-preset-jest@^29.0.0:
     babel-plugin-jest-hoist "^29.0.0"
     babel-preset-current-node-syntax "^1.0.0"
 
-babel-register@^6.26.0:
+babel-register@6.26.0, babel-register@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-register/-/babel-register-6.26.0.tgz#6ed021173e2fcb486d7acb45c6009a856f647071"
   integrity sha512-veliHlHX06wjaeY8xNITbveXSiI+ASFnOqvne/LaIJIqOWi2Ogmj91KOugEz/hoh/fwMhXNBJPCv8Xaz5CyM4A==
@@ -3740,7 +3740,7 @@ ci-info@^3.2.0:
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.3.2.tgz#6d2967ffa407466481c6c90b6e16b3098f080128"
   integrity sha512-xmDt/QIAdeZ9+nfdPsaBCpMvHNLFiLdjj59qjqn+6iPe6YmHGQ35sBnQ8uslRBXFmXkiZQOJRjvQeoGppoTjjg==
 
-cjs-loader@^0.1.0:
+cjs-loader@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/cjs-loader/-/cjs-loader-0.1.0.tgz#ab6325323954e0c199aa8ceb601a4236ba838d27"
   integrity sha512-WgdnnrdNJT+ffiyU2S1zsrhbDjkDH4qgTbGYHPSN6XBVMSg1LbnSnUrVFMic4pWYypcTwkhoNfBB+GFP/73MHQ==
@@ -5033,7 +5033,7 @@ extract-files@^7.0.0:
   resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-7.0.0.tgz#3dc7853320ff7876ec62d6e98f2f4e6f3e6282f6"
   integrity sha512-3AUlT7TD+DbQXNe3t70QrgJU6Wgcp7rk1Zm0vqWz8OYnw4vxihgG0TgZ2SIGrVqScc4WfOu7B4a0BezGJ0YqvQ==
 
-faker@^6.6.6:
+faker@6.6.6:
   version "6.6.6"
   resolved "https://registry.yarnpkg.com/faker/-/faker-6.6.6.tgz#e9529da0109dca4c7c5dbfeaadbd9234af943033"
   integrity sha512-9tCqYEDHI5RYFQigXFwF1hnCwcWCOJl/hmll0lr5D2Ljjb0o4wphb69wikeJDz5qCEzXCoPvG6ss5SDP6IfOdg==
@@ -6763,7 +6763,7 @@ jest-worker@^29.0.1:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-jest@^29.0.1:
+jest@29.0.1:
   version "29.0.1"
   resolved "https://registry.yarnpkg.com/jest/-/jest-29.0.1.tgz#4a1c48d79fada0a47c686a111ed9411fd41cd584"
   integrity sha512-liHkwzaW6iwQyhRBFj0A4ZYKcsQ7ers1s62CCT95fPeNzoxT/vQRWwjTT4e7jpSCwrvPP2t1VESuy7GrXcr2ug==
@@ -7464,7 +7464,7 @@ moment-timezone@^0.5.34:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.29.1:
+moment@2.29.4, "moment@>= 2.9.0", moment@^2.29.1:
   version "2.29.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
@@ -9735,7 +9735,7 @@ ts-invariant@^0.4.0:
   dependencies:
     tslib "^1.9.3"
 
-ts-jest@^28.0.8:
+ts-jest@28.0.8:
   version "28.0.8"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-28.0.8.tgz#cd204b8e7a2f78da32cf6c95c9a6165c5b99cc73"
   integrity sha512-5FaG0lXmRPzApix8oFG8RKjAz4ehtm8yMKOTy5HX3fY6W8kmvOrmcY0hKDElW52FJov+clhUbrKAqofnj4mXTg==
