@@ -13,7 +13,7 @@ const Index: NextPage = () => {
         onClick={() => setModalOpen(true)}
         type="button"
       >
-        Let's welcome Ryel To Contra
+        Let's Welcome Ryel To Contra
       </button>
       <Modal onClose={() => setModalOpen(false)} open={modalOpen} />
     </div>
