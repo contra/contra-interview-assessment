@@ -25,7 +25,7 @@ const Modal = ({ open, onClose }: Props) => {
 
   return createPortal(
     <div className="fixed top-0 flex h-screen w-screen items-center justify-center bg-transparent antialiased">
-      <div className="h-[80%] w-[90%] rounded-xl bg-neutral-100">
+      <div className="h-[80%] w-[90%] max-w-4xl rounded-xl bg-neutral-100">
         <div className="mx-4 mt-4 mb-6 flex justify-end ">
           <button
             className="rounded-full text-neutral-900"
@@ -71,7 +71,7 @@ const Modal = ({ open, onClose }: Props) => {
 
         <div className="mb-6 flex justify-center">
           <button
-            className="w-1/2 rounded-full bg-gradient-to-r from-yellow-500 to-orange-400 p-3 text-center font-semibold"
+            className="w-1/2 max-w-sm rounded-full bg-gradient-to-r from-yellow-500 to-orange-400 p-3 text-center font-semibold"
             onClick={handleParty}
             type="button"
           >
