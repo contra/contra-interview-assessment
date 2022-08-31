@@ -2,6 +2,7 @@
 import { type NextPage } from 'next';
 import { useState } from 'react';
 import Modal from '@/components/Modal';
+import Profile from '@/components/Profile';
 
 const Index: NextPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -15,7 +16,10 @@ const Index: NextPage = () => {
       >
         Let's Welcome Ryel To Contra
       </button>
-      <Modal onClose={() => setModalOpen(false)} open={modalOpen} />
+
+      <Modal onClose={() => setModalOpen(false)} open={modalOpen}>
+        <Profile />
+      </Modal>
     </div>
   );
 };
