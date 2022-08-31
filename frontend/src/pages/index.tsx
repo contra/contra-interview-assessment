@@ -8,13 +8,13 @@ const Index: NextPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-gradient-to-br from-black via-black  to-yellow-700 antialiased">
+    <div className="flex h-screen w-screen items-center justify-center bg-gradient-to-br from-black via-black to-yellow-700 antialiased">
       <button
         className="rounded-full bg-[#f2c94c] px-4 py-3 font-semibold text-black"
         onClick={() => setModalOpen(true)}
         type="button"
       >
-        Let's Welcome Ryel To Contra
+        Who is Ryel?
       </button>
 
       <Modal onClose={() => setModalOpen(false)} open={modalOpen}>

@@ -59,7 +59,7 @@ const Profile = () => {
         </button>
       </div>
 
-      <div className="flex flex-col items-center justify-center px-6 text-center">
+      <div className="mb-8 flex flex-col items-center justify-center px-6 text-center">
         <h3 className="mb-1 font-semibold">Who Am I?</h3>
         <p>I want to be good at what I do.</p>
         <p>I want to write code that makes an impact.</p>
