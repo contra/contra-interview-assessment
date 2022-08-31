@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { type KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { AiFillCloseCircle } from 'react-icons/ai';
@@ -33,13 +34,15 @@ const Modal = ({ open, onClose, children }: Props) => {
         tabIndex={0}
       >
         <div className="mx-4 mt-4 mb-6 flex justify-end ">
-          <button
-            className="rounded-full text-neutral-900"
+          <motion.button
+            className="rounded-full text-neutral-900 hover:text-red-700"
             onClick={onClose}
             type="button"
+            whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+            whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
           >
             <AiFillCloseCircle size={26} />
-          </button>
+          </motion.button>
         </div>
         {children}
       </div>

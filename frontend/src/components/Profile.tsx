@@ -1,4 +1,5 @@
 import confetti from 'canvas-confetti';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const handleParty = async () => {
@@ -16,7 +17,10 @@ const handleParty = async () => {
 const Profile = () => {
   return (
     <>
-      <div className="m-auto w-1/6 rounded-full bg-neutral-600">
+      <motion.div
+        className="m-auto w-1/6 rounded-full bg-neutral-600"
+        whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+      >
         <Image
           alt="A Memoji of Ryel"
           // eslint-disable-next-line react/forbid-component-props
@@ -26,7 +30,7 @@ const Profile = () => {
           src="/Memoji.png"
           width={100}
         />
-      </div>
+      </motion.div>
 
       <div className="m-4">
         <h1 className="mb-1 bg-gradient-to-r from-sky-500 via-indigo-500 to-pink-500 bg-clip-text text-center text-4xl font-extrabold text-transparent">
@@ -50,13 +54,15 @@ const Profile = () => {
       </div>
 
       <div className="mb-6 flex justify-center">
-        <button
+        <motion.button
           className="w-1/2 max-w-sm rounded-full bg-gradient-to-r from-yellow-500 to-orange-400 p-3 text-center font-semibold"
           onClick={handleParty}
           type="button"
+          whileHover={{ scale: 1.025, transition: { duration: 0.2 } }}
+          whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
         >
           <p>Let's Party</p>
-        </button>
+        </motion.button>
       </div>
 
       <div className="mb-8 flex flex-col items-center justify-center px-6 text-center">
