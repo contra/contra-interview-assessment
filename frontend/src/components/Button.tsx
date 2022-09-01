@@ -8,7 +8,7 @@ type Props = {
 const Button = ({ children, setState }: Props) => {
   return (
     <motion.button
-      className="w-full rounded-lg bg-[#f2c94c] font-semibold text-black"
+      className="m-auto max-h-20 w-full max-w-lg rounded-lg bg-[#f2c94c] p-4 font-semibold text-black"
       onClick={() => setState(true)}
       type="button"
       whileHover={{ scale: 1.1 }}

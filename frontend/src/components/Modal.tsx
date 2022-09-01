@@ -19,7 +19,7 @@ const Modal = ({ children, location, onClose, open, small }: Props) => {
     <div
       className={
         small
-          ? `fixed top-0 flex h-screen w-screen flex-col bg-black ${
+          ? `fixed top-0 flex h-screen w-screen flex-col ${
               location === 'top-left'
                 ? 'items-start justify-start'
                 : location === 'top-right'
@@ -32,6 +32,7 @@ const Modal = ({ children, location, onClose, open, small }: Props) => {
             }`
           : 'fixed top-0 flex h-screen w-screen items-center justify-center bg-transparent antialiased'
       }
+      // allow closing the modal when clicking outside of it
       onClick={onClose}
     >
       <div
@@ -41,9 +42,11 @@ const Modal = ({ children, location, onClose, open, small }: Props) => {
             : 'flex h-[80%] w-[90%] max-w-4xl flex-col overflow-auto rounded-md bg-neutral-100'
         }
         onClick={(event) => {
+          // prevent the modal from closing when clicking inside it
           event.stopPropagation();
         }}
       >
+        {/* close button */}
         <div className="mx-4 mt-4 mb-6 flex justify-end ">
           <motion.button
             className="rounded-full text-neutral-900 hover:text-red-700"
