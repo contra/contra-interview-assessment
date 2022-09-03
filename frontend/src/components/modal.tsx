@@ -5,7 +5,11 @@ import { createPortal } from 'react-dom';
 import FocusTrap from 'focus-trap-react';
 
 // hooks
-import { useDisableScroll, useOnClickOutside, useOnEscKeypress } from '@/hooks';
+import {
+  useDisableScroll,
+  useOnClickOutside,
+  useOnEscKeypress,
+} from '@/hooks/';
 
 // styles
 const ModalOverlay = styled.div`
@@ -70,17 +74,6 @@ const ModalBody = styled.div`
   font-size: 16px;
 `;
 
-/**
- * Todo:
- * Focus Management - use FocusTrap or Gist
- * Background scroll-locking - done
- * Tab navigation - done
- * React portals - done
- * Multi-modal environment - did not attempt
- * Accessibility - aria, need to test
- * Mobile - done
- */
-
 type ModalType = {
   isOpen: boolean;
   onClose: () => void;
@@ -101,7 +94,7 @@ const Modal = ({ isOpen, onClose, title, children }: ModalType) => {
   const modalWrapperRef = useRef<HTMLDivElement>(null);
 
   useOnEscKeypress(onClose);
-  useDisableScroll();
+  useDisableScroll(isOpen);
   useOnClickOutside(modalWrapperRef, onClose);
 
   if (isOpen) {
@@ -116,7 +109,7 @@ const Modal = ({ isOpen, onClose, title, children }: ModalType) => {
               aria-describedby="body"
             >
               <ModalHeader id="header">{title}</ModalHeader>
-              <CloseButton onClick={onClose}>
+              <CloseButton data-testid="modal-close-button" onClick={onClose}>
                 <CloseIcon size={32} />
               </CloseButton>
               <ModalBody id="body">{children}</ModalBody>
