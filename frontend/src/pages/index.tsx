@@ -1,27 +1,77 @@
 /* eslint-disable canonical/filename-match-exported */
+import Dialog from '@/components/Dialog';
+import Form from '@/components/Form';
 import { type NextPage } from 'next';
 import { useState } from 'react';
-import Modal from '../components/FirstModal';
+import Modal from '../components/Modal';
+import { random, randomColor } from '../lib/random';
 
 const Index: NextPage = () => {
-  const [open, setOpen] = useState(false);
+  interface ModalData {
+    flag: boolean;
+  }
 
-  const onOpen = () => {
-    setOpen(true);
+  const [modalData, setModalData] = useState<ModalData[]>([]);
+
+  const onOpen = (index: number) => {
+    const temp = structuredClone(modalData);
+    temp.push({
+      flag: true,
+    });
     document.body.style.overflow = 'hidden';
+
+    setModalData(temp);
   };
 
-  const onClose = () => {
-    setOpen(false);
+  const onClose = (index: number) => {
+    const temp = structuredClone(modalData);
+    temp.splice(index, 1);
+    setModalData(temp);
     document.body.style.overflow = 'auto';
   };
+
   return (
-    <div style={{ overflowY: open ? 'hidden' : 'auto' }}>
-      <Modal open={open} onClose={onClose} />
-      <div className="text-container">
+    <div>
+      {modalData[0] && modalData[0].flag && (
+        <Modal
+          width="auto"
+          height="auto"
+          backdrop={true}
+          onClose={() => {
+            onClose(0);
+          }}
+          background="white"
+        >
+          <div>
+            <Form openNewModal={() => onOpen(1)} />
+          </div>
+        </Modal>
+      )}
+
+      {modalData[1] && modalData[1].flag && (
+        <Modal
+          width={300}
+          height={100}
+          backdrop={true}
+          onClose={() => {
+            onClose(1);
+          }}
+          background="white"
+        >
+          <Dialog />
+        </Modal>
+      )}
+
+      <div className="home-page-container">
         <div className="text">
           <h1>Welcome to Contra!</h1>
-          <button onClick={onOpen}>Enter your details</button>
+          <button
+            onClick={(e) => {
+              onOpen(0);
+            }}
+          >
+            Open Modal
+          </button>
           <div className="information">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas
