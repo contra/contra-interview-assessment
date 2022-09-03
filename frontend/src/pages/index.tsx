@@ -4,7 +4,6 @@ import Form from '@/components/Form';
 import { type NextPage } from 'next';
 import { useState } from 'react';
 import Modal from '../components/Modal';
-import { random, randomColor } from '../lib/random';
 
 const Index: NextPage = () => {
   interface ModalData {
@@ -72,6 +71,7 @@ const Index: NextPage = () => {
           >
             Open Modal
           </button>
+          <p></p>
           <div className="information">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas

@@ -1,7 +1,6 @@
 import { KeyboardEvent } from 'react';
 import ReactDOM from 'react-dom';
 import FocusTrap from 'focus-trap-react';
-import { SyntheticEvent } from 'react';
 
 interface ModalProps {
   onClose: () => void;
@@ -25,7 +24,6 @@ export default function Modal({
   background,
 }: ModalProps) {
   const handleKeyDown = (event: KeyboardEvent<HTMLImageElement>) => {
-    console.log(event.key);
     if (event.key === 'Escape') {
       onClose();
     }
