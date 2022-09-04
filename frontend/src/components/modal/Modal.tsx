@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import ClientModalPortal from './ClientModalPortal';
+import ClientModalPortal from './subcomponents/ClientModalPortal';
 
 type IModal = {
     children: ReactNode | ReactNode[];

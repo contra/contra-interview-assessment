@@ -16,7 +16,7 @@ const ClientModalPortal = ({ children }: IClientPortal): ReactPortal | null => {
         ref.current = document.querySelector("#modal");
         setMounted(true);
     }, []);
-
+    
     return ref.current && mounted ? createPortal(children, ref.current) : null;
 }
 
