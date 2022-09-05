@@ -1,0 +1,8 @@
+._freeze-bg-scroll {
+    /* iOS */
+    touch-action: none;
+    -webkit-overflow-scrolling: none;
+    overflow: hidden;
+    /* Other browsers */
+    overscroll-behavior: none;
+}

@@ -1,4 +1,5 @@
 import { createContext, useCallback, useEffect, useMemo, useRef, type DialogHTMLAttributes } from 'react';
+import usePreventScroll from './hooks/usePreventScroll';
 import ClientModalPortal from './subcomponents/ClientModalPortal';
 
 type IContext = {
@@ -13,6 +14,7 @@ type IDialog = DialogHTMLAttributes<HTMLDialogElement> & {
 }
 
 const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDialog) => {
+    usePreventScroll();
     const dialogRef = useRef<HTMLDialogElement>(null)
 
     const handleClickOutside = useCallback((event: MouseEvent) => {
@@ -33,7 +35,6 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
 
     useEffect(() => {
         const node = dialogRef.current;
-
         
         if (!node?.open) {
             node?.showModal();
