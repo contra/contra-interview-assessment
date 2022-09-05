@@ -3,9 +3,10 @@ import ClientModalPortal from './subcomponents/ClientModalPortal';
 
 type IDialog = DialogHTMLAttributes<HTMLDialogElement> & {
     onClickOutside?: () => void;
+    onClose: () => void;
 }
 
-const Dialog = ({ children, onClickOutside, ...dialogAttributes }: IDialog) => {
+const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDialog) => {
     const dialogRef = useRef<HTMLDialogElement>(null)
 
     const handleClickOutside = useCallback((event: MouseEvent) => {
@@ -34,7 +35,7 @@ const Dialog = ({ children, onClickOutside, ...dialogAttributes }: IDialog) => {
         }
     }, [handleClickOutside])
 
-    return <dialog ref={dialogRef} {...dialogAttributes}> {children} </dialog>
+    return <dialog onClose={onClose} ref={dialogRef} {...dialogAttributes}> {children} </dialog>
 }
 
 type IModal = IDialog & {
