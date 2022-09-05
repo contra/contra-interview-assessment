@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "fastify": "3.14.0",
+    "styled-components": "^5.3.5"
+  }
+}
