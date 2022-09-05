@@ -14,7 +14,7 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
         const element = event.target as Node;
 
         // Detect click outside dialog content
-        if (element.nodeName === "DIALOG") { 
+        if (element.nodeName === "DIALOG") {
             event.preventDefault();
             event.stopPropagation();
             onClickOutside();
@@ -27,11 +27,15 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
         if (!node?.open) {
             node?.showModal();
         }
+    }, [])
 
-        document.body.addEventListener("click", handleClickOutside);
+    useEffect(() => {
+        const node = dialogRef.current;
+
+        node?.addEventListener("click", handleClickOutside);
 
         return () => {
-            document.body.removeEventListener("click", handleClickOutside);
+            node?.removeEventListener("click", handleClickOutside);
         }
     }, [handleClickOutside])
 
