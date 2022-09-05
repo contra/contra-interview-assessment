@@ -23,7 +23,7 @@ describe('<Modal/>', () => {
 
     expect(screen.queryByText(content)).toBeInTheDocument();
   })
-  
+
   it('should set dialog properties through props', () => {
     const testId = "modal-dialog"
     const classname = "dialog-class"
@@ -40,7 +40,7 @@ describe('<Modal/>', () => {
     const content = "Modal Content"
     const onClickOutside = jest.fn();
 
-    render(<Modal  data-testid={testId} onClickOutside={onClickOutside} isOpen> {content} </Modal>)
+    render(<Modal data-testid={testId} onClickOutside={onClickOutside} isOpen> <div>{content}</div> </Modal>)
 
     fireEvent.click(screen.getByTestId(testId));
     expect(onClickOutside).toHaveBeenCalledTimes(1);
