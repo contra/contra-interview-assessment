@@ -30,7 +30,7 @@ describe('<Modal/>', () => {
 
     render(<Modal className={classname} data-testid={testId} isOpen> </Modal>)
 
-    expect(screen.getByTestId(testId).tagName).toBe("dialog");
+    expect(screen.getByTestId(testId).tagName).toBe("DIALOG");
     expect(screen.getByTestId(testId).className).toBe(classname);
   })
   // should handle on click outside
