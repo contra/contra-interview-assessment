@@ -1,5 +1,6 @@
 import { createContext, useCallback, useEffect, useMemo, useRef, type DialogHTMLAttributes } from 'react';
 import usePreventScroll from './hooks/usePreventScroll';
+import useRestoreFocus from './hooks/useRestoreFocus';
 import ClientModalPortal from './subcomponents/ClientModalPortal';
 
 type IContext = {
@@ -14,7 +15,9 @@ type IDialog = DialogHTMLAttributes<HTMLDialogElement> & {
 }
 
 const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDialog) => {
+    useRestoreFocus()
     usePreventScroll();
+
     const dialogRef = useRef<HTMLDialogElement>(null)
 
     const handleClickOutside = useCallback((event: MouseEvent) => {
