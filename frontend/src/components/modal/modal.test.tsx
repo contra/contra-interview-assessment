@@ -11,7 +11,7 @@ describe('<Modal/>', () => {
   it('should not render modal content if "isOpen" prop is false', () => {
     const content = "Modal Content"
 
-    render(<Modal> {content} </Modal>)
+    render(<Modal onClose={jest.fn()}> {content} </Modal>)
 
     expect(screen.queryByText(content)).not.toBeInTheDocument();
   })
@@ -19,7 +19,7 @@ describe('<Modal/>', () => {
   it('should render modal content when "isOpen" prop is true', () => {
     const content = "Modal Content"
 
-    render(<Modal isOpen> {content} </Modal>)
+    render(<Modal isOpen onClose={jest.fn()}> {content} </Modal>)
 
     expect(screen.queryByText(content)).toBeInTheDocument();
   })
@@ -28,7 +28,7 @@ describe('<Modal/>', () => {
     const testId = "modal-dialog"
     const classname = "dialog-class"
 
-    render(<Modal className={classname} data-testid={testId} isOpen> </Modal>)
+    render(<Modal className={classname} data-testid={testId} isOpen onClose={jest.fn()}> </Modal>)
 
     expect(screen.getByTestId(testId).tagName).toBe("DIALOG");
     expect(screen.getByTestId(testId).className).toBe(classname);
@@ -40,7 +40,7 @@ describe('<Modal/>', () => {
     const content = "Modal Content"
     const onClickOutside = jest.fn();
 
-    render(<Modal data-testid={testId} onClickOutside={onClickOutside} isOpen> <div>{content}</div> </Modal>)
+    render(<Modal data-testid={testId} onClickOutside={onClickOutside} onClose={jest.fn()} isOpen> <div>{content}</div> </Modal>)
 
     fireEvent.click(screen.getByTestId(testId));
     expect(onClickOutside).toHaveBeenCalledTimes(1);

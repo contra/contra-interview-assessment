@@ -1,5 +1,11 @@
-import { useCallback, useEffect, useRef, type DialogHTMLAttributes } from 'react';
+import { createContext, useCallback, useEffect, useMemo, useRef, type DialogHTMLAttributes } from 'react';
 import ClientModalPortal from './subcomponents/ClientModalPortal';
+
+type IContext = {
+    onClose: () => void
+}
+
+export const ModalContext = createContext<IContext>({ onClose: () => { } });
 
 type IDialog = DialogHTMLAttributes<HTMLDialogElement> & {
     onClickOutside?: () => void;
@@ -21,9 +27,14 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
         }
     }, [onClickOutside]);
 
+    const contextValues = useMemo(() => ({
+        onClose
+    }), [onClose])
+
     useEffect(() => {
         const node = dialogRef.current;
 
+        
         if (!node?.open) {
             node?.showModal();
         }
@@ -39,7 +50,11 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
         }
     }, [handleClickOutside])
 
-    return <dialog onClose={onClose} ref={dialogRef} {...dialogAttributes}> {children} </dialog>
+    return <ModalContext.Provider value={contextValues}>
+        <dialog onClose={onClose} ref={dialogRef} {...dialogAttributes}>
+            {children}
+        </dialog>
+    </ModalContext.Provider>
 }
 
 type IModal = IDialog & {
