@@ -13,7 +13,6 @@
     "test:ci": "NODE_ENV=test jest --ci --reporters jest-silent-reporter"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.9",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/lab": "^5.0.0-alpha.97",
