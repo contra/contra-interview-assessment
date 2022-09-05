@@ -1,7 +1,27 @@
+scalar FeatureFlagValueType
+
 type Mutation {
-  sampleMutation: String!
+  setUsersFeatureFlagMutation(featureFlagKey: String!, featureFlagValue: FeatureFlagValueType!, userIds: [Int!]!): [SetUsersFeatureFlagResponse!]!
 }
 
 type Query {
-  hello: String!
+  users: [User!]
+}
+
+type SetUsersFeatureFlagResponse {
+  userFeatureFlag: UserFeatureFlag!
+}
+
+type User {
+  emailAddress: String!
+  familyName: String!
+  featureFlags: [UserFeatureFlag]
+  givenName: String!
+  userId: Int!
+}
+
+type UserFeatureFlag {
+  featureFlagKey: String!
+  featureFlagValue: FeatureFlagValueType!
+  userId: Int!
 }

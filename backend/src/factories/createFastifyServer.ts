@@ -6,6 +6,7 @@ import { makeExecutableSchema } from 'graphql-tools';
 import type { CommonQueryMethodsType } from 'slonik';
 // @ts-ignore
 import { resolvers } from '../schema/resolvers';
+import { Datasources } from '../datasources';
 
 export const createFastifyServer = async (pool: CommonQueryMethodsType) => {
   const executableSchema = makeExecutableSchema({
@@ -19,7 +20,7 @@ export const createFastifyServer = async (pool: CommonQueryMethodsType) => {
 
   const graphQLServer = new ApolloServer({
     context: ({ request, reply }) => ({
-      pool,
+      datasources: new Datasources(pool),
       reply,
       request,
     }),

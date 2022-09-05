@@ -21,8 +21,8 @@ const pool = createPool(process.env.POSTGRES_CONNECTION_STRING, {
   try {
     const app = await createFastifyServer(pool);
 
-    app.listen(8_080, () =>
-      log.info(`🛩 Server ready at http://localhost:8080/graphql`),
+    app.listen(3_000, () =>
+      log.info(`🛩 Server ready at http://localhost:3000/graphql`),
     );
   } catch (error) {
     // eslint-disable-next-line no-console
