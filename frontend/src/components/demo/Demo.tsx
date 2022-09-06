@@ -8,7 +8,7 @@ import WithForm from "./subcomponents/WithForm";
 
 const Demo = () => {
     return <>
-        <h2>Contra Frontend Assessment - Custom Modal Demo</h2>
+        <h1>Contra Frontend Assessment - Custom Modal Demo</h1>
         <Information />
         <WithForm />
         <ClickOutside />
