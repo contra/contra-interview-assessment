@@ -1,8 +1,9 @@
 /* eslint-disable canonical/filename-match-exported */
 import { type NextPage } from 'next';
+import Demo from '@/components/demo/Demo';
 
 const Index: NextPage = () => {
-  return <h1>Welcome to Contra!</h1>;
+  return <Demo />;
 };
 
 export default Index;
