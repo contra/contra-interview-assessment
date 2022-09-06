@@ -1,11 +1,11 @@
-import { createContext, useCallback, useEffect, useMemo, useRef, type DialogHTMLAttributes } from 'react';
+import { createContext, useCallback, useEffect, useMemo, useRef, type SyntheticEvent, type DialogHTMLAttributes } from 'react';
 import usePreventScroll from './hooks/usePreventScroll';
 import useRestoreFocus from './hooks/useRestoreFocus';
 import ClientModalPortal from './subcomponents/ClientModalPortal';
 import loadDialogPolyfill from './utils/loadDialogPolyfill';
 
 type IContext = {
-    onClose: () => void
+    onClose: (event: SyntheticEvent) => void
 }
 
 export const ModalContext = createContext<IContext>({ onClose: () => { } });
@@ -33,9 +33,14 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
         }
     }, [onClickOutside]);
 
+    const handleClose = useCallback((event: SyntheticEvent) => {
+            event.stopPropagation();
+            onClose();
+    }, [onClose]);
+
     const contextValues = useMemo(() => ({
-        onClose
-    }), [onClose])
+        onClose: handleClose
+    }), [handleClose])
 
     useEffect(() => {
         const node = dialogRef.current;
@@ -62,7 +67,7 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
     }, [handleClickOutside])
 
     return <ModalContext.Provider value={contextValues}>
-        <dialog onClose={onClose} ref={dialogRef} {...dialogAttributes}>
+        <dialog onClose={handleClose} ref={dialogRef} {...dialogAttributes}>
             {children}
         </dialog>
     </ModalContext.Provider>
