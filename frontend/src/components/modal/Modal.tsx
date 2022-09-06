@@ -34,13 +34,13 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
     }, [onClickOutside]);
 
     const handleClose = useCallback((event: SyntheticEvent) => {
-            event.stopPropagation();
-            onClose();
+        event.stopPropagation();
+        onClose();
     }, [onClose]);
 
     const contextValues = useMemo(() => ({
-        onClose: handleClose
-    }), [handleClose])
+        onClose
+    }), [onClose])
 
     useEffect(() => {
         const node = dialogRef.current;

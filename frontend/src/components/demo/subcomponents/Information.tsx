@@ -19,6 +19,7 @@ const Information = () => {
         <button onClick={handleModalOpen} type="button">Open information modal</button>
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
             <div>
+                <p>This demonstrates the use of the custom modal component to display information. It also showcases ability to close the modal using a child element - "Close" button.</p>
                 <button onClick={handleModalClose} type="button">Close Modal</button>
             </div>
         </Modal>

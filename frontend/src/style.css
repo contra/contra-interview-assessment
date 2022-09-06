@@ -28,3 +28,13 @@ button{
     font-weight: bold;
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+input{
+    padding: 1rem;
+    border-radius: 4px;
+}
