@@ -5,7 +5,7 @@ import ClientModalPortal from './subcomponents/ClientModalPortal';
 import loadDialogPolyfill from './utils/loadDialogPolyfill';
 
 type IContext = {
-    onClose: (event: SyntheticEvent) => void
+    onClose: () => void
 }
 
 export const ModalContext = createContext<IContext>({ onClose: () => { } });

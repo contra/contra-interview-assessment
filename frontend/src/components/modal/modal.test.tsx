@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-component-props */
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import Modal from '.';
 
@@ -40,7 +41,7 @@ describe('<Modal/>', () => {
     const content = "Modal Content"
     const onClickOutside = jest.fn();
 
-    render(<Modal data-testid={testId} onClickOutside={onClickOutside} onClose={jest.fn()} isOpen> <div>{content}</div> </Modal>)
+    render(<Modal data-testid={testId} isOpen onClickOutside={onClickOutside} onClose={jest.fn()}> <div>{content}</div> </Modal>)
 
     fireEvent.click(screen.getByTestId(testId));
     expect(onClickOutside).toHaveBeenCalledTimes(1);
