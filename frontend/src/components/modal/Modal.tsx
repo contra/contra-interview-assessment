@@ -2,6 +2,7 @@ import { createContext, useCallback, useEffect, useMemo, useRef, type DialogHTML
 import usePreventScroll from './hooks/usePreventScroll';
 import useRestoreFocus from './hooks/useRestoreFocus';
 import ClientModalPortal from './subcomponents/ClientModalPortal';
+import loadDialogPolyfill from './utils/loadDialogPolyfill';
 
 type IContext = {
     onClose: () => void
@@ -38,9 +39,15 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
 
     useEffect(() => {
         const node = dialogRef.current;
-        
-        if (!node?.open) {
-            node?.showModal();
+
+        if (node && !node.open) {
+            // Check browser support for <dialog>
+            if (typeof HTMLDialogElement === 'function') {
+                node.showModal();
+            } else {
+                // Load <dialog> polyfill if no browser support
+                loadDialogPolyfill(node);
+            }
         }
     }, [])
 
