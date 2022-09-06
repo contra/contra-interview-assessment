@@ -13,7 +13,7 @@ const StackingModal = () => {
     }
 
     return <section>
-        <h3>Use case: Stacking multiple Modals</h3>
+        <h2>Use case: Stacking multiple Modals</h2>
         <p> We can also stack modals by triggering a modal opening when another modal is open</p>
         <button onClick={handleModalOpen} type="button">Open modal</button>
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>

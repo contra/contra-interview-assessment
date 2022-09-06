@@ -67,7 +67,7 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
     }, [handleClickOutside])
 
     return <ModalContext.Provider value={contextValues}>
-        <dialog onClose={handleClose} ref={dialogRef} {...dialogAttributes}>
+        <dialog aria-label='Dialog' onClose={handleClose} ref={dialogRef} {...dialogAttributes}>
             {children}
         </dialog>
     </ModalContext.Provider>
