@@ -29,7 +29,6 @@ const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDia
         onClose
     }), [onClose]);
 
-
     const handleClose = useCallback((event: SyntheticEvent) => {
         event.stopPropagation();
         onClose();
