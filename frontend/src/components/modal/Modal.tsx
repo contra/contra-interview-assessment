@@ -1,8 +1,9 @@
-import { createContext, useCallback, useEffect, useMemo, useRef, type SyntheticEvent, type DialogHTMLAttributes } from 'react';
+import { createContext, useCallback, useMemo, useRef, type SyntheticEvent, type DialogHTMLAttributes } from 'react';
+import useClickOutside from './hooks/useClickOutside';
 import usePreventScroll from './hooks/usePreventScroll';
 import useRestoreFocus from './hooks/useRestoreFocus';
+import useShowModal from './hooks/useShowModal';
 import ClientModalPortal from './subcomponents/ClientModalPortal';
-import loadDialogPolyfill from './utils/loadDialogPolyfill';
 
 type IContext = {
     onClose: () => void
@@ -16,55 +17,23 @@ type IDialog = DialogHTMLAttributes<HTMLDialogElement> & {
 }
 
 const Dialog = ({ children, onClickOutside, onClose, ...dialogAttributes }: IDialog) => {
-    useRestoreFocus()
+    useRestoreFocus();
     usePreventScroll();
 
-    const dialogRef = useRef<HTMLDialogElement>(null)
+    const dialogRef = useRef<HTMLDialogElement>(null);
 
-    const handleClickOutside = useCallback((event: MouseEvent) => {
-        if (!onClickOutside) return;
-        const element = event.target as Node;
+    useShowModal(dialogRef);
+    useClickOutside(dialogRef, onClickOutside);
 
-        // Detect click outside dialog content
-        if (element.nodeName === "DIALOG") {
-            event.preventDefault();
-            event.stopPropagation();
-            onClickOutside();
-        }
-    }, [onClickOutside]);
+    const contextValues = useMemo(() => ({
+        onClose
+    }), [onClose]);
+
 
     const handleClose = useCallback((event: SyntheticEvent) => {
         event.stopPropagation();
         onClose();
     }, [onClose]);
-
-    const contextValues = useMemo(() => ({
-        onClose
-    }), [onClose])
-
-    useEffect(() => {
-        const node = dialogRef.current;
-
-        if (node && !node.open) {
-            // Check browser support for <dialog>
-            if (typeof HTMLDialogElement === 'function') {
-                node.showModal();
-            } else {
-                // Load <dialog> polyfill if no browser support
-                loadDialogPolyfill(node);
-            }
-        }
-    }, [])
-
-    useEffect(() => {
-        const node = dialogRef.current;
-
-        node?.addEventListener("click", handleClickOutside);
-
-        return () => {
-            node?.removeEventListener("click", handleClickOutside);
-        }
-    }, [handleClickOutside])
 
     return <ModalContext.Provider value={contextValues}>
         <dialog aria-label='Dialog' onClose={handleClose} ref={dialogRef} {...dialogAttributes}>
