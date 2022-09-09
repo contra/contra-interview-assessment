@@ -17,9 +17,7 @@ pull_request_rules:
       - base=main
       - -draft
       - label!=blocked
-      - check-success=Test (yarn lint:cspell)
-      - check-success=Test (yarn lint:eslint)
-      - check-success=Test (yarn lint:prettier)
+      - check-success=Lint
     actions:
       label:
         add:
@@ -34,11 +32,8 @@ pull_request_rules:
       - '#changes-requested-reviews-by=0'
       - label!=blocked
       - label=dependencies
-      - label!=hotfix
       - queue-position<=2
-      - check-success=Test (yarn lint:cspell)
-      - check-success=Test (yarn lint:eslint)
-      - check-success=Test (yarn lint:prettier)
+      - check-success=Lint
     actions:
       queue:
         name: default
@@ -53,10 +48,7 @@ pull_request_rules:
       - label!=blocked
       - label!=dependencies
       - label!=high-priority
-      - label!=hotfix
-      - check-success=Test (yarn lint:cspell)
-      - check-success=Test (yarn lint:eslint)
-      - check-success=Test (yarn lint:prettier)
+      - check-success=Lint
     actions:
       queue:
         name: default
