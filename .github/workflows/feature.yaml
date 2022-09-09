@@ -19,26 +19,12 @@ jobs:
         run: |
           cd backend
           yarn
-      - name: Yarn lint Backend
-        run: |
-          cd backend
           yarn lint
-      - name: Yarn lint Backend Prettier
-        run: |
-          cd backend
-          yarn lint:prettier
       - name: Install Dependencies Frontend
         run: |
           cd frontend
           yarn
-      - name: Yarn lint Frontend
-        run: |
-          cd frontend
           yarn lint
-      - name: Yarn lint Frontend Prettier
-        run: |
-          cd frontend
-          yarn lint:prettier
 name: Validate
 on:
   pull_request:
