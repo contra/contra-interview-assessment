@@ -1,0 +1,88 @@
+queue_rules:
+  - name: default
+    conditions: []
+pull_request_rules:
+  - name: update out-of-sync PR
+    conditions:
+      - base=main
+      - -conflict
+      - -draft
+      - label!=blocked
+      - label!=do-not-update
+      - '#approved-reviews-by>=1'
+    actions:
+      update:
+  - name: label PRs ready for review
+    conditions:
+      - base=main
+      - -draft
+      - label!=blocked
+      - check-success=Lint
+    actions:
+      label:
+        add:
+          # Addition of this label triggers a GitHub webhook
+          # that sends a Slack message to #prs channel.
+          - ready-for-review
+  - name: queue approved PR (low priority)
+    conditions:
+      - base=main
+      - -draft
+      - '#approved-reviews-by>=1'
+      - '#changes-requested-reviews-by=0'
+      - label!=blocked
+      - label=dependencies
+      - queue-position<=2
+      - check-success=Lint
+    actions:
+      queue:
+        name: default
+        method: rebase
+        priority: low
+  - name: queue approved PR (medium priority)
+    conditions:
+      - base=main
+      - -draft
+      - '#approved-reviews-by>=1'
+      - '#changes-requested-reviews-by=0'
+      - label!=blocked
+      - label!=dependencies
+      - label!=high-priority
+      - check-success=Lint
+    actions:
+      queue:
+        name: default
+        method: rebase
+        priority: medium
+  - name: merge Renovate pull request
+    conditions:
+      - author=renovate[bot]
+      - label!=blocked
+      - label=dependency-update
+      - '#approved-reviews-by>=1'
+    actions:
+      review:
+        type: APPROVE
+        message: Automatically approving Renovate
+      queue:
+        name: default
+        method: rebase
+        priority: low
+  - name: close Renovate pull request (conflict)
+    conditions:
+      - conflict
+      - author=renovate[bot]
+      - label=dependency-update
+    actions:
+      close:
+        message: |
+          This automated pull request has a conflict. Closing - Renovate will create a new PR.
+  - name: close stale pull request
+    conditions:
+      - base=main
+      - -closed
+      - updated-at<14 days ago
+    actions:
+      close:
+        message: |
+          This pull request looks stale. Feel free to reopen it if you think it is a mistake.

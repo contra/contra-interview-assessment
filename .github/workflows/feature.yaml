@@ -1,0 +1,37 @@
+concurrency:
+  cancel-in-progress: true
+  group: build-${{ github.event.pull_request.number || github.ref }}
+jobs:
+  lint:
+    name: Lint
+    runs-on:
+      - ubuntu-latest
+    steps:
+      - name: setup repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - run: npm install yarn -g
+      - name: Install Dependencies Backend
+        run: |
+          cd backend
+          yarn
+          yarn lint
+      - name: Install Dependencies Frontend
+        run: |
+          cd frontend
+          yarn
+          yarn lint
+name: Validate
+on:
+  pull_request:
+    branches:
+      - main
+    types: 
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
