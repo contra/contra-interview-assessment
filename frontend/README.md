@@ -1,4 +1,4 @@
-# Contra Frontend Technical Asessment
+# Contra Frontend Technical Assessment
 
 ## Requirements
 
