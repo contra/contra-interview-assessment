@@ -15,8 +15,22 @@ jobs:
         with:
           node-version-file: '.nvmrc'
       - run: npm install yarn -g
-      - run: yarn
-      - run: yarn lint
+      - name: Install Dependencies Backend
+        run: |
+          cd backend
+          yarn
+      - name: Yarn lint Backend
+        run: |
+          cd backend
+          yarn lint
+      - name: Install Dependencies Frontend
+        run: |
+          cd backend
+          yarn
+      - name: Yarn lint Frontend
+        run: |
+          cd backend
+          yarn lint
 name: Validate
 on:
   pull_request:
