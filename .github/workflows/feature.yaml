@@ -5,8 +5,7 @@ jobs:
   lint:
     name: Lint
     runs-on:
-      - self-hosted
-      - contra-general-purpose
+      - ubuntu-latest
     steps:
       - name: setup repository
         uses: actions/checkout@v3
