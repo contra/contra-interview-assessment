@@ -1,16 +1,29 @@
-  lint:
-    name: Lint
-    runs-on:
-      - self-hosted
-      - contra-general-purpose
-    steps:
-      - name: setup repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-      - run: npm install yarn -g
-      - run: yarn
-      - run: yarn lint
+  concurrency:
+  cancel-in-progress: true
+  group: build-${{ github.event.pull_request.number || github.ref }}
+  jobs:
+    lint:
+      name: Lint
+      runs-on:
+        - self-hosted
+        - contra-general-purpose
+      steps:
+        - name: setup repository
+          uses: actions/checkout@v3
+          with:
+            fetch-depth: 0
+        - uses: actions/setup-node@v3
+          with:
+            node-version-file: '.nvmrc'
+        - run: npm install yarn -g
+        - run: yarn
+        - run: yarn lint
+on:
+  pull_request:
+    branches:
+      - main
+    types: 
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
