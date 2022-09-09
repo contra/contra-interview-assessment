@@ -1,10 +1,6 @@
 queue_rules:
   - name: default
-    conditions:
-      - check-success=Test (yarn lint:cspell)
-      - check-success=Test (yarn lint:eslint)
-      - check-success=Test (yarn lint:tsc)
-      - check-success=Test (yarn lint:unimported)
+    conditions: []
 pull_request_rules:
   - name: update out-of-sync PR
     conditions:
@@ -16,26 +12,14 @@ pull_request_rules:
       - '#approved-reviews-by>=1'
     actions:
       update:
-  - name: approve self-reviewed PR
-    conditions:
-      # If you must merge a PR without a review, then use this label
-      # to have Mergify merge it for you instead of merging it yourself.
-      # This way we at least guarantee that all automated checks pass
-      # before changes are merged to the main branch.
-      - label!=blocked
-      - label=self-review
-    actions:
-      review:
-        type: APPROVE
-        message: Automatically approving self-reviewed PR
   - name: label PRs ready for review
     conditions:
       - base=main
       - -draft
+      - label!=blocked
       - check-success=Test (yarn lint:cspell)
       - check-success=Test (yarn lint:eslint)
-      - check-success=Test (yarn lint:tsc)
-      - check-success=Test (yarn lint:unimported)
+      - check-success=Test (yarn lint:prettier)
     actions:
       label:
         add:
@@ -61,11 +45,11 @@ pull_request_rules:
       - -draft
       - '#approved-reviews-by>=1'
       - '#changes-requested-reviews-by=0'
+      - label!=blocked
       - label=high-priority
       - check-success=Test (yarn lint:cspell)
       - check-success=Test (yarn lint:eslint)
-      - check-success=Test (yarn lint:tsc)
-      - check-success=Test (yarn lint:unimported)
+      - check-success=Test (yarn lint:prettier)
     actions:
       queue:
         name: default
@@ -83,8 +67,7 @@ pull_request_rules:
       - queue-position<=2
       - check-success=Test (yarn lint:cspell)
       - check-success=Test (yarn lint:eslint)
-      - check-success=Test (yarn lint:tsc)
-      - check-success=Test (yarn lint:unimported)
+      - check-success=Test (yarn lint:prettier)
     actions:
       queue:
         name: default
@@ -102,8 +85,7 @@ pull_request_rules:
       - label!=hotfix
       - check-success=Test (yarn lint:cspell)
       - check-success=Test (yarn lint:eslint)
-      - check-success=Test (yarn lint:tsc)
-      - check-success=Test (yarn lint:unimported)
+      - check-success=Test (yarn lint:prettier)
     actions:
       queue:
         name: default
