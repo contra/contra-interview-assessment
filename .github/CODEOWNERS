@@ -1,0 +1,4 @@
+# Auto assign by default for DevOps Config changes
+.github/**      @leekesler @dev31000
+.mergify.yml    @leekesler @dev31000
+renovate.json   @leekesler @dev31000
