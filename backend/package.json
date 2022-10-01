@@ -12,7 +12,7 @@
     "migrate": "ts-node ./src/bin/migrate.ts"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "1.21.2",
+    "@graphql-codegen/cli": "1.21.8",
     "@graphql-codegen/core": "1.17.9",
     "@graphql-codegen/typescript": "1.21.1",
     "@graphql-codegen/typescript-operations": "1.17.15",
