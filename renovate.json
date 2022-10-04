@@ -2,19 +2,52 @@
   "automerge": false,
   "dependencyDashboard": true,
   "enabledManagers": ["yarn"],
+  "extends": [
+    "group:monorepos"
+  ],
   "labels": ["dependency-update"],
   "packageRules": [
     {
-      "addLabels": ["self-review"],
-      "matchUpdateTypes": ["minor", "patch"]
+      "addLabels": [
+        "self-review"
+      ],
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "groupName": "all minor dependencies",
+      "groupSlug": "all-minor"
     },
     {
-      "addLabels": ["major"],
-      "matchUpdateTypes": ["major"]
+      "addLabels": [
+        "major"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ]
+    },
+    {
+      "updateTypes": [
+        "patch"
+      ],
+      "enabled": false
     }
   ],
   "prConcurrentLimit": 5,
   "prHourlyLimit": 10,
   "rangeStrategy": "bump",
-  "rebaseWhen": "behind-base-branch"
+  "rebaseWhen": "behind-base-branch",
+  "schedule": [
+    "after 1am on thursday",
+    "before 5am on thursday"
+  ],
+  "timezone": "America/Los_Angeles",
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": [
+      "security"
+    ]
+  }
 }
