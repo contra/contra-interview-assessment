@@ -1,5 +1,10 @@
-import { resolve as hello } from './hello';
+import { resolve as userFeatureFlagResolver } from './userFeatureFlag';
+import { resolve as usersResolver } from './users';
 
 export const Query = {
-  hello,
+  users: usersResolver,
+};
+
+export const User = {
+  featureFlags: userFeatureFlagResolver,
 };

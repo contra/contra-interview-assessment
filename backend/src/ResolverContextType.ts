@@ -1,5 +1,5 @@
-import { DatabasePoolType } from 'slonik';
+import { IDatasources } from './datasources';
 
 export type ResolverContext = {
-  readonly pool: DatabasePoolType;
+  readonly datasources: IDatasources;
 };
