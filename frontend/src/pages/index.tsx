@@ -1,13 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable canonical/filename-match-exported */
 import { type NextPage } from 'next';
+import { useState } from 'react';
 import { Modal } from '@/components/Modal';
 
 const Index: NextPage = () => {
+  const [open, setOpen] = useState(false);
   return (
-    <Modal open>
+    <>
+    <Modal onClose={() => setOpen(false)} open={open}>
       <LongForm />
     </Modal>
+    <button onClick={() => setOpen(true)} type="button">open</button>
+    </>
   );
 };
 
