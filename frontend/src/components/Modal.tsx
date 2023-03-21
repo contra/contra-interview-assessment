@@ -1,8 +1,8 @@
-import { styled } from '@/utils/styles';
 import { type PropsWithChildren } from 'react';
+import { styled } from '@/utils/styles';
+import { useEscapeKeyListener } from '@/utils/use-escape-trap';
 import { useFocusTrap } from '@/utils/use-focus-trap';
 import { ReactPortal } from './ReactPortal';
-import { useEscapeKeyListener } from '@/utils/use-escape-trap';
 
 const ModalBackground = styled('div', {
   backgroundColor: 'rgba(0,0,0,0.7)',
@@ -18,16 +18,17 @@ const ModalContainer = styled('div', {
   backgroundColor: '#fefefe',
   border: '1px solid #888',
   boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-  padding: '20px',
-  margin: 0,
-  width: '100%',
   height: '100%',
+  margin: 0,
+  padding: '20px',
+  width: '100%',
 
+  // eslint-disable-next-line canonical/sort-keys
   '@md': {
     borderRadius: '4px',
+    height: 'auto',
     margin: '10% auto',
     width: '50%',
-    height: 'auto',
   },
 });
 
@@ -36,7 +37,7 @@ export const Modal = ({
   children,
   open,
   onClose,
-}: PropsWithChildren<{ open: boolean, onClose: () => void }>) => {
+}: PropsWithChildren<{ onClose: () => void, open: boolean }>) => {
   const ref = useFocusTrap<HTMLDivElement>();
   useEscapeKeyListener(onClose);
 

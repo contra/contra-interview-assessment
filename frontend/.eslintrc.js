@@ -7,7 +7,8 @@ const ruleOverrides = {
   'canonical/export-specifier-newline': 0,
   'canonical/filename-match-regex': 0,
   'canonical/import-specifier-newline': 0,
-  'canonical/sort-keys': ['error', 'asc', { allowLineSeparatedGroups: true }],
+  // The `allowLineSeparatedGroups` option doesn't exist for canonical/sort-keys: https://github.com/gajus/eslint-plugin-canonical/issues/20
+  'canonical/sort-keys': 1,
   'default-case': 0,
   'default-case-last': 0,
   'import/extensions': 0,
