@@ -2,6 +2,7 @@ import { type PropsWithChildren, type HTMLAttributes } from 'react';
 import { styled } from '@/utils/styles';
 import { useEscapeKeyListener } from '@/utils/use-escape-trap';
 import { useFocusTrap } from '@/utils/use-focus-trap';
+import { useScrollLock } from '@/utils/use-scroll-lock';
 import { ReactPortal } from './ReactPortal';
 
 const ModalBackground = styled('div', {
@@ -18,6 +19,8 @@ const ModalContainer = styled('div', {
   backgroundColor: '#fefefe',
   border: '1px solid #888',
   boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+  display: 'flex',
+  flexDirection: 'column',
   height: '100%',
   margin: 0,
   padding: '20px',
@@ -32,19 +35,16 @@ const ModalContainer = styled('div', {
   },
 });
 
-type ModalProps = HTMLAttributes<HTMLDivElement> & PropsWithChildren<{
-  onClose: () => void;
-  open: boolean
-}>
+type ModalProps = HTMLAttributes<HTMLDivElement> &
+  PropsWithChildren<{
+    onClose: () => void;
+    open: boolean;
+  }>;
 
 // event.relatedTarget might be worth researching in the future
-export const Modal = ({
-  children,
-  open,
-  onClose,
-  ...props
-}: ModalProps) => {
+export const Modal = ({ children, open, onClose, ...props }: ModalProps) => {
   const ref = useFocusTrap<HTMLDivElement>();
+  useScrollLock(open);
   useEscapeKeyListener(onClose);
 
   if (!open) return null;
@@ -52,7 +52,13 @@ export const Modal = ({
   return (
     <ReactPortal>
       <ModalBackground>
-        <ModalContainer aria-hidden={!open} aria-modal ref={ref} role="dialog" {...props}>
+        <ModalContainer
+          aria-hidden={!open}
+          aria-modal
+          ref={ref}
+          role="dialog"
+          {...props}
+        >
           {children}
         </ModalContainer>
       </ModalBackground>
