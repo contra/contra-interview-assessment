@@ -1,5 +1,4 @@
-/* eslint-disable import/no-unassigned-import, canonical/filename-match-exported */
-import "wicg-inert";
+/* eslint-disable canonical/filename-match-exported */
 import { type AppProps } from 'next/app';
 
 const App = ({ Component, pageProps }: AppProps) => {
