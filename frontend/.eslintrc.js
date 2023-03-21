@@ -7,6 +7,7 @@ const ruleOverrides = {
   'canonical/export-specifier-newline': 0,
   'canonical/filename-match-regex': 0,
   'canonical/import-specifier-newline': 0,
+  'canonical/sort-keys': ['error', 'asc', { allowLineSeparatedGroups: true }],
   'default-case': 0,
   'default-case-last': 0,
   'import/extensions': 0,
