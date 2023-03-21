@@ -2,6 +2,7 @@ import { styled } from '@/utils/styles';
 import { type PropsWithChildren } from 'react';
 import { useFocusTrap } from '@/utils/use-focus-trap';
 import { ReactPortal } from './ReactPortal';
+import { useEscapeKeyListener } from '@/utils/use-escape-trap';
 
 const ModalBackground = styled('div', {
   backgroundColor: 'rgba(0,0,0,0.7)',
@@ -34,8 +35,10 @@ const ModalContainer = styled('div', {
 export const Modal = ({
   children,
   open,
-}: PropsWithChildren<{ open: boolean }>) => {
+  onClose,
+}: PropsWithChildren<{ open: boolean, onClose: () => void }>) => {
   const ref = useFocusTrap<HTMLDivElement>();
+  useEscapeKeyListener(onClose);
 
   if (!open) return null;
 
