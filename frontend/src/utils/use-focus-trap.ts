@@ -1,4 +1,5 @@
-import { useRef, useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useIsomorphicLayoutEffect } from './use-isomorphic-layout';
 
 const TAB_KEYCODE = 9;
 
@@ -20,19 +21,20 @@ const FOCUSABLE_SELECTORS = [
 const FILTERS = ['disabled', 'aria-hidden'] as const;
 
 export const useFocusTrap = <T extends HTMLElement>() => {
-  const ref = useRef<T | null>(null);
+  // utilizing https://legacy.reactjs.org/docs/refs-and-the-dom.html#callback-refs
+  // there's probably a better stateway focus to manage all modals, might bring in a state library for handling heavy modals
+  const [state, setState] = useState<HTMLDivElement | null>(null);
   const focusableElements = useMemo(() => {
     const elements =
-      ref.current?.querySelectorAll<HTMLElement>(
-        FOCUSABLE_SELECTORS.join(', ')
-      ) ?? [];
+      state?.querySelectorAll<T>(FOCUSABLE_SELECTORS.join(', ')) ?? [];
+
     return Array.from(elements).filter((element) =>
       FILTERS.some((filter) => !element.getAttribute(filter))
     );
-  }, []);
+  }, [state]);
 
-  const handleFocus = useCallback(
-    (event: KeyboardEvent) => {
+  useEffect(() => {
+    const handleFocus = (event: KeyboardEvent) => {
       const firstFocusableElement = focusableElements[0];
       const lastFocusableElement =
         focusableElements[focusableElements.length - 1];
@@ -50,15 +52,21 @@ export const useFocusTrap = <T extends HTMLElement>() => {
         firstFocusableElement?.focus();
         event.preventDefault();
       }
-    },
-    [focusableElements]
-  );
+    };
 
-  useEffect(() => {
-    const node = ref.current;
-    node?.addEventListener('keydown', handleFocus);
-    return () => node?.addEventListener('keydown', handleFocus);
-  }, [handleFocus]);
+    state?.addEventListener('keydown', handleFocus);
+    return () => state?.addEventListener('keydown', handleFocus);
+  }, [state, focusableElements]);
 
-  return ref;
+  useIsomorphicLayoutEffect(() => {
+    if (
+      !state?.contains(document.activeElement) &&
+      document.activeElement !== state
+    ) {
+      // How does this handle for multiple windows
+      focusableElements[0]?.focus();
+    }
+  }, [focusableElements]);
+
+  return setState;
 };
