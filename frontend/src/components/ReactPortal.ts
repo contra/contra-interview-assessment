@@ -1,5 +1,6 @@
-import { type PropsWithChildren, useLayoutEffect, useState, useEffect } from 'react';
+import { type PropsWithChildren, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useIsomorphicLayoutEffect } from '@/utils/use-isomorphic-layout';
 
 type WrapperId = string;
 
@@ -10,13 +11,6 @@ const createRootElement = (wrapperId: WrapperId) => {
   return wrapperElement;
 };
 
-// React currently throws a warning when using useLayoutEffect on the server.
-// To get around it, we can conditionally useEffect on the server (no-op) and
-// useLayoutEffect in the browser. We need useLayoutEffect because we want
-// `connect` to perform sync updates to a ref to save the latest props after
-// a render is actually committed to the DOM.
-const useIsomorphicLayoutEffect =
-  typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 export const ReactPortal = ({
   children,
