@@ -39,6 +39,7 @@ export const useFocusTrap = <T extends HTMLElement>() => {
       const lastFocusableElement =
         focusableElements[focusableElements.length - 1];
       const tabPressed = event.key === 'Tab' || event.keyCode === TAB_KEYCODE;
+
       if (!tabPressed) {
         return;
       }

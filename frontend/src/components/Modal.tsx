@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from 'react';
+import { type PropsWithChildren, type HTMLAttributes } from 'react';
 import { styled } from '@/utils/styles';
 import { useEscapeKeyListener } from '@/utils/use-escape-trap';
 import { useFocusTrap } from '@/utils/use-focus-trap';
@@ -32,12 +32,18 @@ const ModalContainer = styled('div', {
   },
 });
 
+type ModalProps = HTMLAttributes<HTMLDivElement> & PropsWithChildren<{
+  onClose: () => void;
+  open: boolean
+}>
+
 // event.relatedTarget might be worth researching in the future
 export const Modal = ({
   children,
   open,
   onClose,
-}: PropsWithChildren<{ onClose: () => void, open: boolean }>) => {
+  ...props
+}: ModalProps) => {
   const ref = useFocusTrap<HTMLDivElement>();
   useEscapeKeyListener(onClose);
 
@@ -46,7 +52,7 @@ export const Modal = ({
   return (
     <ReactPortal>
       <ModalBackground>
-        <ModalContainer aria-hidden={!open} aria-modal ref={ref} role="dialog">
+        <ModalContainer aria-hidden={!open} aria-modal ref={ref} role="dialog" {...props}>
           {children}
         </ModalContainer>
       </ModalBackground>
