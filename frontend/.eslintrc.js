@@ -5,6 +5,7 @@ const ruleOverrides = {
   'arrow-body-style': 0,
   'canonical/destructuring-property-newline': 0,
   'canonical/export-specifier-newline': 0,
+  'canonical/filename-match-exported': 'off',
   'canonical/filename-match-regex': 0,
   'canonical/import-specifier-newline': 0,
   'default-case': 0,
@@ -39,7 +40,7 @@ module.exports = {
     {
       excludedFiles: '*.test.ts',
       extends: [
-        'next',
+        'canonical/next',
         'canonical',
         'canonical/react',
         'canonical/typescript',
@@ -53,7 +54,7 @@ module.exports = {
     },
     {
       extends: [
-        'next',
+        'canonical/next',
         'canonical',
         'canonical/react',
         'canonical/jsx-a11y',
@@ -80,7 +81,7 @@ module.exports = {
       rules: ruleOverrides,
     },
     {
-      extends: ['next', 'canonical', 'canonical/node', 'prettier'],
+      extends: ['canonical/next', 'canonical', 'canonical/node', 'prettier'],
       files: '*.{js,mjs}',
       parserOptions: {
         sourceType: 'module',
