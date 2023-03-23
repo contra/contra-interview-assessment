@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { FOCUSABLE_HTML_ELEMENT } from './common.const';
+import { useEffect, useMemo } from 'react';
 
 export const useEscapeKey = (handleAction: () => void) => {
   useEffect(() => {
@@ -28,4 +29,54 @@ export const useScrollBlock = (shouldBlock: boolean) => {
       document.body.style.overflow = 'auto';
     };
   }, [shouldBlock]);
+};
+
+export const useFocus = (
+  escAction: () => void,
+  ref: React.RefObject<HTMLDivElement>
+) => {
+  const focusableModalElements = useMemo(() => {
+    return (
+      ref.current?.querySelectorAll<HTMLElement>(
+        FOCUSABLE_HTML_ELEMENT.join(', ')
+      ) ?? []
+    );
+  }, [ref]);
+
+  useEffect(() => {
+    const handleTabKey = (event: KeyboardEvent): void => {
+      if (focusableModalElements) {
+        const firstElement = focusableModalElements[0];
+        const lastElement =
+          focusableModalElements[focusableModalElements.length - 1];
+
+        if (
+          !event.shiftKey &&
+          document.activeElement !== firstElement &&
+          firstElement
+        ) {
+          firstElement.focus();
+          event.preventDefault();
+        }
+
+        if (event.shiftKey && document.activeElement !== lastElement) {
+          lastElement?.focus();
+          event.preventDefault();
+        }
+      }
+    };
+
+    const keyListenersMap = new Map([
+      ['Escape', escAction],
+      ['Tab', handleTabKey],
+    ]);
+    const keyListener = (event: KeyboardEvent): void => {
+      const listener = keyListenersMap.get(event.key);
+      return listener && listener(event);
+    };
+
+    document.addEventListener('keydown', keyListener);
+
+    return () => document.removeEventListener('keydown', keyListener);
+  }, [escAction, focusableModalElements]);
 };

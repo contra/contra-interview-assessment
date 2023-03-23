@@ -7,7 +7,11 @@ describe('<Modal />', () => {
 
   it('should render when prop isOpen = true', async () => {
     expect.hasAssertions();
-    render(<Modal child={contentChild} handleClose={handleClose} isOpen />);
+    render(
+      <Modal handleClose={handleClose} isOpen>
+        {contentChild}
+      </Modal>
+    );
     const modal = screen.queryByTestId('modal-container');
     expect(modal).toBeInTheDocument();
   });
@@ -15,7 +19,9 @@ describe('<Modal />', () => {
   it('should call handleClose after click the close button', async () => {
     expect.hasAssertions();
     const { getByTestId } = render(
-      <Modal child={contentChild} handleClose={handleClose} isOpen />
+      <Modal handleClose={handleClose} isOpen>
+        {contentChild}
+      </Modal>
     );
 
     const closeButton = getByTestId('modal-close');

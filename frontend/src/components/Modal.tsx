@@ -1,22 +1,42 @@
-import React from 'react';
+import ReactPortal from './ReactPortal';
+import { useFocus, useScrollBlock } from '@/Utils/hooks.util';
+import React, { useRef } from 'react';
 
 export type ModalProps = {
-  child: React.ReactElement;
+  children: React.ReactElement;
   handleClose: () => void;
   isOpen: boolean;
 };
 
-const Modal = ({ isOpen, handleClose, child }: ModalProps) => {
+const Modal = ({ isOpen, handleClose, children }: ModalProps) => {
+  useScrollBlock(isOpen);
+  const modalRef = useRef<HTMLDivElement>(null);
+  useFocus(handleClose, modalRef);
+
   return (
     <>
       {isOpen && (
-        <div data-testid="modal-container">
-          This is the modal
-          {child}
-          <button data-testid="modal-close" onClick={handleClose} type="button">
-            close the modal
-          </button>
-        </div>
+        <ReactPortal wrapperId="react-portal-modal-container">
+          <div
+            aria-labelledby="modal-title"
+            aria-modal="true"
+            className="modal"
+            data-testid="modal-container"
+            id="modal"
+            ref={modalRef}
+            role="dialog"
+          >
+            This is the modal
+            {children}
+            <button
+              data-testid="modal-close"
+              onClick={handleClose}
+              type="button"
+            >
+              close the modal
+            </button>
+          </div>
+        </ReactPortal>
       )}
     </>
   );
