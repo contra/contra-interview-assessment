@@ -40,9 +40,9 @@ describe('Modal', () => {
 
     lastElement.focus();
     await userEvent.keyboard('{Tab}');
-    
+
     expect(document.activeElement).toBe(firstElement);
-  })
+  });
 
   it('focuses on the last element when shift + tab is pressed on first element', async () => {
     renderModal(true);

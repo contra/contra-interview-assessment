@@ -11,7 +11,6 @@ const createRootElement = (wrapperId: WrapperId) => {
   return wrapperElement;
 };
 
-
 export const ReactPortal = ({
   children,
   wrapperId = 'contra-frontend-modal',
