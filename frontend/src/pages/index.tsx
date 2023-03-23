@@ -29,11 +29,8 @@ const Index: NextPage = () => {
       <button
         data-modal-target="staticModal"
         data-modal-toggle="staticModal"
-        className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-5 mb-2"
-        onClick={() => {
-          setIsOpen(true);
-          console.log('click btn');
-        }}
+        className="text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-5 mb-2"
+        onClick={() => setIsOpen(true)}
         type="button"
       >
         click to open the modal
