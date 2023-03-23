@@ -24,13 +24,22 @@ const Index: NextPage = () => {
   };
 
   return (
-    <>
-      <h1>Welcome to Contra!</h1>
-      <button onClick={() => setIsOpen(true)} type="button">
+    <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen text-center">
+      <h1 className="text-5xl font-extrabold">Welcome to Contra!</h1>
+      <button
+        data-modal-target="staticModal"
+        data-modal-toggle="staticModal"
+        className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-5 mb-2"
+        onClick={() => {
+          setIsOpen(true);
+          console.log('click btn');
+        }}
+        type="button"
+      >
         click to open the modal
       </button>
       <ConfirmationModal handleClose={handleClose} isOpen={isOpen} />
-    </>
+    </div>
   );
 };
 
