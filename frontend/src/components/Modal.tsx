@@ -1,6 +1,6 @@
 import React from 'react';
-import { useEscapeKey, useFocusTrap, useScrollBlock } from '@/utils/hooks.util';
 import ReactPortal from './ReactPortal';
+import { useEscapeKey, useFocusTrap, useScrollBlock } from '@/utils/hooks.util';
 
 export type ModalProps = {
   children: React.ReactElement;
@@ -33,7 +33,7 @@ const Modal = ({ isOpen, handleClose, children }: ModalProps) => {
 
               <button
                 className="absolute top-0 right-0 text-gray-800 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-hide="staticModal"
+                data-testid="modal-close"
                 onClick={handleClose}
                 tabIndex={0}
                 type="button"
@@ -48,7 +48,7 @@ const Modal = ({ isOpen, handleClose, children }: ModalProps) => {
                     clipRule="evenodd"
                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                     fillRule="evenodd"
-                  ></path>
+                  />
                 </svg>
               </button>
             </div>

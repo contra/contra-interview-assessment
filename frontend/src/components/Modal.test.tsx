@@ -1,5 +1,6 @@
-import Modal from './Modal';
 import { fireEvent, render, screen } from '@testing-library/react';
+
+import Modal from './Modal';
 
 describe('<Modal />', () => {
   const contentChild = <p>This is a test content</p>;
@@ -31,8 +32,21 @@ describe('<Modal />', () => {
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 
-  it.todo('should block the background scrolling');
-  it.todo('should block the background clicking actions');
-  it.todo('should have aria attribute for screen readers');
-  it.todo('should have color contracts');
+  it('should block the background scrolling', () => {
+    const initialScrollPosition = window.pageYOffset;
+
+    render(
+      <Modal handleClose={handleClose} isOpen>
+        {contentChild}
+      </Modal>
+    );
+
+    window.scrollTo(0, 600);
+
+    expect(window.pageYOffset).toBe(initialScrollPosition);
+  });
+
+  it.todo('should focus on first element when render');
+  it.todo('should be able to change focus using Tab');
+  it.todo('should close the modal when press Esc');
 });

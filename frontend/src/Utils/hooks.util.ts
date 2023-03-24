@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+
 import { FOCUSABLE_HTML_ELEMENT_STR } from './common.const';
 
 export const useEscapeKey = (handleAction: () => void) => {
@@ -58,6 +59,7 @@ export const useFocusTrap = () => {
           event.preventDefault();
           firstElement?.focus();
         }
+
         if (
           document.activeElement === firstElement &&
           firstElement &&
@@ -72,7 +74,7 @@ export const useFocusTrap = () => {
 
       return () => document.removeEventListener('keydown', handleTabKey);
     }, 100);
-  }, [refOuter.current]);
+  }, [refOuter]);
 
   return refOuter;
 };
