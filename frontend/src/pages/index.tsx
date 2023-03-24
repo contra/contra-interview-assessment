@@ -1,7 +1,7 @@
 /* eslint-disable canonical/filename-match-exported */
-import ConfirmationModal from '../components/ConfirmModal';
 import { type NextPage } from 'next';
 import { useEffect, useRef, useState } from 'react';
+import ConfirmModal from '../components/ConfirmModal';
 
 const Index: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,10 +32,12 @@ const Index: NextPage = () => {
         className="text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-5 mb-2"
         onClick={() => setIsOpen(true)}
         type="button"
+        tabIndex={0}
       >
         click to open the modal
       </button>
-      <ConfirmationModal handleClose={handleClose} isOpen={isOpen} />
+      <button tabIndex={0}>fake button</button>
+      {isOpen && <ConfirmModal handleClose={handleClose} isOpen={isOpen} />}
     </div>
   );
 };

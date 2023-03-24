@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 type ReactPortalType = {
@@ -15,11 +15,13 @@ const createWrapperAndAppendToBody = (wrapperId: string) => {
 };
 
 const ReactPortal = ({ children, wrapperId }: ReactPortalType) => {
-  const [wrapperElement, setWrapperElement] = useState<HTMLElement>();
+  const [wrapperElement, setWrapperElement] = useState<HTMLDivElement | null>(
+    null
+  );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const element =
-      document.querySelector<HTMLElement>('#wrapperId') ||
+      document.querySelector<HTMLDivElement>(wrapperId) ||
       createWrapperAndAppendToBody(wrapperId);
 
     setWrapperElement(element);

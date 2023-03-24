@@ -1,5 +1,5 @@
-import { FOCUSABLE_HTML_ELEMENT } from './common.const';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useRef } from 'react';
+import { FOCUSABLE_HTML_ELEMENT_STR } from './common.const';
 
 export const useEscapeKey = (handleAction: () => void) => {
   useEffect(() => {
@@ -31,52 +31,48 @@ export const useScrollBlock = (shouldBlock: boolean) => {
   }, [shouldBlock]);
 };
 
-export const useFocus = (
-  escAction: () => void,
-  ref: React.RefObject<HTMLDivElement>
-) => {
-  const focusableModalElements = useMemo(() => {
-    return (
-      ref.current?.querySelectorAll<HTMLElement>(
-        FOCUSABLE_HTML_ELEMENT.join(', ')
-      ) ?? []
-    );
-  }, [ref]);
+export const useFocusTrap = () => {
+  const refOuter = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const handleTabKey = (event: KeyboardEvent): void => {
-      if (focusableModalElements) {
-        const firstElement = focusableModalElements[0];
-        const lastElement =
-          focusableModalElements[focusableModalElements.length - 1];
+    setTimeout(() => {
+      const focusableElements = Array.from<HTMLElement>(
+        refOuter.current?.querySelectorAll(FOCUSABLE_HTML_ELEMENT_STR) ?? []
+      );
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      firstElement?.focus();
+
+      const handleTabKey = (event: KeyboardEvent): void => {
+        if (event.key !== 'Tab') {
+          return;
+        }
 
         if (
-          !event.shiftKey &&
-          document.activeElement !== firstElement &&
-          firstElement
+          document.activeElement === lastElement &&
+          lastElement &&
+          !event.shiftKey
         ) {
-          firstElement.focus();
           event.preventDefault();
+          firstElement?.focus();
         }
-
-        if (event.shiftKey && document.activeElement !== lastElement) {
+        if (
+          document.activeElement === firstElement &&
+          firstElement &&
+          event.shiftKey
+        ) {
+          event.preventDefault();
           lastElement?.focus();
-          event.preventDefault();
         }
-      }
-    };
+      };
 
-    const keyListenersMap = new Map([
-      ['Escape', escAction],
-      ['Tab', handleTabKey],
-    ]);
-    const keyListener = (event: KeyboardEvent): void => {
-      const listener = keyListenersMap.get(event.key);
-      return listener && listener(event);
-    };
+      document.addEventListener('keydown', handleTabKey);
 
-    document.addEventListener('keydown', keyListener);
+      return () => document.removeEventListener('keydown', handleTabKey);
+    }, 100);
+  }, [refOuter.current]);
 
-    return () => document.removeEventListener('keydown', keyListener);
-  }, [escAction, focusableModalElements]);
+  return refOuter;
 };
