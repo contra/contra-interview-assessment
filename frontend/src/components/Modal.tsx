@@ -30,18 +30,18 @@ const Modal = ({ children, handleClose, isOpen, name }: ModalProps) => {
         <div className="fixed inset-0 flex items-center justify-center bg-slate-800 opacity-75" />
         <div className="relative">
           <div className="relative bg-white rounded-lg shadow">
-            <div className="static p-8">
+            <div className="static p-10 md:p-8">
               {children}
 
               <button
-                className="absolute top-0 right-0 text-gray-800 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                className="absolute top-0 right-0 text-gray-800 bg-transparent focus:bg-gray-900 focus:text-white hover:bg-gray-900 hover:text-white  rounded-lg text-lg p-1.5 ml-auto inline-flex items-center"
                 data-testid="modal-close-button"
                 onClick={handleClose}
                 tabIndex={0}
                 type="button"
               >
                 <svg
-                  className="w-5 h-5"
+                  className="w-10 h-10 md:w-5 md:h-5"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
