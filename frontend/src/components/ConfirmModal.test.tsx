@@ -6,7 +6,7 @@ describe('<ConfirmationModal />', () => {
 
   it('should render when prop isOpen = true', async () => {
     expect.hasAssertions();
-    render(<ConfirmationModal handleClose={handleClose} isOpen={true} />);
+    render(<ConfirmationModal handleClose={handleClose} isOpen />);
     const confirmButton = screen.queryByTestId('modal-confirm-button');
 
     expect(confirmButton).toBeInTheDocument();

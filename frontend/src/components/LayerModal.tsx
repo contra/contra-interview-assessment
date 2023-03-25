@@ -5,14 +5,14 @@ type LayerModalProps = {
   isOpen: boolean;
 };
 
-const LayerModal = ({ isOpen, handleClose }: LayerModalProps) => {
+const LayerModal = ({ handleClose, isOpen }: LayerModalProps) => {
   return (
     <>
       {isOpen && (
-        <Modal handleClose={handleClose} isOpen={isOpen}>
+        <Modal handleClose={handleClose} isOpen={isOpen} name="Layer">
           <>
             <p>This is a layer modal</p>
-            <button tabIndex={0} type="button" onClick={handleClose}>
+            <button onClick={handleClose} tabIndex={0} type="button">
               close
             </button>
           </>

@@ -10,10 +10,9 @@ export const useEscapeKey = (handleAction: () => void) => {
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
-
+    document.addEventListener('keydown', handleEscape, false);
     return () => {
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('keydown', handleEscape, false);
     };
   }, [handleAction]);
 };
