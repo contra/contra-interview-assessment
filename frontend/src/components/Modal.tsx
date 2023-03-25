@@ -1,9 +1,10 @@
-import React from 'react';
-import ReactPortal from './ReactPortal';
+import React, { ReactElement } from 'react';
+
 import { useEscapeKey, useFocusTrap, useScrollBlock } from '@/utils/hooks.util';
+import ReactPortal from './ReactPortal';
 
 export type ModalProps = {
-  children: React.ReactElement;
+  children: ReactElement;
   handleClose: () => void;
   isOpen: boolean;
 };
@@ -13,7 +14,6 @@ const Modal = ({ isOpen, handleClose, children }: ModalProps) => {
   useScrollBlock(isOpen);
 
   const refOuter = useFocusTrap();
-
   return (
     <ReactPortal wrapperId="modal-wrapper">
       <div
