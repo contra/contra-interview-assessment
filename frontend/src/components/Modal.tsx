@@ -6,11 +6,11 @@ import ReactPortal from './ReactPortal';
 export type ModalProps = {
   children: React.ReactElement;
   handleClose: () => void;
-  name: string;
   isOpen: boolean;
+  name: string;
 };
 
-const Modal = ({ isOpen, handleClose, name, children }: ModalProps) => {
+const Modal = ({ children, handleClose, isOpen, name }: ModalProps) => {
   useEscapeKey(handleClose);
   useScrollBlock(isOpen);
   const refOuter = useFocusTrap();

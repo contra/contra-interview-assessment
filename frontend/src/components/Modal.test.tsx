@@ -47,6 +47,8 @@ describe('<Modal />', () => {
   });
 
   it('should block the background scrolling', () => {
+    expect.hasAssertions();
+
     jest.spyOn(window, 'scrollTo').mockImplementation();
 
     const initialScrollPosition = window.pageYOffset;
@@ -59,6 +61,8 @@ describe('<Modal />', () => {
   });
 
   it('should focus on first element when render', async () => {
+    expect.hasAssertions();
+
     renderComponent();
 
     const firstButton = screen.queryByTestId('first-item');
@@ -67,6 +71,8 @@ describe('<Modal />', () => {
   });
 
   it('should be able to change focus using Tab', async () => {
+    expect.hasAssertions();
+
     renderComponent();
 
     const firstButton = screen.queryByTestId('first-item');
@@ -81,6 +87,8 @@ describe('<Modal />', () => {
   });
 
   it('should close the modal when press Esc', async () => {
+    expect.hasAssertions();
+
     renderComponent();
 
     await user.keyboard('{Escape}');
