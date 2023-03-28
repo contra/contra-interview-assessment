@@ -1,7 +1,7 @@
 import Modal from '@/component/modal/Modal';
 import Link from 'next/link';
 import { NextPage } from 'next/types';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { CSSProperties, createContext, useContext, useEffect, useState } from 'react';
 
 const Lorem = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
@@ -9,6 +9,13 @@ when an unknown printer took a galley of type and scrambled it to make a type sp
 It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
 It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
 and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`
+
+const InLineStyle: CSSProperties = {
+    position: 'sticky',
+    top: 0,
+    zIndex: 1,
+    background: 'white'
+}
 
 const useModalHandlers = () => {
     const [open, setOpen] = useState(false)
@@ -275,19 +282,21 @@ const DynamicMultiLevelModal = () => {
 const Modals: NextPage = () => {
     return (
         <div className='vertical-flex'>
-            <div className='horizontal-flex'>
-                <Link href='/demos'>
-                    <a 
-                        className='link font-large' 
-                        tabIndex={1}
-                        aria-label='Go Back To Demos Page'
-                    >
-                        {'<<'}
-                    </a>
-                </Link>
-            <span className='font-large'>Modal Demos</span>
+            <div className='vertical-flex' style={InLineStyle}>
+                <div className='horizontal-flex'>
+                    <Link href='/demos'>
+                        <a 
+                            className='link font-large' 
+                            tabIndex={1}
+                            aria-label='Go Back To Demos Page'
+                        >
+                            {'<<'}
+                        </a>
+                    </Link>
+                    <span className='font-large'>Modal Demos</span>
+                </div>
+                <hr />
             </div>
-            <hr />
             <div className='horizontal-flex wrap-flex'>
                 <SingleModal />
                 <SingleModalWithFullscreen />
@@ -298,6 +307,15 @@ const Modals: NextPage = () => {
                 <span className='fill-width'>
                     <DynamicMultiLevelModal />
                 </span>
+                <div>
+                    {
+                        Array(10)
+                            .fill(Lorem)
+                            .map(
+                                (paragraph, index) => <p key={`${index}-${Math.random() * 10}`}>{paragraph}</p>
+                            )
+                    }
+                </div>
             </div>
         </div>
     )
