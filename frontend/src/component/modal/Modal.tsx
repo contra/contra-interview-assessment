@@ -101,7 +101,10 @@ const Modal = ({ isOpen, title, children, fullscreen = false, dismissOnOutsideCl
             else enableBodyScroll(container.current)
         }
 
-        return () => clearAllBodyScrollLocks()
+        return () => {
+            const nodes = document.querySelectorAll('.modal__overlay')
+            if( nodes.length === 0 ) clearAllBodyScrollLocks()
+        }
     }, [isOpen])
 
     const onOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
