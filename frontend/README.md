@@ -61,3 +61,20 @@ $ yarn dev
 ```
 
 and the application should come alive at `localhost:3000`
+
+## Assessment
+### Libraries I used
+- focus-trap-react to help keep focus in currently opened Modal
+- body-scroll-lock to help lock background scroll when Modal is open
+
+### Liberties I took
+- Outside click can be configured to either dismiss the Modal or not
+- Option to make Modal fullscreen or not
+- At very small screen sizes (*450px and below*), modal becomes fullscreen. This is a media query addition for the demo page and is not baked into the Modal implementation itself
+
+### Improvements provided enough time
+- **Styling** will be migrated to a SASS model to help with **encapulation** and **reuse**.
+- **Storybook** will be added to provide more flexible and variable **testing**.
+- Proper **snapshot testing** will be added for varying states.
+- **Extensibility** will be implemented to take advantage of **custom styling** as well as **placement of segments like header and footer**. It will however remain foundational if you do not extend it.
+- Look for more ways to **clean** the codebase
