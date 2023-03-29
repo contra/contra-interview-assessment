@@ -1,7 +1,6 @@
+import Modal from './Modal';
 import { render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
-
-import Modal from './Modal';
 
 describe('<Modal />', () => {
   const contentChild = (
@@ -23,7 +22,7 @@ describe('<Modal />', () => {
 
   const renderComponent = () =>
     render(
-      <Modal handleClose={handleClose} name="Confirm" isOpen>
+      <Modal handleClose={handleClose} isOpen name="Confirm">
         {contentChild}
       </Modal>
     );

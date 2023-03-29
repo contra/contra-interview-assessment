@@ -40,7 +40,7 @@ module.exports = {
     {
       excludedFiles: '*.test.ts',
       extends: [
-        'canonical/next',
+        'next',
         'canonical',
         'canonical/react',
         'canonical/typescript',
@@ -54,7 +54,7 @@ module.exports = {
     },
     {
       extends: [
-        'canonical/next',
+        'next',
         'canonical',
         'canonical/react',
         'canonical/jsx-a11y',
@@ -81,7 +81,7 @@ module.exports = {
       rules: ruleOverrides,
     },
     {
-      extends: ['canonical/next', 'canonical', 'canonical/node', 'prettier'],
+      extends: ['next', 'canonical', 'canonical/node', 'prettier'],
       files: '*.{js,mjs}',
       parserOptions: {
         sourceType: 'module',

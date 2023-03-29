@@ -1,7 +1,6 @@
-import React from 'react';
-
-import { useEscapeKey, useFocusTrap, useScrollBlock } from '@/utils/hooks.util';
 import ReactPortal from './ReactPortal';
+import { useEscapeKey, useFocusTrap, useScrollBlock } from '@/utils/hooks.util';
+import React from 'react';
 
 export type ModalProps = {
   children: React.ReactElement;

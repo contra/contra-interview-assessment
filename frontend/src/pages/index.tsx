@@ -1,7 +1,7 @@
 /* eslint-disable canonical/filename-match-exported */
+import ConfirmModal from '../components/ConfirmModal';
 import { type NextPage } from 'next';
 import { useState } from 'react';
-import ConfirmModal from '../components/ConfirmModal';
 
 const Index: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);

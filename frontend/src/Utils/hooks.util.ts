@@ -1,6 +1,5 @@
-import { useEffect, useRef } from 'react';
-
 import { FOCUSABLE_HTML_ELEMENT_STR } from './common.const';
+import { useEffect, useRef } from 'react';
 
 export const useEscapeKey = (handleAction: () => void) => {
   useEffect(() => {
