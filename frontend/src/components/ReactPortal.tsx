@@ -21,13 +21,13 @@ const ReactPortal = ({ children, wrapperId }: ReactPortalType) => {
 
   useEffect(() => {
     const element =
-      document.querySelector<HTMLDivElement>(wrapperId) ||
+      document.querySelector<HTMLDivElement>(wrapperId) ??
       createWrapperAndAppendToBody(wrapperId);
 
     setWrapperElement(element);
 
     return () => {
-      element?.parentNode?.removeChild(element);
+      element.parentNode?.removeChild(element);
     };
   }, [wrapperId]);
 

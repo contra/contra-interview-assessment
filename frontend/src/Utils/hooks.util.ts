@@ -1,5 +1,5 @@
-import { FOCUSABLE_HTML_ELEMENT_STR } from './common.const';
 import { useEffect, useRef } from 'react';
+import { FOCUSABLE_HTML_ELEMENT_STR } from './common.const';
 
 export const useEscapeKey = (handleAction: () => void) => {
   useEffect(() => {
@@ -49,20 +49,12 @@ export const useFocusTrap = () => {
           return;
         }
 
-        if (
-          document.activeElement === lastElement &&
-          lastElement &&
-          !event.shiftKey
-        ) {
+        if (document.activeElement === lastElement && !event.shiftKey) {
           event.preventDefault();
           firstElement?.focus();
         }
 
-        if (
-          document.activeElement === firstElement &&
-          firstElement &&
-          event.shiftKey
-        ) {
+        if (document.activeElement === firstElement && event.shiftKey) {
           event.preventDefault();
           lastElement?.focus();
         }

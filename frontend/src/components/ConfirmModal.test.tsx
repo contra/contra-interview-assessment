@@ -1,5 +1,5 @@
+import { render, screen } from '@testing-library/react';
 import ConfirmationModal from './ConfirmModal';
-import { render,screen } from '@testing-library/react';
 
 describe('<ConfirmationModal />', () => {
   const handleClose = jest.fn();

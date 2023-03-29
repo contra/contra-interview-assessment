@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import LayerModal from './LayerModal';
 import Modal from './Modal';
-import { useState } from 'react';
 
 type ConfirmationModalProps = {
   handleClose: () => void;
