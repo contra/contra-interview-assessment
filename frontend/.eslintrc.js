@@ -5,6 +5,7 @@ const ruleOverrides = {
   'arrow-body-style': 0,
   'canonical/destructuring-property-newline': 0,
   'canonical/export-specifier-newline': 0,
+  'canonical/filename-match-exported': 'off',
   'canonical/filename-match-regex': 0,
   'canonical/import-specifier-newline': 0,
   'default-case': 0,
