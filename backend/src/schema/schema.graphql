@@ -8,7 +8,7 @@ type FeatureFlag {
 
 type Mutation {
   targetUsers(featureFlagId: ID!, userIds: [ID!]!): FeatureFlag!
-  targetUsers(featureFlagId: ID!, userIds: [ID!]!): FeatureFlag!
+  updateUserFeatureFlag(featureFlagId: ID!, userId: ID!, value: String!): User
 }
 
 type Query {

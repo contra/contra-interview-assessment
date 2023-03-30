@@ -26,6 +26,7 @@ export type FeatureFlag = {
 export type Mutation = {
   __typename?: 'Mutation';
   targetUsers: FeatureFlag;
+  updateUserFeatureFlag?: Maybe<User>;
 };
 
 
@@ -34,24 +35,31 @@ export type MutationTargetUsersArgs = {
   userIds: Array<Scalars['ID']>;
 };
 
-export type Query = {
-  __typename?: 'Query';
-  users: Array<User>;
-  user?: Maybe<User>;
-  usersWithFeatureFlags?: Maybe<Array<User>>;
-  featureFlagsWithUsers?: Maybe<Array<FeatureFlag>>;
-  featureFlag?: Maybe<FeatureFlag>;
-  featureFlags: Array<FeatureFlag>;
-  userFeatureFlags: Array<UserFeatureFlag>;
+
+export type MutationUpdateUserFeatureFlagArgs = {
+  userId: Scalars['ID'];
+  featureFlagId: Scalars['ID'];
+  value: Scalars['String'];
 };
 
-
-export type QueryUserArgs = {
-  id: Scalars['ID'];
+export type Query = {
+  __typename?: 'Query';
+  featureFlag?: Maybe<FeatureFlag>;
+  featureFlags: Array<FeatureFlag>;
+  featureFlagsWithUsers?: Maybe<Array<FeatureFlag>>;
+  user?: Maybe<User>;
+  userFeatureFlags: Array<UserFeatureFlag>;
+  users: Array<User>;
+  usersWithFeatureFlags?: Maybe<Array<User>>;
 };
 
 
 export type QueryFeatureFlagArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryUserArgs = {
   id: Scalars['ID'];
 };
 
@@ -168,16 +176,17 @@ export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = Res
 
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
   targetUsers?: Resolver<ResolversTypes['FeatureFlag'], ParentType, ContextType, RequireFields<MutationTargetUsersArgs, 'featureFlagId' | 'userIds'>>;
+  updateUserFeatureFlag?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserFeatureFlagArgs, 'userId' | 'featureFlagId' | 'value'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
-  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
-  usersWithFeatureFlags?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
-  featureFlagsWithUsers?: Resolver<Maybe<Array<ResolversTypes['FeatureFlag']>>, ParentType, ContextType>;
   featureFlag?: Resolver<Maybe<ResolversTypes['FeatureFlag']>, ParentType, ContextType, RequireFields<QueryFeatureFlagArgs, 'id'>>;
   featureFlags?: Resolver<Array<ResolversTypes['FeatureFlag']>, ParentType, ContextType>;
+  featureFlagsWithUsers?: Resolver<Maybe<Array<ResolversTypes['FeatureFlag']>>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   userFeatureFlags?: Resolver<Array<ResolversTypes['UserFeatureFlag']>, ParentType, ContextType>;
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  usersWithFeatureFlags?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
 }>;
 
 export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['User']> = ResolversObject<{

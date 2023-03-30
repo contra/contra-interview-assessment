@@ -1,5 +1,5 @@
 import { MutationResolvers } from '../../../generated/types';
-import { FeatureFlag } from '../../../sequelize/models';
+import { FeatureFlag, User } from '../../../sequelize/models';
 import { FeatureFlagService } from '../../../services/featureFlagService';
 
 // @ts-ignore
@@ -14,4 +14,19 @@ export const targetUsers: MutationResolvers['targetUsers'] = async (
   );
 
   return (result as unknown) as FeatureFlag[];
+};
+
+// @ts-ignore
+export const updateUserFeatureFlag: MutationResolvers['updateUserFeatureFlag'] = async (
+  _: never,
+  args: { featureFlagId: string; userId: string; value: string },
+) => {
+  const userService = new FeatureFlagService();
+  const result = await userService.updateUserFeatureFlag(
+    args.featureFlagId,
+    args.userId,
+    args.value,
+  );
+
+  return (result as unknown) as User;
 };
