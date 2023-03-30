@@ -1,9 +1,10 @@
-import type { GraphQLResolveInfo } from 'graphql';
+import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import type { ResolverContext } from '../ResolverContextType';
 export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -11,16 +12,77 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  JSON: any;
+};
+
+
+export type Query = {
+  __typename?: 'Query';
+  getUsers: Array<User>;
+  getFeatureFlags: Array<FeatureFlag>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  sampleMutation: Scalars['String'];
+  setUsersFeatureFlag: SuccessPayload;
+  updateUserFlag: SuccessPayload;
 };
 
-export type Query = {
-  __typename?: 'Query';
-  hello: Scalars['String'];
+
+export type MutationSetUsersFeatureFlagArgs = {
+  input: SetUsersFeatureFlagInput;
+};
+
+
+export type MutationUpdateUserFlagArgs = {
+  input: UpdateUserFlagInput;
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['String'];
+  given_name: Scalars['String'];
+  family_name: Scalars['String'];
+  email_address: Scalars['String'];
+  feature_flags: Array<UserFlag>;
+};
+
+export type FeatureFlag = {
+  __typename?: 'FeatureFlag';
+  id: Scalars['String'];
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  type: Scalars['String'];
+};
+
+export type UserFlag = {
+  __typename?: 'UserFlag';
+  id: Scalars['String'];
+  user: User;
+  featureFlag: FeatureFlag;
+  value: Scalars['String'];
+};
+
+export enum FlagType {
+  Boolean = 'BOOLEAN',
+  Multivariant = 'MULTIVARIANT'
+}
+
+export type SetUsersFeatureFlagInput = {
+  userIds: Array<Scalars['String']>;
+  featureFlagId: Scalars['String'];
+  value: Scalars['String'];
+};
+
+export type UpdateUserFlagInput = {
+  userId: Scalars['String'];
+  featureFlagId: Scalars['String'];
+  value: Scalars['String'];
+};
+
+export type SuccessPayload = {
+  __typename?: 'SuccessPayload';
+  success: Scalars['Boolean'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -89,31 +151,87 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
-  Mutation: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']>;
+  JSON: ResolverTypeWrapper<Scalars['JSON']>;
   Query: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<{}>;
+  User: ResolverTypeWrapper<User>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
+  UserFlag: ResolverTypeWrapper<UserFlag>;
+  FlagType: FlagType;
+  setUsersFeatureFlagInput: SetUsersFeatureFlagInput;
+  updateUserFlagInput: UpdateUserFlagInput;
+  SuccessPayload: ResolverTypeWrapper<SuccessPayload>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
-  Mutation: {};
-  String: Scalars['String'];
+  JSON: Scalars['JSON'];
   Query: {};
+  Mutation: {};
+  User: User;
+  String: Scalars['String'];
+  FeatureFlag: FeatureFlag;
+  UserFlag: UserFlag;
+  setUsersFeatureFlagInput: SetUsersFeatureFlagInput;
+  updateUserFlagInput: UpdateUserFlagInput;
+  SuccessPayload: SuccessPayload;
   Boolean: Scalars['Boolean'];
 }>;
 
-export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
-  sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-}>;
+export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
+  name: 'JSON';
+}
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
-  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  getUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  getFeatureFlags?: Resolver<Array<ResolversTypes['FeatureFlag']>, ParentType, ContextType>;
+}>;
+
+export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
+  setUsersFeatureFlag?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationSetUsersFeatureFlagArgs, 'input'>>;
+  updateUserFlag?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationUpdateUserFlagArgs, 'input'>>;
+}>;
+
+export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['User']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  given_name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  family_name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  feature_flags?: Resolver<Array<ResolversTypes['UserFlag']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['UserFlag']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  featureFlag?: Resolver<ResolversTypes['FeatureFlag'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SuccessPayloadResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['SuccessPayload']> = ResolversObject<{
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
-  Mutation?: MutationResolvers<ContextType>;
+  JSON?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
+  FeatureFlag?: FeatureFlagResolvers<ContextType>;
+  UserFlag?: UserFlagResolvers<ContextType>;
+  SuccessPayload?: SuccessPayloadResolvers<ContextType>;
 }>;
 
 

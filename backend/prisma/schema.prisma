@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_CONNECTION_STRING")
+}
+
+model User {
+  id            String     @id @default(uuid())
+  given_name    String     @db.VarChar(255)
+  family_name   String     @db.VarChar(255)
+  email_address String     @unique @db.VarChar(255)
+  created_at    DateTime?  @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime?  @default(now()) @db.Timestamptz(6)
+  feature_flags UserFlag[]
+}
+
+model FeatureFlag {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  description String?
+  type        FlagType
+  users       UserFlag[]
+}
+
+model UserFlag {
+  id            String      @id @default(uuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  featureFlagId String
+  featureFlag   FeatureFlag @relation(fields: [featureFlagId], references: [id])
+  value         String
+
+  @@unique([userId, featureFlagId])
+}
+
+enum FlagType {
+  BOOLEAN
+  MULTIVARIANT
+}

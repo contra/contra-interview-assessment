@@ -4,12 +4,13 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development ROARR_LOG=true ts-node-dev --respawn ./src/bin/server.ts | roarr pretty-print",
+    "dev": "SET NODE_ENV=development&& SET ROARR_LOG=true&& ts-node-dev --respawn ./src/bin/server.ts | roarr pretty-print",
     "format-graphql-schema": "format-graphql --write true ./src/schema/schema.graphql",
     "build": "tsc --project ./",
     "lint": "eslint --fix src . && prettier --write src . && tsc --noEmit && format-graphql --write true src/schema/schema.graphql",
     "generate-types": "graphql-codegen",
-    "migrate": "ts-node ./src/bin/migrate.ts"
+    "migrate": "ts-node ./src/bin/migrate.ts",
+    "seed": "ts-node ./prisma/seed.ts"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "1.21.2",
@@ -31,6 +32,7 @@
     "typescript": "4.5.5"
   },
   "dependencies": {
+    "@prisma/client": "^4.12.0",
     "@roarr/cli": "^3.2.2",
     "apollo-server-fastify": "3.6.3",
     "fast-safe-stringify": "^2.1.1",
@@ -40,6 +42,8 @@
     "graphql": "^15.4.0",
     "graphql-import": "^1.0.2",
     "graphql-tools": "^7.0.2",
+    "graphql-type-json": "^0.3.2",
+    "prisma": "^4.12.0",
     "roarr": "^3.2.0",
     "slonik": "^23.5.1",
     "slonik-interceptor-field-name-transformation": "^1.5.3",
