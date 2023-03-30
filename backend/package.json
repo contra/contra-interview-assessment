@@ -18,6 +18,8 @@
     "@graphql-codegen/typescript-operations": "1.17.15",
     "@graphql-codegen/typescript-resolvers": "1.19.0",
     "@slonik/migrator": "0.11.2",
+    "@types/node": "16.11.*",
+    "@types/sequelize": "4.28.14",
     "@typescript-eslint/parser": "5.12.0",
     "eslint": "7.22.0",
     "eslint-config-canonical": "25.9.1",
@@ -32,7 +34,7 @@
   },
   "dependencies": {
     "@roarr/cli": "^3.2.2",
-    "apollo-server-fastify": "3.6.3",
+    "apollo-server-fastify": "3.12.0",
     "fast-safe-stringify": "^2.1.1",
     "fastify": "^3.14.0",
     "fastify-cookie": "^5.4.0",
@@ -40,10 +42,9 @@
     "graphql": "^15.4.0",
     "graphql-import": "^1.0.2",
     "graphql-tools": "^7.0.2",
+    "pg": "^8.10.0",
     "roarr": "^3.2.0",
-    "slonik": "^23.5.1",
-    "slonik-interceptor-field-name-transformation": "^1.5.3",
-    "slonik-interceptor-preset": "^1.2.10",
+    "sequelize": "6.21.4",
     "ts-node": "^9.1.1"
   }
 }

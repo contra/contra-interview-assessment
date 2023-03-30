@@ -1,5 +1,10 @@
-import { resolve as hello } from './hello';
+import { featureFlags, featureFlag } from './featureFlag';
+import { users, user, usersWithFeatureFlags } from './user';
 
 export const Query = {
-  hello,
+  featureFlag,
+  featureFlags,
+  user,
+  users,
+  usersWithFeatureFlags,
 };
