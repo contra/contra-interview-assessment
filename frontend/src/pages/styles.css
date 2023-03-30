@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    h1 {
+      @apply text-2xl font-bold mb-6;
+    }
+    h2 {
+      @apply text-xl;
+    }
+    h3 {
+      @apply text-lg;
+    }
+    body {
+        @apply bg-slate-200;
+    }
+    input {
+      padding: 1px 5px;
+      border-width: 1px;
+      border-style: inset;
+      border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    }
+  }
