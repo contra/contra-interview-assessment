@@ -1,6 +1,7 @@
 /* eslint-disable unicorn/numeric-separators-style */
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import classNames from 'classnames';
 import FocusTrap from 'focus-trap-react';
 import React, { useContext, useEffect, useRef } from 'react';
 import Button from './Button';
@@ -26,8 +27,9 @@ import Button from './Button';
 
 
 type Props = {
+    animate?: boolean,
     children: React.ReactNode,
-    handleClose: CloseHandler, 
+    handleClose: CloseHandler,
     show: boolean,
     title: string,
 }
@@ -55,7 +57,7 @@ const Overlay = ({ handleClose, zIndex }: { handleClose: CloseHandler, zIndex: n
  */
 const NestingLevel = React.createContext(0);
 
-const Modal = ({ children, handleClose, show, title }: Props) => {
+const Modal = ({ animate = true, children, handleClose, show, title }: Props) => {
 
     const nestingLevel = useContext(NestingLevel);
     
@@ -101,15 +103,20 @@ const Modal = ({ children, handleClose, show, title }: Props) => {
         clickOutsideDeactivates: true,
         // we need escapeDeactivates to be false otherwise nested dialogs will close in the wrong order
         escapeDeactivates: false,
+        // we need fallbackFocus for tests to pass
+        fallbackFocus: `div[aria-label=${title}]`, 
     }
+
+    const modalStyle = "absolute w-full sm:w-[400px] sm:-ml-[200px] bg-white sm:rounded-xl shadow-xl top-1/4 sm:left-1/2"
+    const animation = animate ? "transition-all duration-300 ease-out mt-[-1000px]": "mt-0";
 
     return show ? (<div className="fixed top-0 left-0 w-full h-full">
         <Overlay handleClose={handleClose} zIndex={1000+nestingLevel*2}/>
         <FocusTrap focusTrapOptions={focusTrapOptions}>
             <div aria-label={title}
-                className="absolute w-full transition-all duration-300 ease-out mt-[-1000px] sm:w-[400px] sm:-ml-[200px] bg-white sm:rounded-xl shadow-xl top-1/4 sm:left-1/2"
+                className={classNames(modalStyle, animation)}
                 onKeyUp={handleKey} ref={dialogRef} role="dialog"
-                style={{zIndex: 1001+nestingLevel*2}} tabIndex={0}
+                style={{zIndex: 1001+nestingLevel*2}} tabIndex={-1}
             >
                 <h2 className="text-center bg-violet-700 sm:rounded-t-xl text-white py-1">{title}</h2>
                 
