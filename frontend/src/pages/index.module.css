@@ -1,0 +1,24 @@
+
+.quiz-form > label{
+    display: table-cell;
+    text-align: left;
+}
+
+.quiz-form > input {
+    display: table-cell;
+    height: 20px;
+    margin: 10px 0px;
+}
+.quiz-form > a {
+    display: table-cell;
+}
+
+.footer {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.footer > button {
+    padding: 10px 10px;
+    margin-right: 10px;
+}

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
     "esModuleInterop": true,
@@ -26,8 +26,8 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2015",
-    "useUnknownInCatchVariables": true
+    "useUnknownInCatchVariables": true,
   },
   "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts"]
+  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", "./jest-setup.js"]
 }
