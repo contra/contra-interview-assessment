@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button onClick 1`] = `
+<div>
+  <button
+    class="transition ease-in-out duration-300 active:bg-black hover:bg-violet-400 hover:shadow-xl focus:bg-black font-medium text-lg min-w-[130px] px-4 h-14 rounded-full shadow outline-none bg-violet-700 text-white"
+    type="button"
+  >
+    ClickMe
+  </button>
+</div>
+`;

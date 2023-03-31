@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal no show 1`] = `<div />`;
+
+exports[`Modal show 1`] = `
+<div>
+  <div
+    class="fixed top-0 left-0 w-full h-full"
+  >
+    <div
+      aria-hidden="true"
+      class="absolute top-0 left-0 w-full h-full bg-slate-300/80"
+      role="button"
+      style="z-index: 1000;"
+      tabindex="0"
+    />
+    <div
+      aria-label="Modal"
+      class="absolute w-full sm:w-[400px] sm:-ml-[200px] bg-white sm:rounded-xl shadow-xl top-1/4 sm:left-1/2 mt-0"
+      role="dialog"
+      style="z-index: 1001;"
+      tabindex="-1"
+    >
+      <h2
+        class="text-center bg-violet-700 sm:rounded-t-xl text-white py-1"
+      >
+        Modal
+      </h2>
+      <div
+        class="py-8 px-8 space-y-2 sm:py-4 flex items-center flex-col sm:space-y-0 sm:space-x-6"
+      >
+        Modal Content
+      </div>
+      <div
+        class="text-center mb-4"
+      >
+        <button
+          class="transition ease-in-out duration-300 active:bg-black hover:bg-violet-400 hover:shadow-xl focus:bg-black font-medium text-lg min-w-[130px] px-4 h-14 rounded-full shadow outline-none bg-violet-700 text-white"
+          type="button"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

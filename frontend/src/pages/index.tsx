@@ -19,7 +19,7 @@ const Index: NextPage = () => {
       {showModal || <Button onClick={() => setShowModal(true)}>Show Modal</Button>}
       <Modal handleClose={() => setShowModal(false)} show={showModal} title="Modal 1">
         <Button onClick={() => setShowModal2(true)} type="secondary">Login</Button>
-        <Modal handleClose={() => setShowModal2(false)} show={showModal2} title="Modal 2">
+        <Modal animate={false} handleClose={() => setShowModal2(false)} show={showModal2} title="Modal 2">
           Nested Modal
         </Modal>
       </Modal>

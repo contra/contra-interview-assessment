@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import classNames from 'classnames';
 /**
  * Create custom button in order to have uniform styling and functionality in our app
  */
@@ -25,7 +25,7 @@ const styles:Style = {
 
 const Button = ({children, className = "", onClick = () => {}, type = "primary"}: Props) => {
     return <button 
-        className={classnames(baseStyle, styles[type], className)} 
+        className={classNames(baseStyle, styles[type], className)} 
         onClick={onClick} 
         type={type === "submit"?"submit":"button"}
         >
