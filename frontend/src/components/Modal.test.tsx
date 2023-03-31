@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { useState } from 'react';
 import Modal from './Modal';
 // eslint-disable-next-line import/no-unassigned-import
 import '@testing-library/jest-dom'
@@ -32,11 +33,27 @@ describe('Modal', () => {
     it('close', async () => {
         expect.hasAssertions();
 
-        render(<Modal animate={false} handleClose={onCloseHandler} show title="Modal">Modal Content</Modal>);
+        const onCloseMock = jest.fn();
 
+        const Wrapper = () => {
+            const [showModal, setShowModal] = useState(true);
+
+            onCloseMock.mockImplementation(() => {
+                setShowModal(false);
+            });
+
+            return <Modal animate={false} handleClose={onCloseMock} show={showModal} title="Modal">Modal Content</Modal>;
+        }
+        
+        render(<Wrapper />);
+        
         const close = await screen.findByText('Close');
-        close.click();
+        fireEvent.click(close);
 
-        expect(onCloseHandler.mock.calls).toHaveLength(1);
+        expect(onCloseMock.mock.calls).toHaveLength(1);
+
+        const title = screen.queryByText('Modal');
+        expect(title).toBeNull();
+
     });
 });
