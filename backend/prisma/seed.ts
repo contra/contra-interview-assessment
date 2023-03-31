@@ -1,6 +1,8 @@
-/* eslint-disable no-console */
 import { PrismaClient } from '@prisma/client';
+import Logger from 'roarr';
 import { FlagType } from '../src/generated/types';
+
+const log = Logger.child({ context: 'peisma/seed' });
 
 const prisma = new PrismaClient();
 
@@ -52,8 +54,8 @@ const prisma = new PrismaClient();
       ],
     });
 
-    console.log('Seeding complete!');
+    log('Seeding complete!');
   } catch (error) {
-    console.error(error);
+    log(error);
   }
 })();

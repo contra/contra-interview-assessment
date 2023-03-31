@@ -18,7 +18,6 @@
     "@graphql-codegen/typescript": "1.21.1",
     "@graphql-codegen/typescript-operations": "1.17.15",
     "@graphql-codegen/typescript-resolvers": "1.19.0",
-    "@slonik/migrator": "0.11.2",
     "@typescript-eslint/parser": "5.12.0",
     "eslint": "7.22.0",
     "eslint-config-canonical": "25.9.1",
@@ -45,9 +44,6 @@
     "graphql-type-json": "^0.3.2",
     "prisma": "^4.12.0",
     "roarr": "^3.2.0",
-    "slonik": "^23.5.1",
-    "slonik-interceptor-field-name-transformation": "^1.5.3",
-    "slonik-interceptor-preset": "^1.2.10",
     "ts-node": "^9.1.1"
   }
 }

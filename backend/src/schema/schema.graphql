@@ -1,35 +1,8 @@
-scalar JSON
-
-type Query {
-  getUsers: [User!]!
-  getFeatureFlags: [FeatureFlag!]!
-}
-
-type Mutation {
-  setUsersFeatureFlag(input: setUsersFeatureFlagInput!): SuccessPayload!
-  updateUserFlag(input: updateUserFlagInput!): SuccessPayload!
-}
-
-type User {
-  id: String!
-  given_name: String!
-  family_name: String!
-  email_address: String!
-  feature_flags: [UserFlag!]!
-}
-
 type FeatureFlag {
+  description: String
   id: String!
   name: String!
-  description: String
   type: String!
-}
-
-type UserFlag {
-  id: String!
-  user: User!
-  featureFlag: FeatureFlag!
-  value: JSON!
 }
 
 enum FlagType {
@@ -37,18 +10,45 @@ enum FlagType {
   MULTIVARIANT
 }
 
-input setUsersFeatureFlagInput {
-  userIds: [String!]!
-  featureFlagId: String!
-  value: JSON!
+scalar JSON
+
+type Mutation {
+  setUsersFeatureFlag(input: setUsersFeatureFlagInput!): SuccessPayload!
+  updateUserFlag(input: updateUserFlagInput!): SuccessPayload!
 }
 
-input updateUserFlagInput {
-  userId: String!
+type Query {
+  getFeatureFlags: [FeatureFlag!]!
+  getUsers: [User!]!
+}
+
+input setUsersFeatureFlagInput {
   featureFlagId: String!
+  userIds: [String!]!
   value: JSON!
 }
 
 type SuccessPayload {
   success: Boolean!
+}
+
+input updateUserFlagInput {
+  featureFlagId: String!
+  userId: String!
+  value: JSON!
+}
+
+type User {
+  email_address: String!
+  family_name: String!
+  feature_flags: [UserFlag!]!
+  given_name: String!
+  id: String!
+}
+
+type UserFlag {
+  featureFlag: FeatureFlag!
+  id: String!
+  user: User!
+  value: JSON!
 }

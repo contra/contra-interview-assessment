@@ -18,7 +18,6 @@ if (!process.env.POSTGRES_CONNECTION_STRING)
       log.info(`🛩 Server ready at http://localhost:8080/graphql`),
     );
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(error);
+    log(error);
   }
 })();
