@@ -4,12 +4,13 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development ROARR_LOG=true ts-node-dev --respawn ./src/bin/server.ts",
+    "dev": "NODE_ENV=development ts-node-dev --respawn ./src/bin/server.ts",
     "format-graphql-schema": "format-graphql --write true ./src/schema/schema.graphql",
     "build": "tsc --project ./",
     "lint": "eslint --fix src . && prettier --write src . && tsc --noEmit && format-graphql --write true src/schema/schema.graphql",
     "generate-types": "graphql-codegen",
-    "migrate": "ts-node ./src/bin/migrate.ts",
+    "migrate": "npx sequelize-cli db:migrate",
+    "seed": "npx sequelize-cli db:seed:all",
     "test": "jest --coverage"
   },
   "devDependencies": {

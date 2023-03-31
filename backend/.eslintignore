@@ -3,3 +3,6 @@ dist
 node_modules
 src/generated
 jest.config.ts
+migrations
+seeders
+sequelize-config.js
