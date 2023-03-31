@@ -29,7 +29,7 @@ type UserFlag {
   id: String!
   user: User!
   featureFlag: FeatureFlag!
-  value: String!
+  value: JSON!
 }
 
 enum FlagType {
@@ -40,13 +40,13 @@ enum FlagType {
 input setUsersFeatureFlagInput {
   userIds: [String!]!
   featureFlagId: String!
-  value: String!
+  value: JSON!
 }
 
 input updateUserFlagInput {
   userId: String!
   featureFlagId: String!
-  value: String!
+  value: JSON!
 }
 
 type SuccessPayload {

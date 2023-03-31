@@ -60,7 +60,7 @@ export type UserFlag = {
   id: Scalars['String'];
   user: User;
   featureFlag: FeatureFlag;
-  value: Scalars['String'];
+  value: Scalars['JSON'];
 };
 
 export enum FlagType {
@@ -71,13 +71,13 @@ export enum FlagType {
 export type SetUsersFeatureFlagInput = {
   userIds: Array<Scalars['String']>;
   featureFlagId: Scalars['String'];
-  value: Scalars['String'];
+  value: Scalars['JSON'];
 };
 
 export type UpdateUserFlagInput = {
   userId: Scalars['String'];
   featureFlagId: Scalars['String'];
-  value: Scalars['String'];
+  value: Scalars['JSON'];
 };
 
 export type SuccessPayload = {
@@ -215,7 +215,7 @@ export type UserFlagResolvers<ContextType = ResolverContext, ParentType = Resolv
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   featureFlag?: Resolver<ResolversTypes['FeatureFlag'], ParentType, ContextType>;
-  value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

@@ -31,7 +31,7 @@ model UserFlag {
   user          User        @relation(fields: [userId], references: [id])
   featureFlagId String
   featureFlag   FeatureFlag @relation(fields: [featureFlagId], references: [id])
-  value         String
+  value         Json
 
   @@unique([userId, featureFlagId])
 }
