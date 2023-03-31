@@ -1,5 +1,5 @@
-import { DatabasePoolType } from 'slonik';
+import { Sequelize } from 'sequelize';
 
 export type ResolverContext = {
-  readonly pool: DatabasePoolType;
+  db: Sequelize;
 };

@@ -13,8 +13,6 @@ src/types/api.ts
 .*
 .yarn/*
 
-*.log
-.*
 !.babelrc
 !.dockerignore
 !.editorconfig
@@ -33,7 +31,6 @@ src/types/api.ts
 !.gitattributes
 !.npmignore
 !.npmrc
-!.nvmrc
 !.vscode
 !.yarn
 !.yarn/patches
