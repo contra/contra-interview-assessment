@@ -71,10 +71,14 @@ I used [Render](https://render.com), which provides a free hosted PostgreSQL ins
 
 1. Configure your database instance by setting `POSTGRES_CONNECTION_STRING` in the `.env` file with the connection string of your database.
 
-2. run Prisma migrations using:
+2. run Prisma migrations and generate a prisma client using:
 
 ```sh
 $ yarn run migrate dev
+```
+
+```sh
+$ npx prisma generate
 ```
 
 3. To seed your database, run
