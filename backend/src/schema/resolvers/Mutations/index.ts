@@ -1,5 +1,5 @@
-import { resolve as sampleMutation } from './sampleMutation';
+import { updateFeatureForUser } from './updateFeatureForUser';
 
 export const Mutation = {
-  sampleMutation,
+  updateFeatureForUser,
 };

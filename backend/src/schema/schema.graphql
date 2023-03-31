@@ -25,7 +25,7 @@ type User {
 }
 
 type Mutation {
-  sampleMutation: String!
+  updateFeatureForUser(userId: Int!, flag: String!, value: String!, environment: String!): Int!
 }
 
 type Query {
