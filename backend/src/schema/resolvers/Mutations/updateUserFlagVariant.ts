@@ -1,5 +1,6 @@
 import { GraphQLError } from 'graphql';
 import { MutationResolvers } from '../../../generated/types';
+import { FeatureFlagService } from '../../../services/FeatureFlagService';
 
 export const updateUserFlag: MutationResolvers['updateUserFlag'] = async (
   _parent,
@@ -7,26 +8,14 @@ export const updateUserFlag: MutationResolvers['updateUserFlag'] = async (
   { db },
 ) => {
   try {
-    const { featureFlagId, userId, value } = input;
-    // Fetch the user-flag that needs to be updated
-    const userFlag = await db.userFlag.findUnique({
-      where: { userId_featureFlagId: { featureFlagId, userId } },
-    });
+    const { featureFlagId, userId } = input;
+    const featureFlagServics = new FeatureFlagService(db);
 
-    if (!userFlag) {
-      throw new GraphQLError(
-        `User flag with userId ${userId} and featureFlagId ${featureFlagId} not found`,
-      );
-    }
-    // Update the variant value of the user flag
-    await db.userFlag.update({
-      data: {
-        value,
-      },
-      where: {
-        userId_featureFlagId: { featureFlagId, userId },
-      },
-    });
+    // check if user flag with userId and featureFlagId do exists
+    await featureFlagServics.findUserFeatureFlags(userId, featureFlagId);
+
+    // Update the feature flag value of a specific user
+    await featureFlagServics.updateUsersFeatureFlag(input);
 
     // this return type only for simplicity, in real-world application we can have more details returned
     return { success: true };

@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import Logger from 'roarr';
+import { prismaClient } from '../database/client';
 import { createFastifyServer } from '../factories/createFastifyServer';
 
-const prisma = new PrismaClient();
 const log = Logger.child({ context: 'bin/server' });
 
 if (!process.env.POSTGRES_CONNECTION_STRING)
@@ -12,7 +11,7 @@ if (!process.env.POSTGRES_CONNECTION_STRING)
 
 (async () => {
   try {
-    const app = await createFastifyServer(prisma);
+    const app = await createFastifyServer(prismaClient);
 
     app.listen(8_080, () =>
       log.info(`🛩 Server ready at http://localhost:8080/graphql`),

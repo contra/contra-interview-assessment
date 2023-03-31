@@ -1,11 +1,17 @@
+import { GraphQLError } from 'graphql';
 import { QueryResolvers } from '../../../generated/types';
+import { FeatureFlagService } from '../../../services/FeatureFlagService';
 
 export const getFeatureFlags: QueryResolvers['getFeatureFlags'] = async (
   _parent,
   _args,
-  { db: prisma },
+  { db },
 ) => {
-  const featureFlags = await prisma.featureFlag.findMany();
+  try {
+    const featureFlags = await new FeatureFlagService(db).findAllFeatureFlags();
 
-  return featureFlags;
+    return featureFlags;
+  } catch (error) {
+    throw new GraphQLError(error);
+  }
 };
