@@ -72,7 +72,10 @@ export const updateFeatureForUser: MutationResolvers['updateFeatureForUser'] = a
    */
 
   await pool.query(
-    sql`UPDATE user_context SET context_id=${context!.id} WHERE id=${user_contexts[0].id};`
+    sql`UPDATE user_context 
+    SET context_id=${context!.id},
+    updated_at=NOW()
+    WHERE id=${user_contexts[0].id};`
   )
 
   return user_contexts[0].id as number;
