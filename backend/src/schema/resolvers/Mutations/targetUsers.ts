@@ -78,6 +78,10 @@ export const targetUsers: MutationResolvers['targetUsers'] = async(
 		;`
 	);
 
-
-    return [] as User[];
+    return pool.any<User>(
+        sql`SELECT id, given_name, family_name, email_address, created_at, updated_at, ${environment} as environment FROM user_account
+        WHERE id = ANY ( ${sql.array(userIds, 'int4')} )
+        ;`
+    );
+    
 };
