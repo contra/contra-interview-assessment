@@ -12,9 +12,12 @@
     "migrate:up": "knex migrate:latest --knexfile src/bin/knexfile",
     "migrate:down": "knex migrate:down --knexfile src/bin/knexfile",
     "migrate:create": "knex migrate:make --knexfile src/bin/knexfile",
-    "migrate:reset": "knex migrate:rollback --all --knexfile src/bin/knexfile"
+    "migrate:reset": "knex migrate:rollback --all --knexfile src/bin/knexfile",
+    "seed:create": "knex seed:make --knexfile src/bin/knexfile",
+    "seed:run": "knex seed:run --knexfile src/bin/knexfile"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@graphql-codegen/cli": "1.21.2",
     "@graphql-codegen/core": "1.17.9",
     "@graphql-codegen/typescript": "1.21.1",

@@ -9,7 +9,12 @@ export default {
   connection: process.env.POSTGRES_CONNECTION_STRING,
   migrations: {
     directory: __dirname + '/migrations',
-    loadExtensions: ['.ts'],
-    extension: 'ts'
+    extension: 'ts',
+    loadExtensions: ['.ts']
+  },
+  seeds: {
+    directory: __dirname + '/seeds',
+    extension: 'ts',
+    loadExtensions: ['.ts']
   }
 };

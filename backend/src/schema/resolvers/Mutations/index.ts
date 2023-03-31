@@ -1,5 +1,5 @@
-import { resolve as sampleMutation } from './sampleMutation';
+import { resolve as targetUsers } from './targetUsersMutation';
 
 export const Mutation = {
-  sampleMutation,
+  targetUsers
 };

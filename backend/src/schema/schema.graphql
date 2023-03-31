@@ -1,5 +1,28 @@
+input FeatureFlagInput {
+  id: Int!
+  override: String
+}
+
+type UserFeatureFlag {
+  id: Int!
+  override: String
+  createdAt: Float
+  updatedAt: Float
+}
+
+# Feature flags for a single user
+type TargetUsersResponse {
+  userId: Int!
+  featureFlag: UserFeatureFlag!
+}
+
+input TargetUsersInput {
+  userId: Int!
+  featureFlags: [FeatureFlagInput!]!
+}
+
 type Mutation {
-  sampleMutation: String!
+  targetUsers(data: [TargetUsersInput]): [TargetUsersResponse!]!
 }
 
 type Query {
