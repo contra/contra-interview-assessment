@@ -1,9 +1,10 @@
-import type { GraphQLResolveInfo } from 'graphql';
+import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import type { ResolverContext } from '../ResolverContextType';
 export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -11,16 +12,40 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: any;
+  FlagMap: any;
+  FlagValue: any;
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  sampleMutation: Scalars['String'];
+
+
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['Int'];
+  givenName: Scalars['String'];
+  familyName: Scalars['String'];
+  emailAddress: Scalars['String'];
+  createdAt: Scalars['Date'];
+  updatedAt: Scalars['Date'];
+  flags: Scalars['FlagMap'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
+  users?: Maybe<Array<Maybe<User>>>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  assignFlag: Scalars['Boolean'];
+};
+
+
+export type MutationAssignFlagArgs = {
+  userIds: Array<Scalars['Int']>;
+  flag: Scalars['String'];
+  value?: Maybe<Scalars['FlagValue']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -89,31 +114,68 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
-  Mutation: ResolverTypeWrapper<{}>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
+  FlagMap: ResolverTypeWrapper<Scalars['FlagMap']>;
+  FlagValue: ResolverTypeWrapper<Scalars['FlagValue']>;
+  User: ResolverTypeWrapper<User>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Query: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
-  Mutation: {};
+  Date: Scalars['Date'];
+  FlagMap: Scalars['FlagMap'];
+  FlagValue: Scalars['FlagValue'];
+  User: User;
+  Int: Scalars['Int'];
   String: Scalars['String'];
   Query: {};
+  Mutation: {};
   Boolean: Scalars['Boolean'];
 }>;
 
-export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
-  sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
+export interface FlagMapScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['FlagMap'], any> {
+  name: 'FlagMap';
+}
+
+export interface FlagValueScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['FlagValue'], any> {
+  name: 'FlagValue';
+}
+
+export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['User']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  givenName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  familyName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  emailAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  flags?: Resolver<ResolversTypes['FlagMap'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
-  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+}>;
+
+export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
+  assignFlag?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAssignFlagArgs, 'userIds' | 'flag'>>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
-  Mutation?: MutationResolvers<ContextType>;
+  Date?: GraphQLScalarType;
+  FlagMap?: GraphQLScalarType;
+  FlagValue?: GraphQLScalarType;
+  User?: UserResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
 }>;
 
 

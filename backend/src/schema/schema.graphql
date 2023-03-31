@@ -1,7 +1,21 @@
-type Mutation {
-  sampleMutation: String!
+scalar Date
+scalar FlagMap
+scalar FlagValue
+
+type User{
+  id: Int!
+  givenName: String!
+  familyName: String!
+  emailAddress: String!
+  createdAt: Date!
+  updatedAt: Date!
+  flags: FlagMap!
 }
 
 type Query {
-  hello: String!
+  users: [User]
+}
+
+type Mutation {
+  assignFlag(userIds: [Int!]!, flag: String!, value: FlagValue): Boolean!
 }
