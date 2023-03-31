@@ -1,5 +1,7 @@
 # Solution Walkthrough
 
+#### [Loom video](https://www.loom.com/share/ff27e8e8b511443aa49f1d14c3834cf3)
+
 ## Database
 
 ### What is Prisma?
