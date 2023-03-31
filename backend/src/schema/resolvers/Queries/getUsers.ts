@@ -1,6 +1,4 @@
-/* eslint-disable no-warning-comments */
 import { QueryResolvers, User, UserFlag } from '../../../generated/types';
-import { FlagType } from '.prisma/client';
 
 export const getUsers: QueryResolvers['getUsers'] = async (
   _parent,
@@ -17,7 +15,7 @@ export const getUsers: QueryResolvers['getUsers'] = async (
     },
   });
 
-  // formate output to be of type User[]
+  // formate output to be of be an array of User objects
   const formatedUsers: User[] = JSON.parse(JSON.stringify(users));
   const result = formatedUsers.map((user: User) => {
     const {
@@ -27,16 +25,12 @@ export const getUsers: QueryResolvers['getUsers'] = async (
       feature_flags: userFeatureFlags,
       given_name,
     } = user;
-    // TODO: find out how to parse feature flag value
     const formattedUserFlags: UserFlag[] = userFeatureFlags.map(
       (userFlag: UserFlag) => {
         return {
           ...userFlag,
           featureFlag: {
-            description: userFlag.featureFlag.description ?? '',
-            id: userFlag.featureFlag.id,
-            name: userFlag.featureFlag.name,
-            type: userFlag.featureFlag.type as FlagType,
+            ...userFlag.featureFlag,
           },
         };
       },
