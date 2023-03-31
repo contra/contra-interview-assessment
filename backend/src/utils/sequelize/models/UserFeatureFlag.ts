@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import sequelizeConnection from '../sequelize';
+import sequelizeConnection from '../connection';
 import FeatureFlag from './FeatureFlag';
 import User from './User';
 import { modelConstants } from './constants';

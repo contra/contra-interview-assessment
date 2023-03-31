@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
-import { User, UserFeatureFlag } from '../sequelize/models';
-import FeatureFlag from '../sequelize/models/FeatureFlag';
-import logger from '../utils/logger';
+import logger from '../utils/logger/logger';
+import { User, UserFeatureFlag } from '../utils/sequelize/models';
+import FeatureFlag from '../utils/sequelize/models/FeatureFlag';
 
 interface UserWithFeatureFlag extends User {
   UserFeatureFlag: UserFeatureFlag;

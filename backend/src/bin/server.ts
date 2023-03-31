@@ -1,6 +1,6 @@
 import { createFastifyServer } from '../factories/createFastifyServer';
-import { connect } from '../sequelize';
-import logger from '../utils/logger';
+import logger from '../utils/logger/logger';
+import { connect } from '../utils/sequelize';
 
 (async () => {
   try {

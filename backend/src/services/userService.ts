@@ -1,5 +1,4 @@
-import { UserFeatureFlag, FeatureFlag } from '../sequelize/models';
-import User from '../sequelize/models/User';
+import { User, UserFeatureFlag, FeatureFlag } from '../utils/sequelize/models';
 
 interface UserWithFeatureFlag extends User {
   FeatureFlags: FeatureFlag[];

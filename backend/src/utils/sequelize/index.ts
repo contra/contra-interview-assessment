@@ -1,5 +1,5 @@
-import logger from '../utils/logger';
-import sequelizeConnection from './sequelize';
+import logger from '../logger/logger';
+import sequelizeConnection from './connection';
 
 export const disconnect = async () => {
   try {

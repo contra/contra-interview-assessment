@@ -8,6 +8,7 @@ import { resolvers } from '../schema/resolvers';
 export const createFastifyServer = async () => {
   const executableSchema = makeExecutableSchema({
     inheritResolversFromInterfaces: true,
+    // @ts-ignore
     resolvers,
     resolverValidationOptions: { requireResolversForResolveType: 'ignore' },
     typeDefs: importSchema(path.resolve(__dirname, '../schema/schema.graphql')),

@@ -1,1 +1,5 @@
-export type ResolverContext = {};
+import { Sequelize } from 'sequelize';
+
+export type ResolverContext = {
+  db: Sequelize;
+};

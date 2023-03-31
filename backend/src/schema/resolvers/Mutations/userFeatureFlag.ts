@@ -1,6 +1,6 @@
 import { MutationResolvers } from '../../../generated/types';
-import { FeatureFlag, User } from '../../../sequelize/models';
 import { FeatureFlagService } from '../../../services/featureFlagService';
+import { FeatureFlag, User } from '../../../utils/sequelize/models';
 
 // @ts-ignore
 export const targetUsers: MutationResolvers['targetUsers'] = async (

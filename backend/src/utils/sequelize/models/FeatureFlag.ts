@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 import { configConstants } from '../config/configConstants';
-import sequelizeConnection from '../sequelize';
+import sequelizeConnection from '../connection';
 import { modelConstants } from './constants';
 
 interface FeatureFlagAttributes {
