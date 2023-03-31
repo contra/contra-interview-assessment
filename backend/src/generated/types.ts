@@ -1,9 +1,10 @@
-import type { GraphQLResolveInfo } from 'graphql';
+import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import type { ResolverContext } from '../ResolverContextType';
 export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -11,16 +12,57 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
+};
+
+
+export enum FlagType {
+  Boolean = 'boolean',
+  String = 'string',
+  Json = 'json'
+}
+
+export type Feature = {
+  readonly __typename?: 'Feature';
+  readonly contextId: Scalars['Int'];
+  readonly name: Scalars['String'];
+  readonly type?: Maybe<FlagType>;
+  readonly value: Scalars['String'];
+};
+
+export type User = {
+  readonly __typename?: 'User';
+  readonly id: Scalars['Int'];
+  readonly givenName: Scalars['String'];
+  readonly familyName: Scalars['String'];
+  readonly emailAddress?: Maybe<Scalars['String']>;
+  readonly createdAt: Scalars['DateTime'];
+  readonly updatedAt: Scalars['DateTime'];
+  readonly environment: Scalars['String'];
+  readonly features: ReadonlyArray<Feature>;
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
-  sampleMutation: Scalars['String'];
+  readonly __typename?: 'Mutation';
+  readonly updateFeatureForUser: Scalars['Int'];
+};
+
+
+export type MutationUpdateFeatureForUserArgs = {
+  userId: Scalars['Int'];
+  flag: Scalars['String'];
+  value: Scalars['String'];
+  environment: Scalars['String'];
 };
 
 export type Query = {
-  __typename?: 'Query';
-  hello: Scalars['String'];
+  readonly __typename?: 'Query';
+  readonly users: ReadonlyArray<User>;
+};
+
+
+export type QueryUsersArgs = {
+  environment: Scalars['String'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -89,29 +131,65 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
-  Mutation: ResolverTypeWrapper<{}>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  FlagType: FlagType;
+  Feature: ResolverTypeWrapper<Feature>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  User: ResolverTypeWrapper<User>;
+  Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
-  Mutation: {};
+  DateTime: Scalars['DateTime'];
+  Feature: Feature;
+  Int: Scalars['Int'];
   String: Scalars['String'];
+  User: User;
+  Mutation: {};
   Query: {};
   Boolean: Scalars['Boolean'];
 }>;
 
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
+
+export type FeatureResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Feature']> = ResolversObject<{
+  contextId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['FlagType']>, ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['User']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  givenName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  familyName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  emailAddress?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  environment?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  features?: Resolver<ReadonlyArray<ResolversTypes['Feature']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
-  sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updateFeatureForUser?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationUpdateFeatureForUserArgs, 'userId' | 'flag' | 'value' | 'environment'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
-  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  users?: Resolver<ReadonlyArray<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'environment'>>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
+  DateTime?: GraphQLScalarType;
+  Feature?: FeatureResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 }>;

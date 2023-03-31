@@ -1,5 +1,6 @@
-import { resolve as hello } from './hello';
+import { users } from './users';
+export { features } from './features';
 
 export const Query = {
-  hello,
+  users,
 };

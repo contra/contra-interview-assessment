@@ -17,3 +17,4 @@ generates:
         ID: 'string | number'
       useTypeImports: true
       mappers:
+      immutableTypes: true

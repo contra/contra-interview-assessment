@@ -1,7 +1,33 @@
+scalar DateTime
+
+enum FlagType {
+  boolean,
+  string,
+  json
+}
+
+type Feature {
+  contextId: Int!
+  name: String!
+  type: FlagType
+  value: String!
+}
+
+type User {
+  id: Int!
+  givenName: String!
+  familyName: String!
+  emailAddress: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  environment: String!
+  features: [Feature!]!
+}
+
 type Mutation {
   sampleMutation: String!
 }
 
 type Query {
-  hello: String!
+  users(environment: String!): [User!]!
 }
