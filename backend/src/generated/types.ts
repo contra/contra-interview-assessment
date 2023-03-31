@@ -44,7 +44,21 @@ export type User = {
 
 export type Mutation = {
   readonly __typename?: 'Mutation';
-  readonly updateFeatureForUser: Scalars['Int'];
+  /** Setup a feature flag for a group of users. The feature flag and value must already exist. */
+  readonly targetUsers: ReadonlyArray<User>;
+  /**
+   * Update an existing feature flag for a single user.
+   * If the feature is not availabe for this user or is assigned to multiple user an error will be thrown.
+   */
+  readonly updateFeatureForUser?: Maybe<Scalars['Int']>;
+};
+
+
+export type MutationTargetUsersArgs = {
+  userIds: ReadonlyArray<Scalars['Int']>;
+  flag: Scalars['String'];
+  value: Scalars['String'];
+  environment: Scalars['String'];
 };
 
 
@@ -57,6 +71,7 @@ export type MutationUpdateFeatureForUserArgs = {
 
 export type Query = {
   readonly __typename?: 'Query';
+  /** Retrieve all the users in the system and their feature flags for the given environment */
   readonly users: ReadonlyArray<User>;
 };
 
@@ -179,7 +194,8 @@ export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversP
 }>;
 
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
-  updateFeatureForUser?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationUpdateFeatureForUserArgs, 'userId' | 'flag' | 'value' | 'environment'>>;
+  targetUsers?: Resolver<ReadonlyArray<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationTargetUsersArgs, 'userIds' | 'flag' | 'value' | 'environment'>>;
+  updateFeatureForUser?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<MutationUpdateFeatureForUserArgs, 'userId' | 'flag' | 'value' | 'environment'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{

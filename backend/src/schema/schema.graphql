@@ -25,9 +25,21 @@ type User {
 }
 
 type Mutation {
-  updateFeatureForUser(userId: Int!, flag: String!, value: String!, environment: String!): Int!
+  """
+  Setup a feature flag for a group of users. The feature flag and value must already exist.
+  """
+  targetUsers(userIds: [Int!]!, flag: String!, value: String!, environment: String!): [User!]!
+
+  """
+  Update an existing feature flag for a single user.
+  If the feature is not availabe for this user or is assigned to multiple user an error will be thrown.
+  """
+  updateFeatureForUser(userId: Int!, flag: String!, value: String!, environment: String!): Int
 }
 
 type Query {
+  """
+  Retrieve all the users in the system and their feature flags for the given environment
+  """
   users(environment: String!): [User!]!
 }
