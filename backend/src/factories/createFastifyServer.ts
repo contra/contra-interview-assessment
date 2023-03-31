@@ -1,13 +1,13 @@
-import path from 'path';
 import { ApolloServer } from 'apollo-server-fastify';
 import fastify from 'fastify';
 import { importSchema } from 'graphql-import';
 import { makeExecutableSchema } from 'graphql-tools';
-import type { CommonQueryMethodsType } from 'slonik';
+import path from 'path';
 // @ts-ignore
+import type { Knex } from 'knex';
 import { resolvers } from '../schema/resolvers';
 
-export const createFastifyServer = async (pool: CommonQueryMethodsType) => {
+export const createFastifyServer = async (pool: Knex) => {
   const executableSchema = makeExecutableSchema({
     inheritResolversFromInterfaces: true,
     resolvers,

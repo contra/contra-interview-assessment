@@ -1,4 +1,3 @@
-import { sql } from 'slonik';
 import { QueryResolvers } from '../../../generated/types';
 
 export const resolve: QueryResolvers['hello'] = async (
@@ -6,9 +5,9 @@ export const resolve: QueryResolvers['hello'] = async (
   _args,
   { pool },
 ) => {
-  const result = await pool.one<{ phrase: string }>(
-    sql`SELECT 'world' as phrase;`,
-  );
+  // const result = await pool.one<{ phrase: string }>(
+  //   sql`SELECT 'world' as phrase;`,
+  // );
 
-  return result.phrase;
+  // return result.phrase;
 };
