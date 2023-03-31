@@ -12,6 +12,7 @@ src/types/api.ts
 *.log
 .*
 .yarn/*
+backend/data
 
 *.log
 .*
