@@ -9,14 +9,19 @@ jest.mock('../../utils/sequelize/config');
 
 jest.mock('../../utils/sequelize/models', () => ({
   FeatureFlag: {
+    create: jest.fn(),
     findAll: jest.fn(),
     findByPk: jest.fn(),
+    findOne: jest.fn(),
   },
   User: {
     findAll: jest.fn(),
+    findByPk: jest.fn(),
   },
   UserFeatureFlag: {
     bulkCreate: jest.fn(),
+    create: jest.fn(),
+    destroy: jest.fn(),
     findAll: jest.fn(),
   },
 }));
@@ -132,6 +137,54 @@ describe('FeatureFlagService', () => {
       expect(result.id).toBe(featureFlagUUID);
       // @ts-ignore
       expect(result.users).toBeDefined();
+    });
+  });
+
+  describe('updateUserFeatureFlag', () => {
+    it('should update the user feature flag', async () => {
+      // @ts-ignore
+      const mockFeatureFlag: FeatureFlag = {
+        createdDate: faker.date.past(),
+        description: faker.commerce.productDescription(),
+        id: faker.datatype.uuid(),
+        name: faker.commerce.department(),
+        toJSON: jest.fn().mockReturnValue({
+          id: faker.datatype.uuid(),
+        }),
+        updatedDate: faker.date.past(),
+        value: faker.commerce.product(),
+      };
+
+      jest.spyOn(FeatureFlag, 'findByPk').mockResolvedValue(mockFeatureFlag);
+
+      const newFeatureFlag = {
+        toJSON: jest.fn().mockReturnValue({
+          id: faker.datatype.uuid(),
+        }),
+      };
+      jest.spyOn(FeatureFlag, 'create').mockResolvedValue(newFeatureFlag);
+
+      const userId = faker.datatype.uuid();
+      // @ts-ignore
+      const mockUser: User = {
+        email: faker.internet.email(),
+        id: userId,
+        name: faker.name.fullName(),
+        toJSON: jest.fn().mockReturnValue({
+          id: userId,
+        }),
+      };
+      jest.spyOn(User, 'findByPk').mockResolvedValue(mockUser);
+
+      const result = await featureFlagService.updateUserFeatureFlag(
+        mockFeatureFlag.id,
+        mockUser.id,
+        faker.commerce.product(),
+      );
+
+      expect(result).toBeDefined();
+      // @ts-ignore
+      expect(result.id).toEqual(mockUser.id);
     });
   });
 });
