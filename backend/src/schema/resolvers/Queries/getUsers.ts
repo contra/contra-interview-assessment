@@ -15,7 +15,7 @@ export const getUsers: QueryResolvers['getUsers'] = async (
     },
   });
 
-  // formate output to be of be an array of User objects
+  // format output to be of be an array of User objects
   const formatedUsers: User[] = JSON.parse(JSON.stringify(users));
   const result = formatedUsers.map((user: User) => {
     const {
