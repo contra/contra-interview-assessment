@@ -76,4 +76,70 @@ describe('UserService', () => {
       expect(User.findByPk).toHaveBeenCalledWith(userUUID);
     });
   });
+
+  describe('getUsersWithFeatureFlag', () => {
+    it('should return users with feature flags', async () => {
+      const mockUsers: User[] = [
+        {
+          createdDate: faker.date.past(),
+          email: faker.internet.email(),
+          // @ts-ignore
+          FeatureFlags: [
+            {
+              createdDate: faker.date.past(),
+              description: faker.commerce.productDescription(),
+              id: faker.datatype.uuid(),
+              name: faker.commerce.department(),
+              updatedDate: faker.date.past(),
+              value: faker.commerce.product(),
+            },
+            {
+              createdDate: faker.date.past(),
+              description: faker.commerce.productDescription(),
+              id: faker.datatype.uuid(),
+              name: faker.commerce.department(),
+              updatedDate: faker.date.past(),
+              value: faker.commerce.product(),
+            },
+          ],
+          id: faker.datatype.uuid(),
+          name: faker.name.fullName(),
+          toJSON: jest.fn().mockReturnValue({
+            createdDate: faker.date.past(),
+            email: faker.internet.email(),
+            // @ts-ignore
+            FeatureFlags: [
+              {
+                createdDate: faker.date.past(),
+                description: faker.commerce.productDescription(),
+                id: faker.datatype.uuid(),
+                name: faker.commerce.department(),
+                updatedDate: faker.date.past(),
+                value: faker.commerce.product(),
+              },
+              {
+                createdDate: faker.date.past(),
+                description: faker.commerce.productDescription(),
+                id: faker.datatype.uuid(),
+                name: faker.commerce.department(),
+                updatedDate: faker.date.past(),
+                value: faker.commerce.product(),
+              },
+            ],
+            id: faker.datatype.uuid(),
+            name: faker.name.fullName(),
+            updatedDate: faker.date.past(),
+          }),
+          updatedDate: faker.date.past(),
+        },
+      ];
+
+      jest.spyOn(User, 'findAll').mockResolvedValue(mockUsers);
+
+      const result = await userService.getUsersWithFeatureFlag();
+      expect(result).toBeDefined();
+      expect(result.length).toBe(1);
+      expect(result[0].FeatureFlags).toBeDefined();
+    });
+  });
 });

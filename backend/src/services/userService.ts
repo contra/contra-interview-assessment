@@ -23,7 +23,6 @@ export class UserService {
 
   async getUsersWithFeatureFlag(): Promise<UserWithFeatureFlag[]> {
     const users = await User.findAll({
-      attributes: ['id', 'name', 'email'],
       include: [
         {
           all: true,
