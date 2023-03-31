@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('User', [
       {
         id: 'bcd76b0b-5ccd-4f5a-8809-08f152aeb199',
@@ -87,12 +87,11 @@ module.exports = {
         email: 'lang.brianne@bashirian.com',
         createdDate: new Date(),
         updatedDate: new Date(),
-      }
+      },
     ]);
-
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('User', null, {});
-  }
+  },
 };

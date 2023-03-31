@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('UserFeatureFlag', [
       {
         userId: '4c28f8cb-0dfb-4047-b064-ad100f22a967',
@@ -39,11 +39,11 @@ module.exports = {
         featureFlagId: 'f09c1fb2-9599-406c-a486-29f08a5ac951',
         createdDate: new Date(),
         updatedDate: new Date(),
-      }
+      },
     ]);
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('UserFeatureFlag', null, {});
-  }
+  },
 };

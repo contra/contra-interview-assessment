@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('FeatureFlag', [
       {
         id: '01ff166b-c14d-4c26-b431-1664eb67df63',
@@ -71,7 +71,7 @@ module.exports = {
     ]);
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('FeatureFlag', null, {});
-  }
+  },
 };

@@ -37,8 +37,8 @@ export type MutationTargetUsersArgs = {
 
 
 export type MutationUpdateUserFeatureFlagArgs = {
-  userId: Scalars['ID'];
   featureFlagId: Scalars['ID'];
+  userId: Scalars['ID'];
   value: Scalars['String'];
 };
 
@@ -46,7 +46,6 @@ export type Query = {
   __typename?: 'Query';
   featureFlag?: Maybe<FeatureFlag>;
   featureFlags: Array<FeatureFlag>;
-  featureFlagsWithUsers?: Maybe<Array<FeatureFlag>>;
   user?: Maybe<User>;
   userFeatureFlags: Array<UserFeatureFlag>;
   users: Array<User>;
@@ -176,13 +175,12 @@ export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = Res
 
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
   targetUsers?: Resolver<ResolversTypes['FeatureFlag'], ParentType, ContextType, RequireFields<MutationTargetUsersArgs, 'featureFlagId' | 'userIds'>>;
-  updateUserFeatureFlag?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserFeatureFlagArgs, 'userId' | 'featureFlagId' | 'value'>>;
+  updateUserFeatureFlag?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserFeatureFlagArgs, 'featureFlagId' | 'userId' | 'value'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
   featureFlag?: Resolver<Maybe<ResolversTypes['FeatureFlag']>, ParentType, ContextType, RequireFields<QueryFeatureFlagArgs, 'id'>>;
   featureFlags?: Resolver<Array<ResolversTypes['FeatureFlag']>, ParentType, ContextType>;
-  featureFlagsWithUsers?: Resolver<Maybe<Array<ResolversTypes['FeatureFlag']>>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   userFeatureFlags?: Resolver<Array<ResolversTypes['UserFeatureFlag']>, ParentType, ContextType>;
   users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;

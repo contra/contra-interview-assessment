@@ -11,18 +11,3 @@ services:
       POSTGRES_DB: ${DB_NAME}
     ports:
       - '5432:5432'
-  todoapp:
-    image: feature_flag
-    container_name: feature_flag
-    ports:
-      - ${APP_PORT}:${APP_PORT}
-      - ${APOLLO_PORT}:${APOLLO_PORT}
-    build:
-      context: ..
-      dockerfile: ./docker/Dockerfile
-    env_file:
-      - ../.env
-    volumes:
-      - ..:/usr/src/app
-    depends_on:
-      - db
