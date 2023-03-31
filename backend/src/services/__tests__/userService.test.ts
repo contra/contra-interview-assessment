@@ -15,9 +15,6 @@ jest.mock('../../utils/sequelize/models', () => ({
     findAll: jest.fn(),
     findByPk: jest.fn(),
   },
-  UserFeatureFlag: {
-    findAll: jest.fn(),
-  },
 }));
 
 describe('UserService', () => {
