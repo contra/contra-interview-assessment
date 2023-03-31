@@ -67,12 +67,12 @@ $ yarn
 
 I used [Render](https://render.com), which provides a free hosted PostgreSQL instance in just a few clicks.
 
-1. Configure your database instance by setting `POSTGRES_CONNECTION_STRING` in the .env file with the connection string of your database.
+1. Configure your database instance by setting `POSTGRES_CONNECTION_STRING` in the `.env` file with the connection string of your database.
 
 2. run Prisma migrations using:
 
 ```sh
-$ yarn run migrate up
+$ yarn run migrate dev
 ```
 
 3. To seed your database, run
