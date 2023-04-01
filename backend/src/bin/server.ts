@@ -1,4 +1,5 @@
 import knex from 'knex';
+import { Model } from 'objection';
 import Logger from 'roarr';
 import { createFastifyServer } from '../factories/createFastifyServer';
 
@@ -14,6 +15,8 @@ const pool = knex({
   connection: process.env.POSTGRES_CONNECTION_STRING,
   acquireConnectionTimeout: 60 * 1_000,
 });
+
+Model.knex(pool);
 
 (async () => {
   try {

@@ -36,7 +36,7 @@ type Users {
   featureFlags: [FeatureFlag]!
 }
 
-type OverrideUserFeatureFlagOutput {
+type UpdateUserFeatureFlagOutput {
   userId: ID!
   featureFlagId: ID!
   value: String!
@@ -56,7 +56,7 @@ input TargetUsersInput {
   featureFlags: [UserFeatureFlagInput!]!
 }
 
-input OverrideUserFeatureFlagInput {
+input UpdateUserFeatureFlagInput {
   userId: ID!
   featureFlagId: ID!
   value: String!
@@ -67,7 +67,7 @@ input OverrideUserFeatureFlagInput {
 ##############################
 type Mutation {
   targetUsers(data: [TargetUsersInput]): [TargetUsersOutput!]!
-  overrideUserFeatureFlag(data: OverrideUserFeatureFlagInput!): OverrideUserFeatureFlagOutput!
+  updateUserFeatureFlag(data: UpdateUserFeatureFlagInput!): UpdateUserFeatureFlagOutput!
 }
 
 type Query {
