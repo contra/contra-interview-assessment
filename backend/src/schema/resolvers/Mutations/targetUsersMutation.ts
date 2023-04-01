@@ -1,25 +1,23 @@
+import Logger from "roarr";
 import { FeatureFlagUser } from "../../../bin/models/feature-flag-user";
 import { MutationResolvers } from "../../../generated/types";
 
+const logger = Logger.child({ context: 'resolvers/Mutations/targetUsers' });
+
 export const resolve: MutationResolvers['targetUsers'] = async (
   _parent: any,
-  _args: any,
+  args: any,
+  // @ts-ignore
+  { repository, correlationId }
 ) => {
-  const values = _args.data.flatMap((arg: any) => {
-    return arg.featureFlags.flatMap((featureFlag: any) => {
-      return {
-        user_id: parseInt(arg.userId),
-        feature_flag_id: parseInt(featureFlag.id),
-        override: featureFlag.value || null
-      };
-    });
+  logger.debug('Handling request to assign feature flags to users');
+
+  const result: FeatureFlagUser[] = await repository.targetUsers({
+    targets: args.data,
+    correlationId
   });
 
-  // @ts-ignore
-  const result: FeatureFlagUser[] = await FeatureFlagUser.query().insert(values).returning('*');
-
   return result.map((row) => {
-    console.log(row);
     return {
       userId: row.userId,
       featureFlag: {
@@ -29,5 +27,5 @@ export const resolve: MutationResolvers['targetUsers'] = async (
         updatedAt: row.updatedAt
       }
     }
-  });
+  })
 };
