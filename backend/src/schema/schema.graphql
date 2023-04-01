@@ -1,3 +1,6 @@
+##############################
+######## Custom Types ########
+##############################
 type User {
   id: ID!
   givenName: String
@@ -23,14 +26,13 @@ type UserFeatureFlag {
   updatedAt: String
 }
 
-# Feature flags for a single user
 type TargetUsersOutput {
   userId: ID!
   featureFlag: UserFeatureFlag!
 }
 
-type UserWithFlag {
-  userId: ID!
+type Users {
+  user: User!
   featureFlags: [FeatureFlag]!
 }
 
@@ -41,6 +43,9 @@ type OverrideUserFeatureFlagOutput {
   updatedAt: String!
 }
 
+##############################
+##### Input Definitions ######
+##############################
 input UserFeatureFlagInput {
   id: ID!
   value: String
@@ -57,11 +62,14 @@ input OverrideUserFeatureFlagInput {
   value: String!
 }
 
+##############################
+#### Mutations / Queries #####
+##############################
 type Mutation {
   targetUsers(data: [TargetUsersInput]): [TargetUsersOutput!]!
   overrideUserFeatureFlag(data: OverrideUserFeatureFlagInput!): OverrideUserFeatureFlagOutput!
 }
 
 type Query {
-  usersWithFlags: [UserWithFlag]!
+  users: [Users]!
 }
