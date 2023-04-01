@@ -7,35 +7,61 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Mayb
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
+  ID: string | number;
   String: string;
   Boolean: boolean;
   Int: number;
   Float: number;
 };
 
-export type FeatureFlagInput = {
-  id: Scalars['Int'];
-  override?: Maybe<Scalars['String']>;
+export type User = {
+  __typename?: 'User';
+  id: Scalars['ID'];
+  givenName?: Maybe<Scalars['String']>;
+  familyName?: Maybe<Scalars['String']>;
+  emailAddress?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
+};
+
+export type FeatureFlag = {
+  __typename?: 'FeatureFlag';
+  id: Scalars['ID'];
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
 };
 
 export type UserFeatureFlag = {
   __typename?: 'UserFeatureFlag';
-  id: Scalars['Int'];
+  id: Scalars['ID'];
   override?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Float']>;
-  updatedAt?: Maybe<Scalars['Float']>;
+  createdAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
 };
 
 export type TargetUsersResponse = {
   __typename?: 'TargetUsersResponse';
-  userId: Scalars['Int'];
+  userId: Scalars['ID'];
   featureFlag: UserFeatureFlag;
 };
 
+export type UserFeatureFlagInput = {
+  id: Scalars['ID'];
+  override?: Maybe<Scalars['String']>;
+};
+
 export type TargetUsersInput = {
-  userId: Scalars['Int'];
-  featureFlags: Array<FeatureFlagInput>;
+  userId: Scalars['ID'];
+  featureFlags: Array<UserFeatureFlagInput>;
+};
+
+export type UserWithFlag = {
+  __typename?: 'UserWithFlag';
+  userId: Scalars['ID'];
+  featureFlags: Array<Maybe<FeatureFlag>>;
 };
 
 export type Mutation = {
@@ -50,7 +76,7 @@ export type MutationTargetUsersArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
+  usersWithFlags: Array<Maybe<UserWithFlag>>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -119,13 +145,15 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
-  FeatureFlagInput: FeatureFlagInput;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
+  User: ResolverTypeWrapper<User>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
   UserFeatureFlag: ResolverTypeWrapper<UserFeatureFlag>;
-  Float: ResolverTypeWrapper<Scalars['Float']>;
   TargetUsersResponse: ResolverTypeWrapper<TargetUsersResponse>;
+  UserFeatureFlagInput: UserFeatureFlagInput;
   TargetUsersInput: TargetUsersInput;
+  UserWithFlag: ResolverTypeWrapper<UserWithFlag>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -133,29 +161,57 @@ export type ResolversTypes = ResolversObject<{
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
-  FeatureFlagInput: FeatureFlagInput;
-  Int: Scalars['Int'];
+  User: User;
+  ID: Scalars['ID'];
   String: Scalars['String'];
+  FeatureFlag: FeatureFlag;
   UserFeatureFlag: UserFeatureFlag;
-  Float: Scalars['Float'];
   TargetUsersResponse: TargetUsersResponse;
+  UserFeatureFlagInput: UserFeatureFlagInput;
   TargetUsersInput: TargetUsersInput;
+  UserWithFlag: UserWithFlag;
   Mutation: {};
   Query: {};
   Boolean: Scalars['Boolean'];
 }>;
 
+export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['User']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  givenName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  familyName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  emailAddress?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type UserFeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['UserFeatureFlag']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   override?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  createdAt?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  updatedAt?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type TargetUsersResponseResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['TargetUsersResponse']> = ResolversObject<{
-  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   featureFlag?: Resolver<ResolversTypes['UserFeatureFlag'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserWithFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['UserWithFlag']> = ResolversObject<{
+  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  featureFlags?: Resolver<Array<Maybe<ResolversTypes['FeatureFlag']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -164,12 +220,15 @@ export type MutationResolvers<ContextType = ResolverContext, ParentType = Resolv
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
-  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  usersWithFlags?: Resolver<Array<Maybe<ResolversTypes['UserWithFlag']>>, ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
+  User?: UserResolvers<ContextType>;
+  FeatureFlag?: FeatureFlagResolvers<ContextType>;
   UserFeatureFlag?: UserFeatureFlagResolvers<ContextType>;
   TargetUsersResponse?: TargetUsersResponseResolvers<ContextType>;
+  UserWithFlag?: UserWithFlagResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 }>;

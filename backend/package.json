@@ -47,6 +47,7 @@
     "graphql-import": "^1.0.2",
     "graphql-tools": "^7.0.2",
     "knex": "^2.4.2",
+    "objection": "^3.0.1",
     "pg": "^8.10.0",
     "roarr": "^3.2.0",
     "ts-node": "^9.1.1"
