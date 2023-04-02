@@ -13,7 +13,7 @@ import Portal from './Portal';
  * 2) add toggle button on index page to display the modal ✅
  * 3) add prop to show Modal ✅
  * 4) add a way to close Modal ✅
- * 5)
+ * 5) add title header & content sections + styling ✅
  * 6) add overlay ✅
  * 7) prevent scrolling ✅
  * 8) Handle stacking ✅
