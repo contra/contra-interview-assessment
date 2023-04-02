@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { useState } from 'react';
+import ReactDOM from 'react-dom';
 import Modal from './Modal';
 // eslint-disable-next-line import/no-unassigned-import
 import '@testing-library/jest-dom'
@@ -22,7 +23,10 @@ describe('Modal', () => {
     it('show', async () => {
         expect.hasAssertions();
 
-        const { container } = render(<Modal animate={false} handleClose={onCloseHandler} noPortal show title="Modal">Modal Content</Modal>);
+        // Another way to test with portals
+        jest.spyOn(ReactDOM, 'createPortal').mockImplementation((element) => element as React.ReactPortal);
+
+        const { container } = render(<Modal animate={false} handleClose={onCloseHandler} show title="Modal">Modal Content</Modal>);
 
         expect(container).toMatchSnapshot();
 
