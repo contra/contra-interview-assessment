@@ -31,7 +31,7 @@ export function tryParse(value: any, type: FeatureFlagType) {
 
   if (type === FeatureFlagType.Boolean) {
     if (value === 'true' || value === 'false') {
-      return Boolean(value);
+      return value;
     }
 
     throw new ParseError(`${value} cannot be parsed as ${FeatureFlagType.Boolean}`);
@@ -43,6 +43,6 @@ export function tryParse(value: any, type: FeatureFlagType) {
       throw new ParseError(`${value} cannot be parsed as ${FeatureFlagType.Number}`);
     }
 
-    return parsed;
+    return value;
   }
 }
