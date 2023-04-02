@@ -33,6 +33,7 @@ type Props = {
     animate?: boolean,
     children: React.ReactNode,
     handleClose: CloseHandler,
+    noPortal?: boolean
     show: boolean,
     title: string,
 }
@@ -60,7 +61,7 @@ const Overlay = ({ handleClose, zIndex }: { handleClose: CloseHandler, zIndex: n
  */
 const NestingLevel = React.createContext(0);
 
-const Modal = ({ animate = true, children, handleClose, show, title }: Props) => {
+const Modal = ({ animate = true, children, handleClose, show, title, noPortal = false }: Props) => {
 
     const nestingLevel = useContext(NestingLevel);
     
@@ -119,7 +120,7 @@ const Modal = ({ animate = true, children, handleClose, show, title }: Props) =>
     const modalStyle = "absolute w-full sm:w-[400px] sm:-ml-[200px] bg-white sm:rounded-xl shadow-xl top-1/4 sm:left-1/2"
     const animation = animate ? "transition-all duration-300 ease-out mt-[-1000px]": "mt-0";
 
-    return show ? (<Portal>
+    return show ? (<Portal disabled={noPortal}>
         <div className="fixed top-0 left-0 w-full h-full">
             <Overlay handleClose={handleClose} zIndex={1000+nestingLevel*2}/>
             <FocusTrap focusTrapOptions={focusTrapOptions}>

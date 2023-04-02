@@ -9,7 +9,7 @@ const onCloseHandler = jest.fn(() => {});
 describe('Modal', () => {
 
     it('no show', () => {
-        const { container } = render(<Modal handleClose={onCloseHandler} show={false} title="Modal">Modal Content</Modal>);
+        const { container } = render(<Modal handleClose={onCloseHandler} noPortal show={false} title="Modal">Modal Content</Modal>);
 
         expect(container).toMatchSnapshot();
 
@@ -22,7 +22,7 @@ describe('Modal', () => {
     it('show', async () => {
         expect.hasAssertions();
 
-        const { container } = render(<Modal animate={false} handleClose={onCloseHandler} show title="Modal">Modal Content</Modal>);
+        const { container } = render(<Modal animate={false} handleClose={onCloseHandler} noPortal show title="Modal">Modal Content</Modal>);
 
         expect(container).toMatchSnapshot();
 
@@ -42,7 +42,7 @@ describe('Modal', () => {
                 setShowModal(false);
             });
 
-            return <Modal animate={false} handleClose={onCloseMock} show={showModal} title="Modal">Modal Content</Modal>;
+            return <Modal animate={false} handleClose={onCloseMock} noPortal show={showModal} title="Modal">Modal Content</Modal>;
         }
         
         render(<Wrapper />);
