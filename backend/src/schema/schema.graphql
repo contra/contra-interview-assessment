@@ -1,8 +1,9 @@
 ##############################
 ######## Custom Types ########
 ##############################
-# Allowed feature flag types. These types help the client and server correct
-# serialize and deserialise a feature flag's value.
+
+# Allowed feature flag types. These types help the client and server 
+# correctly serialize and deserialise a feature flag's value
 enum FeatureFlagType {
   BOOLEAN
   JSON
@@ -19,9 +20,9 @@ type User {
   familyName: String
   # The users' email address
   emailAddress: String
-  # Timestamp with timezone of when this record was first created
+  # Timestamp of when this record was first created
   createdAt: String
-  # Timestamp with timezone of when this record was last updated
+  # Timestamp of when this record was last updated
   updatedAt: String
 }
 
@@ -34,27 +35,35 @@ type FeatureFlag {
   # The value associated with this feature flag. Ex: 'one click'
   value: String
   # Feature flags may be booleans or multi variate. Type indicates what this
-  # feature flag represents. Valid values are documented as enum.
+  # feature flag represents. Valid values are documented as enum
   type: FeatureFlagType
-  # Timestamp with timezone of when this record was first created
+  # Timestamp of when this record was first created
   createdAt: String
-  # Timestamp with timezone of when this record was last updated
+  # Timestamp of when this record was last updated
   updatedAt: String
 }
 
+# Represents the feature flag assinged to a user
 type UserFeatureFlag {
+  # ID of the feature flag
   id: ID!
+  # Value of the feature flag for this specific user
   value: String
+  # Timestamp of when this record was first created
   createdAt: String
+  # Timestamp of when this record was last updated
   updatedAt: String
 }
 
-type TargetUsersOutput {
+# Response on successfully targetting users with feature flags
+type TargetUsersResponse {
+  # Targetted user ID
   userId: ID!
+  # The feature flag record for this user
   featureFlag: UserFeatureFlag!
 }
 
-# Represents a targetted users' feature flags
+# A single user record with it's associated feature flags
 type UserWithFeatureFlagsResponse {
   # This is the targetted user
   user: User!
@@ -62,29 +71,41 @@ type UserWithFeatureFlagsResponse {
   featureFlags: [FeatureFlag]!
 }
 
-type UpdateUserFeatureFlagOutput {
+# Response on successfully updating a single users' feature flag
+type UpdateUserFeatureFlagResponse {
+  # ID of the user whose feature flag was updated
   userId: ID!
+  # ID of the feature flag
   featureFlagId: ID!
+  # The update value
   value: String!
-  updatedAt: String!
+  # Timestamp of when this record was updated
+  updatedAt: String
 }
 
 ##############################
 ##### Input Definitions ######
 ##############################
 input UserFeatureFlagInput {
+  # ID of the feature flag
   id: ID!
+  # Value to be used for the feature flag
   value: String
 }
 
 input TargetUsersInput {
+  # ID of the user being targetted
   userId: ID!
+  # List of feature flags to associate with the user
   featureFlags: [UserFeatureFlagInput!]!
 }
 
 input UpdateUserFeatureFlagInput {
+  # ID of the user to update it's feature flag
   userId: ID!
+  # ID of feature flag
   featureFlagId: ID!
+  # Value to update
   value: String!
 }
 
@@ -92,10 +113,13 @@ input UpdateUserFeatureFlagInput {
 #### Mutations / Queries #####
 ##############################
 type Mutation {
-  targetUsers(data: [TargetUsersInput]): [TargetUsersOutput!]!
-  updateUserFeatureFlag(data: UpdateUserFeatureFlagInput!): UpdateUserFeatureFlagOutput!
+  # Associate feature flags with users
+  targetUsers(data: [TargetUsersInput]): [TargetUsersResponse!]!
+  # Update a specific users' feature flag
+  updateUserFeatureFlag(data: UpdateUserFeatureFlagInput!): UpdateUserFeatureFlagResponse!
 }
 
 type Query {
+  # Fetch all users and the associated feature flags
   usersWithFeatureFlags: [UserWithFeatureFlagsResponse]!
 }

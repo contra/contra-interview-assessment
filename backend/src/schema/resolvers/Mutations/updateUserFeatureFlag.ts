@@ -12,7 +12,9 @@ export const resolve: MutationResolvers['updateUserFeatureFlag'] = async (
   // @ts-ignore
   { repository, correlationId }
 ) => {
-  logger.debug('Handling request to update a user\'s feature flag');
+  logger.debug({
+    correlationId
+  }, 'Handling request to update a user\'s feature flag');
 
   const { userId, featureFlagId, value } = args.data;
   const result = await repository.updateUserFeatureFlag({
@@ -20,7 +22,7 @@ export const resolve: MutationResolvers['updateUserFeatureFlag'] = async (
     featureFlagId,
     value,
     correlationId
-  })
+  });
 
   return {
     userId: result.userId,

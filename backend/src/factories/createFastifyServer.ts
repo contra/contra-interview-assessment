@@ -7,7 +7,7 @@ import path from 'path';
 import type { Knex } from 'knex';
 import Logger from 'roarr';
 import { v4 } from 'uuid';
-import { Repository } from '../bin/repository';
+import { Repository } from '../bin/datasources/database/repository';
 import { resolvers } from '../schema/resolvers';
 
 const logger = Logger.child({ context: 'factories/createFastifyServer' });

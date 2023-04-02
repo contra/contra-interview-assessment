@@ -1,4 +1,5 @@
 import { Model, snakeCaseMappers } from 'objection';
+import { FeatureFlagType } from '../../generated/types';
 
 export enum Type {
   TOGGLE = 'TOGGLE',
@@ -9,7 +10,7 @@ export class FeatureFlag extends Model {
   id: string;
   key: string
   value: string;
-  type: string;
+  type: FeatureFlagType;
   created_at: string;
   updated_at: string;
 

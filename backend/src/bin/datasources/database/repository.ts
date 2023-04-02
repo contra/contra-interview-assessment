@@ -1,6 +1,8 @@
 import Logger from 'roarr';
-import { FeatureFlagUser } from './models/feature-flag-user';
-import { UserAccount } from './models/user-account';
+import { FeatureFlag } from '../../models/feature-flag';
+import { FeatureFlagUser } from '../../models/feature-flag-user';
+import { UserAccount } from '../../models/user-account';
+import { tryParse } from './utils';
 
 const logger = Logger.child({ context: 'bin/repositories/repository' });
 
@@ -42,7 +44,8 @@ export class Repository {
 
 
   /**
-   * Updates a feature flag for a specific user
+   * Updates a feature flag for a specific user. Targets the specified user 
+   * with the feature flag value, if a feature flag is not already attached to the user.
    *
    * @param {UpdateUserFeatureFlagArgs} args
    * @returns {Promise<FeatureFlagUser>}
@@ -56,23 +59,38 @@ export class Repository {
 
     const { userId, featureFlagId, value } = args;
 
-    let result;
-    result = await FeatureFlagUser.query()
-      .update({ override: value })
-      .where({
-        user_id: parseInt(userId),
-        feature_flag_id: parseInt(featureFlagId)
-      })
-      .returning('*')
-      .first();
+    return FeatureFlag.transaction(async (connection) => {
+      const featureFlag = await FeatureFlag.query(connection).findOne({
+        id: featureFlagId
+      });
 
-    if (!result) {
-      result = await FeatureFlagUser.query()
-        .insert({ userId, featureFlagId, override: value })
-        .returning('*');
-    }
+      if (!featureFlag) {
+        throw new Error(`Feature flag ${featureFlagId} not found`);
+      }
 
-    return result;
+      const { type } = featureFlag;
+      const parsedValue = tryParse(value, type);
+
+      let result;
+      result = await FeatureFlagUser.query(connection)
+        .update({ override: parsedValue })
+        .where({
+          user_id: parseInt(userId),
+          feature_flag_id: parseInt(featureFlagId)
+        })
+        .returning('*')
+        .first();
+
+      // The update above will return 'undefined' if the row to update
+      // doesn't exist. We perform an insert in such a scenario.
+      if (!result) {
+        result = await FeatureFlagUser.query(connection)
+          .insert({ userId, featureFlagId, override: value })
+          .returning('*');
+      }
+
+      return result;
+    });
   }
 
   /**
