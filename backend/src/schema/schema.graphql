@@ -1,21 +1,44 @@
 ##############################
 ######## Custom Types ########
 ##############################
+# Allowed feature flag types. These types help the client and server correct
+# serialize and deserialise a feature flag's value.
+enum FeatureFlagType {
+  BOOLEAN
+  JSON
+  STRING
+  NUMBER
+}
+
 type User {
+  # Unique identifier of the user
   id: ID!
+  # The users's first name
   givenName: String
+  # The users' last name
   familyName: String
+  # The users' email address
   emailAddress: String
+  # Timestamp with timezone of when this record was first created
   createdAt: String
+  # Timestamp with timezone of when this record was last updated
   updatedAt: String
 }
 
+# Represents a feature flag
 type FeatureFlag {
+  # Unique identifier of the feature flag
   id: ID!
+  # Name of the feature flag. Ex: 'CHECKOUT_FLOW'
   key: String
+  # The value associated with this feature flag. Ex: 'one click'
   value: String
-  type: String
+  # Feature flags may be booleans or multi variate. Type indicates what this
+  # feature flag represents. Valid values are documented as enum.
+  type: FeatureFlagType
+  # Timestamp with timezone of when this record was first created
   createdAt: String
+  # Timestamp with timezone of when this record was last updated
   updatedAt: String
 }
 
@@ -31,8 +54,11 @@ type TargetUsersOutput {
   featureFlag: UserFeatureFlag!
 }
 
-type Users {
+# Represents a targetted users' feature flags
+type UserWithFeatureFlagsResponse {
+  # This is the targetted user
   user: User!
+  # This is the users' associated feature flags
   featureFlags: [FeatureFlag]!
 }
 
@@ -71,5 +97,5 @@ type Mutation {
 }
 
 type Query {
-  users: [Users]!
+  usersWithFeatureFlags: [UserWithFeatureFlagsResponse]!
 }

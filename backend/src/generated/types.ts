@@ -14,6 +14,13 @@ export type Scalars = {
   Float: number;
 };
 
+export enum FeatureFlagType {
+  Boolean = 'BOOLEAN',
+  Json = 'JSON',
+  String = 'STRING',
+  Number = 'NUMBER'
+}
+
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
@@ -29,7 +36,7 @@ export type FeatureFlag = {
   id: Scalars['ID'];
   key?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
+  type?: Maybe<FeatureFlagType>;
   createdAt?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['String']>;
 };
@@ -48,8 +55,8 @@ export type TargetUsersOutput = {
   featureFlag: UserFeatureFlag;
 };
 
-export type Users = {
-  __typename?: 'Users';
+export type UserWithFeatureFlagsResponse = {
+  __typename?: 'UserWithFeatureFlagsResponse';
   user: User;
   featureFlags: Array<Maybe<FeatureFlag>>;
 };
@@ -96,7 +103,7 @@ export type MutationUpdateUserFeatureFlagArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  users: Array<Maybe<Users>>;
+  usersWithFeatureFlags: Array<Maybe<UserWithFeatureFlagsResponse>>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -165,13 +172,14 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
+  FeatureFlagType: FeatureFlagType;
   User: ResolverTypeWrapper<User>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   String: ResolverTypeWrapper<Scalars['String']>;
   FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
   UserFeatureFlag: ResolverTypeWrapper<UserFeatureFlag>;
   TargetUsersOutput: ResolverTypeWrapper<TargetUsersOutput>;
-  Users: ResolverTypeWrapper<Users>;
+  UserWithFeatureFlagsResponse: ResolverTypeWrapper<UserWithFeatureFlagsResponse>;
   UpdateUserFeatureFlagOutput: ResolverTypeWrapper<UpdateUserFeatureFlagOutput>;
   UserFeatureFlagInput: UserFeatureFlagInput;
   TargetUsersInput: TargetUsersInput;
@@ -189,7 +197,7 @@ export type ResolversParentTypes = ResolversObject<{
   FeatureFlag: FeatureFlag;
   UserFeatureFlag: UserFeatureFlag;
   TargetUsersOutput: TargetUsersOutput;
-  Users: Users;
+  UserWithFeatureFlagsResponse: UserWithFeatureFlagsResponse;
   UpdateUserFeatureFlagOutput: UpdateUserFeatureFlagOutput;
   UserFeatureFlagInput: UserFeatureFlagInput;
   TargetUsersInput: TargetUsersInput;
@@ -213,7 +221,7 @@ export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = Res
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['FeatureFlagType']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -233,7 +241,7 @@ export type TargetUsersOutputResolvers<ContextType = ResolverContext, ParentType
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type UsersResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Users']> = ResolversObject<{
+export type UserWithFeatureFlagsResponseResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['UserWithFeatureFlagsResponse']> = ResolversObject<{
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   featureFlags?: Resolver<Array<Maybe<ResolversTypes['FeatureFlag']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -253,7 +261,7 @@ export type MutationResolvers<ContextType = ResolverContext, ParentType = Resolv
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
-  users?: Resolver<Array<Maybe<ResolversTypes['Users']>>, ParentType, ContextType>;
+  usersWithFeatureFlags?: Resolver<Array<Maybe<ResolversTypes['UserWithFeatureFlagsResponse']>>, ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
@@ -261,7 +269,7 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   FeatureFlag?: FeatureFlagResolvers<ContextType>;
   UserFeatureFlag?: UserFeatureFlagResolvers<ContextType>;
   TargetUsersOutput?: TargetUsersOutputResolvers<ContextType>;
-  Users?: UsersResolvers<ContextType>;
+  UserWithFeatureFlagsResponse?: UserWithFeatureFlagsResponseResolvers<ContextType>;
   UpdateUserFeatureFlagOutput?: UpdateUserFeatureFlagOutputResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

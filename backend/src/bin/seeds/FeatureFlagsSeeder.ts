@@ -1,4 +1,5 @@
 import { Knex } from "knex";
+import { FeatureFlagType } from "../../generated/types";
 
 const TABLE_NAME = 'feature_flags';
 
@@ -10,11 +11,11 @@ export async function seed(knex: Knex): Promise<void> {
 
     const records = [{
         key: 'BETA_TESTER',
-        type: 'TOGGLE',
+        type: FeatureFlagType.Boolean,
         value: 'false'
     }, {
         key: 'CHECKOUT FLOW',
-        type: 'MULTI_VARIATE',
+        type: FeatureFlagType.String,
         value: 'one click'
     }];
 

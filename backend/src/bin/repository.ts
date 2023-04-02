@@ -1,16 +1,8 @@
 import Logger from 'roarr';
-import { FeatureFlag } from './models/feature-flag';
 import { FeatureFlagUser } from './models/feature-flag-user';
 import { UserAccount } from './models/user-account';
 
 const logger = Logger.child({ context: 'bin/repositories/repository' });
-
-type RelatedFeatureFlags = FeatureFlag & Pick<FeatureFlagUser, 'override'>;
-
-export type UserWithFeatureFlags = {
-  user: UserAccount;
-  featureFlags: RelatedFeatureFlags[]
-}
 
 type DebugArgs = {
   correlationId: string;
@@ -35,26 +27,17 @@ type TargetUsersArgs = {
 } & DebugArgs;
 
 export class Repository {
-  async getAllUsers(args: GetAllUsersArgs): Promise<UserWithFeatureFlags[]> {
+  async getAllUsers(args: GetAllUsersArgs): Promise<UserAccount[]> {
     logger.debug({
       correlationId: args.correlationId
     }, 'Fetching all users');
 
-    const results = await UserAccount.query().withGraphFetched('featureFlags');
-
-    return results.map((user: UserAccount) => {
-      user.featureFlags = user.featureFlags!.map((featureFlag) => {
-        if (featureFlag.override !== null) {
-          featureFlag.value = featureFlag.override;
-        }
-        return featureFlag;
-      });
-
-      return {
-        user,
-        featureFlags: user.featureFlags
-      };
-    });
+    // Eager loading using this approach uses separate queries under the hood
+    // as opposed to `withGraphJoined` which uses a single query with a join.
+    // Without measuring, either approach could be bad or good. This method call
+    // is made with an understanding that it may change in the future based on
+    // request load to the server.
+    return UserAccount.query().withGraphFetched('featureFlags');
   }
 
 
