@@ -24,8 +24,8 @@ import Portal from './Portal';
  * 11.1) Fix mobile vertical alignment for modal ✅
  * bonus 1) add modal animation ✅
  * bonus 2) add button animation ✅
- * 12) Add react Portal
- * 12.1) Fix animation with Portal
+ * 12) Add react Portal ✅
+ * 12.1) Fix animation with Portal ✅
  */
 
 
