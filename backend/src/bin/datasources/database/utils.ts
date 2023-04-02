@@ -18,7 +18,8 @@ export function tryParse(value: any, type: FeatureFlagType) {
   
   if (type === FeatureFlagType.Json) {
     try {
-      return JSON.parse(value);
+      JSON.parse(value);
+      return value;
     } catch (e) {
       throw new ParseError(`${value} cannot be parsed as ${FeatureFlagType.Json}`);
     }
