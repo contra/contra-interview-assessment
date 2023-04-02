@@ -5,6 +5,9 @@ import { FeatureFlagUser } from './feature-flag-user';
 type RelatedFeatureFlags = FeatureFlag & Pick<FeatureFlagUser, 'override'>;
 
 export class UserAccount extends Model {
+  id: number;
+  featureFlags: RelatedFeatureFlags[] = [];
+
   static tableName = 'user_account';
 
   static get columnNameMappers() {
@@ -26,7 +29,4 @@ export class UserAccount extends Model {
       },
     },
   }
-
-  id = '';
-  featureFlags: RelatedFeatureFlags[] = [];
 }

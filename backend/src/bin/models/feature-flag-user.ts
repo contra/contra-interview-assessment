@@ -1,9 +1,9 @@
 import { Model, snakeCaseMappers } from 'objection';
 
 export class FeatureFlagUser extends Model {
-  userId: string;
-  featureFlagId: string;
-  override: string = '';
+  userId: number;
+  featureFlagId: number;
+  override: string;
   createdAt: string;
   updatedAt: string;
 

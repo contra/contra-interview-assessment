@@ -85,8 +85,13 @@ export class Repository {
       // doesn't exist. We perform an insert in such a scenario.
       if (!result) {
         result = await FeatureFlagUser.query(connection)
-          .insert({ userId, featureFlagId, override: value })
-          .returning('*');
+          .insert({
+            userId: parseInt(userId),
+            featureFlagId: parseInt(featureFlagId),
+            override: value 
+          })
+          .returning('*')
+          .first();
       }
 
       return result;
@@ -104,6 +109,24 @@ export class Repository {
     logger.debug({
       correlationId: args.correlationId,
     }, 'Attaching users with feature flags');
+
+    const featureFlagIds = args.targets.reduce((acc, target) => {
+      acc.push(
+        target.featureFlags.map((featureFlag) => featureFlag.id)
+      );
+      return acc;
+    }, []).flat();
+
+    const featureFlagsRows = await FeatureFlag.query().findByIds(featureFlagIds);
+
+    args.targets.forEach((target) => {
+      target.featureFlags.forEach((featureFlag) => {
+        if (featureFlag.value !== '') {
+          const featureFlagType = featureFlagsRows.find((row) => row.id === parseInt(featureFlag.id)).type;
+          tryParse(featureFlag.value, featureFlagType);
+        }
+      });
+    })
 
     const values = args.targets.flatMap((arg: any) => {
       return arg.featureFlags.flatMap((featureFlag: any) => {

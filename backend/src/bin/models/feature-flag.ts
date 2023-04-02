@@ -7,7 +7,7 @@ export enum Type {
 }
 
 export class FeatureFlag extends Model {
-  id: string;
+  id: number;
   key: string
   value: string;
   type: FeatureFlagType;
