@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import classNames from 'classnames';
 import FocusTrap from 'focus-trap-react';
-import React, { useContext, useEffect, useRef, useState, useLayoutEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import Button from './Button';
 import Portal from './Portal';
 
