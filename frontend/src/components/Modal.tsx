@@ -3,8 +3,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import classNames from 'classnames';
 import FocusTrap from 'focus-trap-react';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState, useLayoutEffect } from 'react';
 import Button from './Button';
+import Portal from './Portal';
 
 /**
  * TODO:
@@ -23,6 +24,8 @@ import Button from './Button';
  * 11.1) Fix mobile vertical alignment for modal ✅
  * bonus 1) add modal animation ✅
  * bonus 2) add button animation ✅
+ * 12) Add react Portal
+ * 12.1) Fix animation with Portal
  */
 
 
@@ -93,10 +96,16 @@ const Modal = ({ animate = true, children, handleClose, show, title }: Props) =>
      */
     const dialogRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        if (dialogRef.current) {
-            dialogRef.current.classList.remove('mt-[-1000px]');
-            dialogRef.current.classList.add('mt-0');
-        }
+        /**
+         * Use timeout to make sure we get the Ref
+         */
+        setTimeout(() => {
+            if (dialogRef.current) {
+                dialogRef.current.classList.remove('mt-[-1000px]');
+                dialogRef.current.classList.remove('mt-0');
+                dialogRef.current.classList.add('mt-0');
+            }
+        }, 0);
     });
 
     const focusTrapOptions = {
@@ -110,27 +119,29 @@ const Modal = ({ animate = true, children, handleClose, show, title }: Props) =>
     const modalStyle = "absolute w-full sm:w-[400px] sm:-ml-[200px] bg-white sm:rounded-xl shadow-xl top-1/4 sm:left-1/2"
     const animation = animate ? "transition-all duration-300 ease-out mt-[-1000px]": "mt-0";
 
-    return show ? (<div className="fixed top-0 left-0 w-full h-full">
-        <Overlay handleClose={handleClose} zIndex={1000+nestingLevel*2}/>
-        <FocusTrap focusTrapOptions={focusTrapOptions}>
-            <div aria-label={title}
-                className={classNames(modalStyle, animation)}
-                onKeyUp={handleKey} ref={dialogRef} role="dialog"
-                style={{zIndex: 1001+nestingLevel*2}} tabIndex={-1}
-            >
-                <h2 className="text-center bg-violet-700 sm:rounded-t-xl text-white py-1">{title}</h2>
-                
-                <div className="py-8 px-8 space-y-2 sm:py-4 flex items-center flex-col sm:space-y-0 sm:space-x-6">
-                <NestingLevel.Provider value={nestingLevel+1}>
-                    {children}
-                </NestingLevel.Provider>
+    return show ? (<Portal>
+        <div className="fixed top-0 left-0 w-full h-full">
+            <Overlay handleClose={handleClose} zIndex={1000+nestingLevel*2}/>
+            <FocusTrap focusTrapOptions={focusTrapOptions}>
+                <div aria-label={title}
+                    className={classNames(modalStyle, animation)}
+                    onKeyUp={handleKey} ref={dialogRef} role="dialog"
+                    style={{zIndex: 1001+nestingLevel*2}} tabIndex={-1}
+                >
+                    <h2 className="text-center bg-violet-700 sm:rounded-t-xl text-white py-1">{title}</h2>
+                    
+                    <div className="py-8 px-8 space-y-2 sm:py-4 flex items-center flex-col sm:space-y-0 sm:space-x-6">
+                    <NestingLevel.Provider value={nestingLevel+1}>
+                        {children}
+                    </NestingLevel.Provider>
+                    </div>
+                    <div className="text-center mb-4">
+                        <Button onClick={handleClose}>Close</Button>
+                    </div>
                 </div>
-                <div className="text-center mb-4">
-                    <Button onClick={handleClose}>Close</Button>
-                </div>
-            </div>
-        </FocusTrap>
-    </div>) : null;
+            </FocusTrap>
+        </div>
+    </Portal>) : null;
 }
 
 export default Modal;

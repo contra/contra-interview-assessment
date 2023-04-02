@@ -64,7 +64,6 @@ export const targetUsers: MutationResolvers['targetUsers'] = async(
 	/**
 	 * insert into user_context
 	 */
-    
     const rows = [];
     for (const id of userIds) {
         rows.push([id, context!.id])
