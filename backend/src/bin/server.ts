@@ -1,7 +1,6 @@
+import knex from 'knex';
+import { Model } from 'objection';
 import Logger from 'roarr';
-import { createPool } from 'slonik';
-// @ts-expect-error
-import { createInterceptors } from 'slonik-interceptor-preset';
 import { createFastifyServer } from '../factories/createFastifyServer';
 
 const log = Logger.child({ context: 'bin/server' });
@@ -11,11 +10,13 @@ if (!process.env.POSTGRES_CONNECTION_STRING)
     'Must provide a PG connection string (export POSTGRES_CONNECTION_STRING=value) -- if you need a fresh database, we recommend using Render.com',
   );
 
-const pool = createPool(process.env.POSTGRES_CONNECTION_STRING, {
-  captureStackTrace: false,
-  connectionTimeout: 60 * 1_000,
-  interceptors: createInterceptors(),
+const pool = knex({
+  client: 'pg',
+  connection: process.env.POSTGRES_CONNECTION_STRING,
+  acquireConnectionTimeout: 60 * 1_000,
 });
+
+Model.knex(pool);
 
 (async () => {
   try {

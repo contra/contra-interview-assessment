@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+  database:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: feature_flags
+    ports:
+      - "54321:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
