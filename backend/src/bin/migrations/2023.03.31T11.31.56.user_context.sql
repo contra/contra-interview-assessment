@@ -1,7 +1,7 @@
 CREATE TABLE user_context (
     id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_id integer,
-    context_id integer,
+    user_id integer NOT NULL,
+    context_id integer NOT NULL,
     created_at timestamp with time zone DEFAULT NOW(),
     updated_at timestamp with time zone DEFAULT NOW(),
     UNIQUE(user_id, context_id),
