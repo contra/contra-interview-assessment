@@ -90,6 +90,7 @@ const Modal = ({ animate = true, children, handleClose, show, title, noPortal = 
                 document.body.style.overflow = 'unset';
             };
         }
+        else return undefined;
     }, [show, nestingLevel]);
 
     /**
