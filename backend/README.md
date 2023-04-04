@@ -1,29 +1,49 @@
-# Contra Backend Technical Asessment
+# Solution Walkthrough
 
-## Requirements
+#### [Loom video](https://www.loom.com/share/ff27e8e8b511443aa49f1d14c3834cf3)
 
-At Contra, feature flags enable our team to run experiments, ship to production frequently, and control the rollout of new features for our users. If you're not familiar with feature flags, [here's an article that explains the concept.](https://featureflags.io/feature-flags/).
+## Database
 
-Assume the following about feature flags:
+### What is Prisma?
 
-- The same user cannot receive different values for the same feature flag
-- Different users can be targeted with the same feature flag
-- A feature flag can have boolean or [multivariate values](https://featureflags.io/multivariate-feature-flags/)
+Prisma is a **next-generation ORM** that consists of these tools:
 
-**Your task is to build a lightweight feature flag management service by completing the following backend tasks.**
+- [**Prisma Client**](https://www.prisma.io/docs/concepts/components/prisma-client): Auto-generated and type-safe query builder for Node.js & TypeScript
+- [**Prisma Migrate**](https://www.prisma.io/docs/concepts/components/prisma-migrate): Declarative data modeling & migration system
+- [**Prisma Studio**](https://github.com/prisma/studio): GUI to view and edit data in your database
 
-- [ ] Build a GraphQL API that:
-  - [ ] Exposes a GraphQL Mutation to target one or more users with a specific feature flag
-  - [ ] Exposes a GraphQL Query that returns all users and their associated feature flags
-  - [ ] Exposes a GraphQL Mutation to change the value of a feature flag for a specific user
+### Schema
 
-_Note: To keep it simple, you don't need to build API functionality to create or delete feature flags or users. Assume that you can manually seed feature flags and users in the database, once you've designed the database schema to support._
+The schema has 3 main tables; `User`, `FeatureFlag` and `UserFlag`
+
+- `User`: stores users main details and has a many-to-many relation with `FeatureFlag`.
+- `FeatureFlag`: stores feature flag id, name, description and type.
+- `UserFlag`: represent the relation between a `User` and `FeatureFlag` with a **value**
+  field of type JSON
+
+---
+
+## GraphQL
+
+### Mutaitons
+
+- `SetUsersFeatureFlag`: a mutation to set a feature flag with a value for one or more users.
+- `UpdateUserFlag`: a mutation to change the value of a feature flag for a specific user.
+
+### Query
+
+- `getUsers`: a query to fetch all users and their associated feature flags.
+- `GetFeatureFlags`: a query to fetch all feature flags in the database
+
+### Scalars
+
+I used [`graphql-json-type`](https://github.com/taion/graphql-type-json) package to handle JSON types in the schema. This allow us to represent any JSON-serializable value, including scalars, arrays, and objects.
+
+---
 
 ## Repository Setup Instructions
 
-### Install NVM
-
-The easiest way to install and manage versions Node.JS on your local machine is `nvm`.
+### Install NVM and Yarn
 
 [Follow the nvm installation instructions](https://github.com/nvm-sh/nvm)
 
@@ -35,17 +55,7 @@ $ cd contra-interview-assessment
 $ nvm use
 ```
 
-If successful, you should get a message like this:
-
-```sh
-Now using node v16.11.0 (npm v7.11.2)
-```
-
-### Install Yarn
-
-Next, you'll need to install the `yarn` package manager to install project dependencies and run scripts.
-
-[Follow the yarn setup instructions](https://yarnpkg.com/getting-started/install)
+- Install Yarn: [Follow the yarn setup instructions](https://yarnpkg.com/getting-started/install)
 
 ### Install Project Dependencies
 
@@ -57,76 +67,30 @@ $ yarn
 
 ### Start the Backend
 
-We've provided a fresh NodeJS/Fastify/TypeScript/GraphQL/PostgreSQL project out of the box.
+I used [Render](https://render.com), which provides a free hosted PostgreSQL instance in just a few clicks.
 
-The project expects a valid database connection string passed to the `POSTGRES_CONNECTION_STRING` environment variable to start. We recommend using [Render](https://render.com), which provides a free hosted PostgreSQL instance in just a few clicks. [Have a look at the Render setup instructions](https://render.com/docs/databases#creating-a-database) for more detail. That said, you're welcome to use another database service of your choice, run a local PostgreSQL Docker container, etc. Regardless, once you've configured a database instance, set the `POSTGRES_CONNECTION_STRING` environment variable:
+1. Configure your database instance by setting `POSTGRES_CONNECTION_STRING` in the `.env` file with the connection string of your database.
 
-```sh
-$ export POSTGRES_CONNECTION_STRING='YOUR_PG_DATABASE_CONNECTION_STRING'
-```
-
-Once you've installed the correct NodeJS version with `nvm`, installed the `yarn` package manager, run `yarn` in the `backend` directory to install dependencies, and set the `POSTGRES_CONNECTION_STRING` environment variable, you're all set to start coding.
-
-To boot up the backend, just run
+2. run Prisma migrations and generate a prisma client using:
 
 ```sh
-$ yarn dev
+$ yarn run migrate dev
 ```
-
-and the application should come alive at `localhost:8080/graphql`
-
-This project comes with Apollo Explorer, a handy GUI to execute operations your GraphQL server. A `hello` query comes ready for you out of the box -- try it out:
-
-```graphql
-{
-  hello
-}
-```
-
-If successful, you'll get back the following response:
-
-```json
-{
-  "data": {
-    "hello": "world"
-  }
-}
-```
-
-### A word on Databases, Slonik, and Migrations
-
-We've provided the PostgreSQL client [`slonik`](https://github.com/gajus/slonik) out of the box for you to use, though you're welcome to replace it with any PostgreSQL client you'd like. The same goes for [`@slonik/migrator`](https://github.com/mmkal/slonik-tools/tree/master/packages/migrator) &mdash; it is there to help you with writing and managing database migrations, but feel free to use another tool if you see fit. Regardless of what technology you use, make sure to commit all migration artifacts with your submission, just as you would building for production.
-
-If you chose to adopt something other than `slonik`, you'll want to update `createFastifyServer` to accept a database connection of your choosing, and include it in the GraphQL resolver context when instantiating `ApolloServer`.
-
-If you choose to stay with `slonik` and `@slonik/migrator`, the following is relevant to you:
-
-- An instance of `DatabasePoolType` is exposed to your GraphQL resolvers through the resolver context, like so:
-
-```ts
-import { QueryResolvers } from '../../../generated/types';
-import { sql } from 'slonik';
-
-export const resolve: QueryResolvers['hello'] = async (
-  _parent,
-  _args,
-  context,
-) => {
-  const { pool } = context;
-  const result = await pool.one<{ phrase: string }>(
-    sql`SELECT 'world' as phrase;`,
-  );
-
-  return result.phrase;
-};
-```
-
-- All migration activity will run against the database instance you connected through the `POSTGRES_CONNECTION_STRING` environment variable. Make sure that `yarn migrate` prefixes all [commands](https://github.com/mmkal/slonik-tools/tree/master/packages/migrator#commands). Here's an example:
 
 ```sh
-$ yarn migrate create --name user_account.sql
-$ yarn migrate up
-$ yarn migrate down
+$ npx prisma generate
 ```
 
-- A sample migration for a `user_account` table has provided for your convenience.
+3. To seed your database, run
+
+```sh
+$ yarn run seed
+```
+
+4. To boot up the backend, just run
+
+```sh
+$ yarn run dev
+```
+
+and the application should come alive at `localhost:8080/graphql`. This project comes with Apollo Explorer, a handy GUI to execute operations your GraphQL server.

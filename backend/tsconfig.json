@@ -27,5 +27,5 @@
     "forceConsistentCasingInFileNames": true,
     "useUnknownInCatchVariables": false
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "prisma/seed.ts"]
 }
