@@ -9,7 +9,7 @@
     "build": "tsc --project ./",
     "lint": "eslint --fix src . && prettier --write src . && tsc --noEmit && format-graphql --write true src/schema/schema.graphql",
     "generate-types": "graphql-codegen",
-    "migrate": "ts-node ./src/bin/migrate.ts",
+    "migrate": "npx prisma migrate dev",
     "seed": "ts-node ./prisma/seed.ts"
   },
   "devDependencies": {
