@@ -21,9 +21,6 @@ const SecondModal = () => {
 
   return (
     <>
-      <Head>
-        <title>Contra Assessment</title>
-      </Head>
       <button onClick={() => setIsModal2Open(true)} type="button">
         Open second smaller modal
       </button>
@@ -118,6 +115,9 @@ const Index: NextPage = () => {
   const [isBiggerModalOpen, setIsBiggerModalOpen] = useState(false);
   return (
     <MainPage>
+      <Head>
+        <title>Contra Assessment</title>
+      </Head>
       <button onClick={() => setIsModalOpen(true)} type="button">
         Open first modal
       </button>
