@@ -12,7 +12,9 @@ const Index: NextPage = () => {
       <button onClick={() => setIsModalOpen(true)} type="button">
         Show modal
       </button>
-      <Modal isOpen={isModalOpen} />
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        Hi there. I'm a modal!
+      </Modal>
     </div>
   );
 };
