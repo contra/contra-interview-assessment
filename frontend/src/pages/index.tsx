@@ -6,6 +6,27 @@ import { Modal } from '@/components/modal';
 const reallyLongText =
   'Text repeated over and over to showcase scroll-lock.\n'.repeat(80);
 
+const Nested = () => {
+  const [isInfiniteModalOpen, setIsInfiniteModalOpen] = useState(false);
+
+  return (
+    <div>
+      <div>I'm an infinitely nested modal!</div>
+
+      <button onClick={() => setIsInfiniteModalOpen(true)} type="button">
+        Just click me
+      </button>
+
+      <Modal
+        isOpen={isInfiniteModalOpen}
+        onClose={() => setIsInfiniteModalOpen(false)}
+      >
+        {isInfiniteModalOpen && <Nested />}
+      </Modal>
+    </div>
+  );
+};
+
 const Index: NextPage = () => {
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
@@ -44,6 +65,7 @@ const Index: NextPage = () => {
           onClose={() => setIsSecondModalOpen(false)}
         >
           <div>I'm a nested modal!</div>
+          <Nested />
         </Modal>
       </Modal>
     </div>
