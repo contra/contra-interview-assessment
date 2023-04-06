@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect } from 'react';
 
 const focusableElements =
   'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -12,15 +12,8 @@ const getFocusableElementInfo = (element: HTMLElement) => {
   };
 };
 
-type FocusTrapProps = {
-  children: ReactNode;
-  element: HTMLElement | null;
-};
-
 // Adapted from https://uxdesign.cc/how-to-trap-focus-inside-modal-to-make-it-ada-compliant-6a50f9a70700
-export const FocusTrap = (props: FocusTrapProps) => {
-  const { children, element } = props;
-
+export const useFocusTrap = (element: HTMLElement | null) => {
   useEffect(() => {
     if (element === null) {
       return () => {};
@@ -62,6 +55,4 @@ export const FocusTrap = (props: FocusTrapProps) => {
       document.removeEventListener('keydown', tabHandler);
     };
   }, [element]);
-
-  return <>{children}</>;
 };

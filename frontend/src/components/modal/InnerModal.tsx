@@ -1,7 +1,7 @@
 import { type ReactNode, useState } from 'react';
-import { FocusTrap } from './utils/FocusTrap';
 import { useModalId } from './utils/modalHierarchy';
 import { useCloseOnPressingEsc } from './utils/useCloseOnPressingEsc';
+import { useFocusTrap } from './utils/useFocusTrap';
 import { useScrollLock } from './utils/useScrollLock';
 
 type InnerModalProps = {
@@ -17,25 +17,21 @@ export const InnerModal = (props: InnerModalProps) => {
 
   useScrollLock();
 
-  /**
-   * It's unusual to be using a HTML element's ref() callback to set state,
-   *    but inside FocusTrap we need to run effects when the modalContentElement changes.
-   */
+  // We need to run effects in useFocusTrap when this changes, so we're using state instead of a ref.
   const [modalContentElement, setModalContentElement] =
     useState<HTMLDivElement | null>(null);
+  useFocusTrap(modalContentElement);
 
   return (
-    <FocusTrap element={modalContentElement}>
-      <div
-        className="contra--modal-wrapper"
-        ref={setModalContentElement}
-        role="presentation"
-      >
-        {/* We're listening to Esc events on document.body itself. */}
-        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
-        <div className="contra--modal-background" onClick={onClose} />
-        <div className="contra--modal-content">{children}</div>
-      </div>
-    </FocusTrap>
+    <div
+      className="contra--modal-wrapper"
+      ref={setModalContentElement}
+      role="presentation"
+    >
+      {/* We're listening to Esc events on document.body itself. */}
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
+      <div className="contra--modal-background" onClick={onClose} />
+      <div className="contra--modal-content">{children}</div>
+    </div>
   );
 };
