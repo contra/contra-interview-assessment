@@ -13,8 +13,6 @@
     "test:ci": "NODE_ENV=test jest --ci --reporters jest-silent-reporter"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
     "next": "12.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0"

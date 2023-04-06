@@ -1,38 +1,8 @@
-import styled from '@emotion/styled';
 import { type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-
-enum ZIndexes {
-  Background = '1000',
-  Content = '1100',
-}
-
-const ModalBackground = styled.div`
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.3);
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  z-index: ${ZIndexes.Background};
-`;
-
-const ModalContent = styled.div`
-  max-width: 640px;
-  background-color: white;
-  z-index: ${ZIndexes.Content};
-`;
-
-const ModalWrapper = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import { useIsRunningOnClient } from '@/utils/useIsRunningOnClient';
+import { useModalId } from './modalHierarchy';
+import { useCloseOnPressingEsc } from './useCloseOnPressingEsc';
 
 type ModalInnerProps = {
   children: ReactNode;
@@ -43,11 +13,17 @@ type ModalInnerProps = {
 const ModalInner = (props: ModalInnerProps) => {
   const { children, onClose } = props;
 
+  const modalId = useModalId();
+
+  useCloseOnPressingEsc(modalId, onClose);
+
   return (
-    <ModalWrapper>
-      <ModalBackground onClick={onClose} />
-      <ModalContent>{children}</ModalContent>
-    </ModalWrapper>
+    <div className="contra--modal-wrapper">
+      {/* We're listening to Esc events on document.body itself */}
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
+      <div className="contra--modal-background" onClick={onClose} />
+      <div className="contra--modal-content">{children}</div>
+    </div>
   );
 };
 
@@ -60,8 +36,17 @@ export type ModalProps = {
 
 export const Modal = (props: ModalProps) => {
   const { container, isOpen } = props;
+  const isRunningOnClient = useIsRunningOnClient();
 
-  const portalRoot = container ?? document.body;
+  /**
+   * We don't have access to the document on the server, so we just don't render the modal.
+   * Doing this comes at a cost of not having the modal on the server-generated HTML
+   *    if said modal is open immediately, but I consider that OK for our purposes.
+   */
+  const portalRoot = isRunningOnClient ? container ?? document.body : null;
+  if (!portalRoot) {
+    return null;
+  }
 
   if (!isOpen) {
     return null;

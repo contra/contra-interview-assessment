@@ -4,16 +4,29 @@ import { useState } from 'react';
 import { Modal } from '@/components/modal';
 
 const Index: NextPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
+  const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
   return (
     <div>
       <h1>Welcome to Contra!</h1>
-      <button onClick={() => setIsModalOpen(true)} type="button">
+      <button onClick={() => setIsFirstModalOpen(true)} type="button">
         Show modal
       </button>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        Hi there. I'm a modal!
+      <Modal
+        isOpen={isFirstModalOpen}
+        onClose={() => setIsFirstModalOpen(false)}
+      >
+        <div>Hi there. I'm a modal!</div>
+        <button onClick={() => setIsSecondModalOpen(true)} type="button">
+          Open a nested modal
+        </button>
+        <Modal
+          isOpen={isSecondModalOpen}
+          onClose={() => setIsSecondModalOpen(false)}
+        >
+          <div>I'm a nested modal!</div>
+        </Modal>
       </Modal>
     </div>
   );
