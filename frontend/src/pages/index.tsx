@@ -1,6 +1,6 @@
 /* eslint-disable canonical/filename-match-exported */
 import { type NextPage } from 'next';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Modal } from '@/components/modal';
 
 const reallyLongText =
@@ -21,6 +21,9 @@ const Nested = () => {
         isOpen={isInfiniteModalOpen}
         onClose={() => setIsInfiniteModalOpen(false)}
       >
+        <button type="button">Example button</button>
+        <input placeholder="Example input" type="text" />
+        <input placeholder="Example input 2" type="text" />
         {isInfiniteModalOpen && <Nested />}
       </Modal>
     </div>
@@ -29,7 +32,9 @@ const Nested = () => {
 
 const Index: NextPage = () => {
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
-  const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
+
+  const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
+  const customContainerRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <div>
@@ -49,25 +54,30 @@ const Index: NextPage = () => {
         isOpen={isFirstModalOpen}
         onClose={() => setIsFirstModalOpen(false)}
       >
-        <p>Hi there. I'm a modal!</p>
-
-        <button onClick={() => setIsSecondModalOpen(true)} type="button">
-          Open a nested modal
-        </button>
-
-        <div>
-          <input placeholder="Example input" type="text" />
-          <input placeholder="Example input 2" type="text" />
-        </div>
-
-        <Modal
-          isOpen={isSecondModalOpen}
-          onClose={() => setIsSecondModalOpen(false)}
-        >
-          <div>I'm a nested modal!</div>
-          <Nested />
-        </Modal>
+        <p>Hi there. I'm the first modal. Click the button below for more.</p>
+        <Nested />
       </Modal>
+
+      <button onClick={() => setIsCustomModalOpen(true)} type="button">
+        Open modal inside custom container
+      </button>
+
+      <div
+        ref={customContainerRef}
+        style={{ backgroundColor: 'blue', margin: '20px' }}
+      >
+        Custom container
+      </div>
+
+      {customContainerRef.current && (
+        <Modal
+          container={customContainerRef.current}
+          isOpen={isCustomModalOpen}
+          onClose={() => setIsCustomModalOpen(false)}
+        >
+          This modal is inside a custom container. Check out the elements tree.
+        </Modal>
+      )}
     </div>
   );
 };
