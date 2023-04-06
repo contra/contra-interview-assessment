@@ -29,10 +29,11 @@ export const useFocusTrap = (modalId: string, element: HTMLElement | null) => {
         return;
       }
 
+      const currentlyActiveElement = document.activeElement;
       const focusableElementInfo = getFocusableElementInfo(element);
 
       // If it's trying to tab outside of the element, fallback to our first element
-      if (!element.contains(document.activeElement)) {
+      if (!element.contains(currentlyActiveElement)) {
         focusableElementInfo.first?.focus();
         event.preventDefault();
         return;
@@ -40,12 +41,12 @@ export const useFocusTrap = (modalId: string, element: HTMLElement | null) => {
 
       // On Shift+Tab, if we're in the first element, wrap focus into the last element
       if (event.shiftKey) {
-        if (document.activeElement === focusableElementInfo.first) {
+        if (currentlyActiveElement === focusableElementInfo.first) {
           focusableElementInfo.last?.focus();
           event.preventDefault();
         }
         // On Tab, if we're in the last element, wrap focus back into the first element
-      } else if (document.activeElement === focusableElementInfo.last) {
+      } else if (currentlyActiveElement === focusableElementInfo.last) {
         focusableElementInfo.first?.focus();
         event.preventDefault();
       }
