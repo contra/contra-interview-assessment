@@ -62,12 +62,7 @@ const Index: NextPage = () => {
         Open modal inside custom container
       </button>
 
-      <div
-        ref={customContainerRef}
-        style={{ backgroundColor: 'blue', margin: '20px' }}
-      >
-        Custom container
-      </div>
+      <div ref={customContainerRef}>Custom container</div>
 
       {customContainerRef.current && (
         <Modal
