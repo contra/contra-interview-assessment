@@ -38,12 +38,21 @@ export const FocusTrap = (props: FocusTrapProps) => {
         if (document.activeElement === focusableElementInfo.first) {
           focusableElementInfo.last?.focus();
           event.preventDefault();
+          return;
         }
         // On Tab, if we're in the last element, wrap focus back into the first element
       } else if (document.activeElement === focusableElementInfo.last) {
         focusableElementInfo.first?.focus();
         event.preventDefault();
+        return;
       }
+
+      // If it's trying to tab outside of the element, fallback to our first element
+      if (!element.contains(document.activeElement)) {
+        focusableElementInfo.first?.focus();
+        event.preventDefault();
+      }
+
       // Otherwise, we're just tabbing somewhere in the middle and it's OK to proceed
     };
 

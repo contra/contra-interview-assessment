@@ -11,7 +11,7 @@ const ruleOverrides = {
   'default-case-last': 0,
   'import/extensions': 0,
   'import/no-unassigned-import': [2, {
-    "allow": ["**/*.css"]
+    "allow": ["**/*.css", '@testing-library/jest-dom/*']
   }],
   'jest/prefer-strict-equal': 0,
   'jsx-a11y/anchor-is-valid': 0,
