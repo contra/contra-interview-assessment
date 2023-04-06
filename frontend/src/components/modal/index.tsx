@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useModalId } from './modalHierarchy';
 import { useCloseOnPressingEsc } from './useCloseOnPressingEsc';
 import { useIsRunningOnClient } from './useIsRunningOnClient';
+import { useScrollLock } from './useScrollLock';
 
 type ModalInnerProps = {
   children: ReactNode;
@@ -16,6 +17,8 @@ const ModalInner = (props: ModalInnerProps) => {
   const modalId = useModalId();
 
   useCloseOnPressingEsc(modalId, onClose);
+
+  useScrollLock();
 
   return (
     <div className="contra--modal-wrapper">

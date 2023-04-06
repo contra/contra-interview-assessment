@@ -3,6 +3,9 @@ import { type NextPage } from 'next';
 import { useState } from 'react';
 import { Modal } from '@/components/modal';
 
+const reallyLongText =
+  'Text repeated over and over to showcase scroll-lock.\n'.repeat(80);
+
 const Index: NextPage = () => {
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
@@ -13,6 +16,7 @@ const Index: NextPage = () => {
       <button onClick={() => setIsFirstModalOpen(true)} type="button">
         Show modal
       </button>
+      <div style={{ whiteSpace: 'pre-line' }}>{reallyLongText}</div>
       <Modal
         isOpen={isFirstModalOpen}
         onClose={() => setIsFirstModalOpen(false)}
