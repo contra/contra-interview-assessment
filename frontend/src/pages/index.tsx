@@ -43,7 +43,7 @@ const Index: NextPage = () => {
         Show modal
       </button>
 
-      <div style={{ whiteSpace: 'pre-line' }}>{reallyLongText}</div>
+      <p style={{ whiteSpace: 'pre-line' }}>{reallyLongText}</p>
 
       <Modal
         isOpen={isFirstModalOpen}
