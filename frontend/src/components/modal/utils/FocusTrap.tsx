@@ -12,7 +12,7 @@ const getFocusableElementInfo = (element: HTMLElement) => {
   };
 };
 
-export type FocusTrapProps = {
+type FocusTrapProps = {
   children: ReactNode;
   element: HTMLElement | null;
 };
