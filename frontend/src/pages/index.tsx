@@ -13,18 +13,32 @@ const Index: NextPage = () => {
   return (
     <div>
       <h1>Welcome to Contra!</h1>
+      <p>
+        This page has some inputs and quite a bit of text to showcase things
+        such as focus traps and scroll-locking.
+      </p>
+
       <button onClick={() => setIsFirstModalOpen(true)} type="button">
         Show modal
       </button>
+
       <div style={{ whiteSpace: 'pre-line' }}>{reallyLongText}</div>
+
       <Modal
         isOpen={isFirstModalOpen}
         onClose={() => setIsFirstModalOpen(false)}
       >
-        <div>Hi there. I'm a modal!</div>
+        <p>Hi there. I'm a modal!</p>
+
         <button onClick={() => setIsSecondModalOpen(true)} type="button">
           Open a nested modal
         </button>
+
+        <div>
+          <input placeholder="Example input" type="text" />
+          <input placeholder="Example input 2" type="text" />
+        </div>
+
         <Modal
           isOpen={isSecondModalOpen}
           onClose={() => setIsSecondModalOpen(false)}
