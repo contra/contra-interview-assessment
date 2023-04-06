@@ -1,8 +1,8 @@
 import { type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { useIsRunningOnClient } from '@/utils/useIsRunningOnClient';
 import { useModalId } from './modalHierarchy';
 import { useCloseOnPressingEsc } from './useCloseOnPressingEsc';
+import { useIsRunningOnClient } from './useIsRunningOnClient';
 
 type ModalInnerProps = {
   children: ReactNode;
