@@ -13,6 +13,7 @@ export const InnerModal = (props: InnerModalProps) => {
   const { children, onClose } = props;
 
   const modalId = useModalId();
+
   useCloseOnPressingEsc(modalId, onClose);
 
   useScrollLock();
@@ -20,7 +21,7 @@ export const InnerModal = (props: InnerModalProps) => {
   // We need to run effects in useFocusTrap when this changes, so we're using state instead of a ref.
   const [modalContentElement, setModalContentElement] =
     useState<HTMLDivElement | null>(null);
-  useFocusTrap(modalContentElement);
+  useFocusTrap(modalId, modalContentElement);
 
   return (
     <div

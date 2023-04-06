@@ -29,7 +29,8 @@ export const modalHierarchy = new ModalHierarchy();
 export const useModalId = () => {
   /**
    * We're using React IDs as they're guaranteed to be
-   *  different across different rendered React nodes
+   *  different across different rendered React nodes.
+   * Note that this would break on microfrontends.
    */
   const modalId = useId();
 
