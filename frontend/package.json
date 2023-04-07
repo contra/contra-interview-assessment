@@ -15,13 +15,16 @@
   "dependencies": {
     "next": "12.1.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
     "@types/jest": "28.1.3",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
+    "@types/react-portal": "^4.0.4",
+    "@types/styled-components": "^5.1.26",
     "eslint": "8.18.0",
     "eslint-config-canonical": "35.0.1",
     "eslint-config-next": "12.1.6",
@@ -30,5 +33,8 @@
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
     "typescript": "4.7.4"
+  },
+  "resolutions": {
+    "styled-components": "^5"
   }
 }
