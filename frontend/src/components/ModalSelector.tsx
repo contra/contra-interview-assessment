@@ -14,7 +14,15 @@ const ModalSelectorContainer = styled.div`
 `;
 
 type ModalSelectorProps = {
-  onSelectModal: (modalType: boolean | 'Base' | 'Content' | 'Dialog') => void;
+  onSelectModal: (
+    modalType:
+      | boolean
+      | 'Base'
+      | 'Content'
+      | 'Dialog'
+      | 'Nested'
+      | 'NestedChildren'
+  ) => void;
   onSwitchTheme: () => void;
 };
 const ModalSelector: React.FC<ModalSelectorProps> = ({
@@ -28,6 +36,9 @@ const ModalSelector: React.FC<ModalSelectorProps> = ({
         Open Content Modal
       </Button>
       <Button onClick={() => onSelectModal('Dialog')}>Open Dialog Modal</Button>
+      <Button onClick={() => onSelectModal('Nested')}>
+        Open Modal with Nested
+      </Button>
       <Button onClick={() => onSwitchTheme()} variant="Secondary">
         Switch Theme
       </Button>

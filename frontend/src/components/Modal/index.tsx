@@ -109,6 +109,16 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
     setIsBrowser(true);
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflow = 'visible';
+    };
+  }, [isOpen]);
+
   if (isBrowser && isOpen) {
     return createPortal(
       <ModalOverlay aria-hidden={!isOpen} aria-modal={isOpen} isOpen={isOpen}>

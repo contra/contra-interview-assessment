@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import translation from '@/assets/mockedTranslation.json';
+import Button from '@/components/Button';
 import Modal from '@/components/Modal';
 import ContentModal from '@/components/Modal/ContentModal';
 import DialogModal from '@/components/Modal/DialogModal';
@@ -13,7 +14,7 @@ import { darkTheme, lightTheme } from '@/styled/themes';
 
 const Index: NextPage = () => {
   const [openModal, setOpenModal] = useState<
-    boolean | 'Base' | 'Content' | 'Dialog'
+    boolean | 'Base' | 'Content' | 'Dialog' | 'Nested' | 'NestedChildren'
   >(false);
   const [theme, setTheme] = useState<'dark' | 'light'>('light');
 
@@ -51,6 +52,25 @@ const Index: NextPage = () => {
           text={translation.longText}
           title={translation.modalTitle}
         />
+
+        <Modal
+          isOpen={openModal === 'Nested' || openModal === 'NestedChildren'}
+          onClose={() => setOpenModal(false)}
+        >
+          <Button onClick={() => setOpenModal('NestedChildren')}>
+            Open Nested
+          </Button>
+          <Modal
+            isOpen={openModal === 'NestedChildren'}
+            onClose={() => setOpenModal('Nested')}
+          >
+            Hey There
+          </Modal>
+        </Modal>
+        <p>
+          {translation.longText} {translation.longText} {translation.longText}
+          {translation.longText}
+        </p>
       </ThemeProvider>
     </>
   );
