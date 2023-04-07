@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 
 export type ModalProps = {
@@ -31,7 +32,7 @@ const ModalContent = styled.div`
   transform: translate(-50%, -50%);
   max-width: 90%;
   max-height: 90%;
-  overflow: auto;
+  overflow-y: hidden;
   padding: 36px 40px;
   background: ${({ theme: { colors } }) => colors.modalBackground};
   border-radius: ${({ theme: { radius } }) => radius.regular};
@@ -72,16 +73,57 @@ const CloseButton = styled.button`
 `;
 
 const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
-  return (
-    <ModalOverlay aria-hidden={!isOpen} aria-modal={isOpen} isOpen={isOpen}>
-      <ModalContent aria-label="Modal dialog" role="dialog">
-        <CloseButton aria-label="Close modal" onClick={onClose}>
-          &times;
-        </CloseButton>
-        {children}
-      </ModalContent>
-    </ModalOverlay>
-  );
+  const [isBrowser, setIsBrowser] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleClickOutside = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      onClose();
+    }
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleEscape = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscape);
+    } else {
+      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, handleClickOutside, handleEscape]);
+
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+
+  if (isBrowser && isOpen) {
+    return createPortal(
+      <ModalOverlay aria-hidden={!isOpen} aria-modal={isOpen} isOpen={isOpen}>
+        <ModalContent aria-label="Modal dialog" ref={modalRef} role="dialog">
+          <CloseButton aria-label="Close modal" onClick={onClose}>
+            &times;
+          </CloseButton>
+          {children}
+        </ModalContent>
+      </ModalOverlay>,
+      document.querySelector('#modal-root') as Element
+    );
+  }
+
+  return null;
 };
 
 export default Modal;

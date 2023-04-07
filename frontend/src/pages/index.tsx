@@ -1,5 +1,6 @@
 /* eslint-disable canonical/filename-match-exported */
 import { type NextPage } from 'next';
+import Head from 'next/head';
 import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import translation from '@/assets/mockedTranslation.json';
@@ -17,32 +18,41 @@ const Index: NextPage = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('light');
 
   return (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <GlobalStyle />
-      <ModalSelector
-        onSelectModal={(modal) => setOpenModal(modal)}
-        onSwitchTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      />
-      <Modal isOpen={openModal === 'Base'} onClose={() => setOpenModal(false)}>
-        {translation.regularText}
-      </Modal>
-      <DialogModal
-        cancelLabel={translation.noButton}
-        confirmLabel={translation.yesButton}
-        isOpen={openModal === 'Dialog'}
-        onClickCancel={() => setOpenModal(false)}
-        onClickConfirm={() => {}}
-        onClose={() => setOpenModal(false)}
-        text={translation.regularText}
-        title={translation.modalTitle}
-      />
-      <ContentModal
-        isOpen={openModal === 'Content'}
-        onClose={() => setOpenModal(false)}
-        text={translation.longText}
-        title={translation.modalTitle}
-      />
-    </ThemeProvider>
+    <>
+      <Head>
+        <title>Contra Modal</title>
+      </Head>
+
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+        <GlobalStyle />
+        <ModalSelector
+          onSelectModal={(modal) => setOpenModal(modal)}
+          onSwitchTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        />
+        <Modal
+          isOpen={openModal === 'Base'}
+          onClose={() => setOpenModal(false)}
+        >
+          {translation.regularText}
+        </Modal>
+        <DialogModal
+          cancelLabel={translation.noButton}
+          confirmLabel={translation.yesButton}
+          isOpen={openModal === 'Dialog'}
+          onClickCancel={() => setOpenModal(false)}
+          onClickConfirm={() => {}}
+          onClose={() => setOpenModal(false)}
+          text={translation.regularText}
+          title={translation.modalTitle}
+        />
+        <ContentModal
+          isOpen={openModal === 'Content'}
+          onClose={() => setOpenModal(false)}
+          text={translation.longText}
+          title={translation.modalTitle}
+        />
+      </ThemeProvider>
+    </>
   );
 };
 
