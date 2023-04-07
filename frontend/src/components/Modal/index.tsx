@@ -7,15 +7,6 @@ export type ModalProps = {
   onClose: () => void;
 };
 
-/* 
-  TODO List
-
-  1 - Should have a max-height and scroll from there
-  2 - Should work with dark and white theme
-  3 - Implement Test
-  4- Implement Storybook
-*/
-
 const ModalOverlay = styled.div<{ isOpen: boolean }>`
   position: fixed;
   top: 0;
@@ -48,10 +39,12 @@ const ModalContent = styled.div`
 
   @media (${({ theme: { device } }) => device.mobile}) {
     width: 70%;
+    max-height: 80%;
   }
 
   @media ${({ theme: { device } }) => device.tablet} {
     width: 80%;
+    max-height: 80%;
   }
 `;
 

@@ -7,6 +7,7 @@ const defaultTheme = {
   },
   device: {
     mobile: 'max-width: 425px',
+    mobileAndTablet: 'max-width: 820px',
     tablet: '(max-width: 820px) and (min-width: 425px)',
   },
   fontSize: {

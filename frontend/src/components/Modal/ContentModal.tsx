@@ -11,6 +11,12 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  overflow-x: hidden;
+  max-height: 500px;
+
+  @media (${({ theme: { device } }) => device.mobileAndTablet}) {
+    max-height: 100%;
+  }
 `;
 
 const Title = styled.h2`

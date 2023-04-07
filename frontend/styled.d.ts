@@ -17,6 +17,7 @@ declare module 'styled-components' {
     };
     device: {
       mobile: string;
+      mobileAndTablet: string;
       tablet: string;
     };
     fontSize: {

@@ -17,6 +17,10 @@ const ButtonsContainer = styled.div`
   gap: 16px;
   margin-top: 24px;
   justify-content: flex-end;
+  @media (${({ theme: { device } }) => device.mobile}) {
+    justify-content: center;
+    flex-direction: column;
+  }
 `;
 
 const DialogModal: React.FC<Props> = ({

@@ -34,9 +34,10 @@ const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
   variant = 'Primary',
+  ...rest
 }) => {
   return (
-    <ButtonContainer onClick={onClick} variant={variant}>
+    <ButtonContainer onClick={onClick} variant={variant} {...rest}>
       {children}
     </ButtonContainer>
   );
