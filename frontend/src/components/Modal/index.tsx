@@ -123,13 +123,13 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
     return createPortal(
       <ModalOverlay aria-hidden={!isOpen} aria-modal={isOpen} isOpen={isOpen}>
         <ModalContent aria-label="Modal dialog" ref={modalRef} role="dialog">
-          <CloseButton aria-label="Close modal" onClick={onClose}>
+          <CloseButton aria-label="Close modal" onClick={() => onClose()}>
             &times;
           </CloseButton>
           {children}
         </ModalContent>
       </ModalOverlay>,
-      document.querySelector('#modal-root') as Element
+      document.body
     );
   }
 
