@@ -11,6 +11,7 @@ declare module 'styled-components' {
       grey: string;
       modalBackground: string;
       modalText: string;
+      modalTitle: string;
       opaqueDark: string;
       white: string;
     };

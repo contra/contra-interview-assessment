@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-type ModalProps = {
-  children: React.ReactNode;
+export type ModalProps = {
+  children?: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
 };

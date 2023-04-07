@@ -43,8 +43,10 @@ const lightTheme = {
     ...defaultTheme.colors,
     bodyBackground: '#fff',
     bodyText: '#4F4F4F',
+
     modalBackground: '#fff',
-    modalText: '#4F4F4F',
+    modalText: 'rgba(84, 89, 94, 0.6)',
+    modalTitle: '#54595E',
   },
 };
 
@@ -54,8 +56,10 @@ const darkTheme = {
     ...defaultTheme.colors,
     bodyBackground: '#4F4F4F',
     bodyText: '#fff',
+
     modalBackground: '#323232',
-    modalText: '#fff',
+    modalText: 'rgba(222, 226, 230, 0.6)',
+    modalTitle: '#DEE2E6',
   },
 };
 
