@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_CONNECTION_STRING")
+}
+
+model User {
+  id           Int        @id @default(autoincrement())
+  givenName    String     @db.VarChar(255)
+  familyName   String     @db.VarChar(255)
+  email        String     @unique @db.VarChar(255)
+  created      DateTime   @default(now()) @db.Timestamptz()
+  updated      DateTime   @default(now()) @db.Timestamptz()
+  featureFlags UserFlag[]
+}
+
+model FeatureFlag {
+  id        Int        @id @default(autoincrement())
+  flagName  String     @unique @db.VarChar(255)
+  flagType  FlagType
+  userFlags UserFlag[]
+}
+
+model UserFlag {
+  id            Int         @id @default(autoincrement())
+  user          User        @relation(fields: [userId], references: [id])
+  userId        Int
+  featureFlag   FeatureFlag @relation(fields: [featureFlagId], references: [id])
+  featureFlagId Int
+  value         Json
+
+  @@unique([userId, featureFlagId])
+}
+
+enum FlagType {
+  BOOLEAN
+  STRING
+  JSON
+}

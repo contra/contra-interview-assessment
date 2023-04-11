@@ -3,11 +3,11 @@ import { ApolloServer } from 'apollo-server-fastify';
 import fastify from 'fastify';
 import { importSchema } from 'graphql-import';
 import { makeExecutableSchema } from 'graphql-tools';
-import type { CommonQueryMethodsType } from 'slonik';
+import { PrismaClient } from '@prisma/client';
 // @ts-ignore
 import { resolvers } from '../schema/resolvers';
 
-export const createFastifyServer = async (pool: CommonQueryMethodsType) => {
+export const createFastifyServer = async (pool: PrismaClient) => {
   const executableSchema = makeExecutableSchema({
     inheritResolversFromInterfaces: true,
     resolvers,
