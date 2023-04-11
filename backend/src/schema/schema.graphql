@@ -3,6 +3,7 @@ scalar JSON
 type Mutation {
   sampleMutation: String!
   setUsersFlag(input: SetUsersFlagInput!): SetUsersFlagResponse!
+  updateUserFlag(input: UpdateUserFeatureFlagInput!): UpdateUserFlagResponse!
 }
 
 type Query {
@@ -36,8 +37,19 @@ type SetUsersFlagResponse {
   status: FlagResponse!
 }
 
+type UpdateUserFlagResponse {
+  status: FlagResponse!
+  data: UserFlag
+}
+
 input SetUsersFlagInput {
   userId: [ID!]!
+  featureFlagId: ID!
+  value: JSON!
+}
+
+input UpdateUserFeatureFlagInput {
+  userId: ID!
   featureFlagId: ID!
   value: JSON!
 }

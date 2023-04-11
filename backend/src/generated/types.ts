@@ -20,11 +20,17 @@ export type Mutation = {
   __typename?: 'Mutation';
   sampleMutation: Scalars['String'];
   setUsersFlag: SetUsersFlagResponse;
+  updateUserFlag: UpdateUserFlagResponse;
 };
 
 
 export type MutationSetUsersFlagArgs = {
   input: SetUsersFlagInput;
+};
+
+
+export type MutationUpdateUserFlagArgs = {
+  input: UpdateUserFeatureFlagInput;
 };
 
 export type Query = {
@@ -63,8 +69,20 @@ export type SetUsersFlagResponse = {
   status: FlagResponse;
 };
 
+export type UpdateUserFlagResponse = {
+  __typename?: 'UpdateUserFlagResponse';
+  status: FlagResponse;
+  data?: Maybe<UserFlag>;
+};
+
 export type SetUsersFlagInput = {
   userId: Array<Scalars['ID']>;
+  featureFlagId: Scalars['ID'];
+  value: Scalars['JSON'];
+};
+
+export type UpdateUserFeatureFlagInput = {
+  userId: Scalars['ID'];
   featureFlagId: Scalars['ID'];
   value: Scalars['JSON'];
 };
@@ -155,7 +173,9 @@ export type ResolversTypes = ResolversObject<{
   FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
   UserFlag: ResolverTypeWrapper<UserFlag>;
   SetUsersFlagResponse: ResolverTypeWrapper<SetUsersFlagResponse>;
+  UpdateUserFlagResponse: ResolverTypeWrapper<UpdateUserFlagResponse>;
   SetUsersFlagInput: SetUsersFlagInput;
+  UpdateUserFeatureFlagInput: UpdateUserFeatureFlagInput;
   FlagType: FlagType;
   FlagResponse: FlagResponse;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -172,7 +192,9 @@ export type ResolversParentTypes = ResolversObject<{
   FeatureFlag: FeatureFlag;
   UserFlag: UserFlag;
   SetUsersFlagResponse: SetUsersFlagResponse;
+  UpdateUserFlagResponse: UpdateUserFlagResponse;
   SetUsersFlagInput: SetUsersFlagInput;
+  UpdateUserFeatureFlagInput: UpdateUserFeatureFlagInput;
   Boolean: Scalars['Boolean'];
 }>;
 
@@ -183,6 +205,7 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
   sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   setUsersFlag?: Resolver<ResolversTypes['SetUsersFlagResponse'], ParentType, ContextType, RequireFields<MutationSetUsersFlagArgs, 'input'>>;
+  updateUserFlag?: Resolver<ResolversTypes['UpdateUserFlagResponse'], ParentType, ContextType, RequireFields<MutationUpdateUserFlagArgs, 'input'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
@@ -220,6 +243,12 @@ export type SetUsersFlagResponseResolvers<ContextType = ResolverContext, ParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type UpdateUserFlagResponseResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['UpdateUserFlagResponse']> = ResolversObject<{
+  status?: Resolver<ResolversTypes['FlagResponse'], ParentType, ContextType>;
+  data?: Resolver<Maybe<ResolversTypes['UserFlag']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   JSON?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
@@ -228,6 +257,7 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   FeatureFlag?: FeatureFlagResolvers<ContextType>;
   UserFlag?: UserFlagResolvers<ContextType>;
   SetUsersFlagResponse?: SetUsersFlagResponseResolvers<ContextType>;
+  UpdateUserFlagResponse?: UpdateUserFlagResponseResolvers<ContextType>;
 }>;
 
 
