@@ -23,6 +23,12 @@ export type Query = {
   hello: Scalars['String'];
 };
 
+export enum FlagType {
+  Boolean = 'BOOLEAN',
+  String = 'STRING',
+  Json = 'JSON'
+}
+
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
 
@@ -92,6 +98,7 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Query: ResolverTypeWrapper<{}>;
+  FlagType: FlagType;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 

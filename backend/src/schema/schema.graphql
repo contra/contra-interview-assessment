@@ -5,3 +5,9 @@ type Mutation {
 type Query {
   hello: String!
 }
+
+enum FlagType {
+  BOOLEAN
+  STRING
+  JSON
+}
