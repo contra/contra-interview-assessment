@@ -4,6 +4,7 @@ export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string | number;
@@ -18,6 +19,12 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   sampleMutation: Scalars['String'];
+  setUsersFlag: SetUsersFlagResponse;
+};
+
+
+export type MutationSetUsersFlagArgs = {
+  input: SetUsersFlagInput;
 };
 
 export type Query = {
@@ -51,10 +58,26 @@ export type UserFlag = {
   value?: Maybe<Scalars['JSON']>;
 };
 
+export type SetUsersFlagResponse = {
+  __typename?: 'SetUsersFlagResponse';
+  status: FlagResponse;
+};
+
+export type SetUsersFlagInput = {
+  userId: Array<Scalars['ID']>;
+  featureFlagId: Scalars['ID'];
+  value: Scalars['JSON'];
+};
+
 export enum FlagType {
   Boolean = 'BOOLEAN',
   String = 'STRING',
   Json = 'JSON'
+}
+
+export enum FlagResponse {
+  Success = 'SUCCESS',
+  Fail = 'FAIL'
 }
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -131,7 +154,10 @@ export type ResolversTypes = ResolversObject<{
   ID: ResolverTypeWrapper<Scalars['ID']>;
   FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
   UserFlag: ResolverTypeWrapper<UserFlag>;
+  SetUsersFlagResponse: ResolverTypeWrapper<SetUsersFlagResponse>;
+  SetUsersFlagInput: SetUsersFlagInput;
   FlagType: FlagType;
+  FlagResponse: FlagResponse;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -145,6 +171,8 @@ export type ResolversParentTypes = ResolversObject<{
   ID: Scalars['ID'];
   FeatureFlag: FeatureFlag;
   UserFlag: UserFlag;
+  SetUsersFlagResponse: SetUsersFlagResponse;
+  SetUsersFlagInput: SetUsersFlagInput;
   Boolean: Scalars['Boolean'];
 }>;
 
@@ -154,6 +182,7 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
   sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  setUsersFlag?: Resolver<ResolversTypes['SetUsersFlagResponse'], ParentType, ContextType, RequireFields<MutationSetUsersFlagArgs, 'input'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
@@ -186,6 +215,11 @@ export type UserFlagResolvers<ContextType = ResolverContext, ParentType = Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type SetUsersFlagResponseResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['SetUsersFlagResponse']> = ResolversObject<{
+  status?: Resolver<ResolversTypes['FlagResponse'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   JSON?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
@@ -193,6 +227,7 @@ export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   User?: UserResolvers<ContextType>;
   FeatureFlag?: FeatureFlagResolvers<ContextType>;
   UserFlag?: UserFlagResolvers<ContextType>;
+  SetUsersFlagResponse?: SetUsersFlagResponseResolvers<ContextType>;
 }>;
 
 

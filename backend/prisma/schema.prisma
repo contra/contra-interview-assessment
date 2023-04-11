@@ -16,7 +16,7 @@ model User {
   familyName   String     @db.VarChar(255)
   email        String     @unique @db.VarChar(255)
   created      DateTime   @default(now()) @db.Timestamptz()
-  updated      DateTime   @default(now()) @db.Timestamptz()
+  updated      DateTime?  @db.Timestamptz()
   featureFlags UserFlag[]
 }
 

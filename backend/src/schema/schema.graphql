@@ -2,6 +2,7 @@ scalar JSON
 
 type Mutation {
   sampleMutation: String!
+  setUsersFlag(input: SetUsersFlagInput!): SetUsersFlagResponse!
 }
 
 type Query {
@@ -31,8 +32,23 @@ type UserFlag {
   value: JSON
 }
 
+type SetUsersFlagResponse {
+  status: FlagResponse!
+}
+
+input SetUsersFlagInput {
+  userId: [ID!]!
+  featureFlagId: ID!
+  value: JSON!
+}
+
 enum FlagType {
   BOOLEAN
   STRING
   JSON
+}
+
+enum FlagResponse {
+  SUCCESS
+  FAIL
 }
