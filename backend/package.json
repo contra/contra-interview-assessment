@@ -44,6 +44,7 @@
     "graphql": "^15.4.0",
     "graphql-import": "^1.0.2",
     "graphql-tools": "^7.0.2",
+    "graphql-type-json": "^0.3.2",
     "prisma": "^4.12.0",
     "roarr": "^3.2.0",
     "ts-node": "^9.1.1"

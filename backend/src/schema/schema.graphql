@@ -1,9 +1,34 @@
+scalar JSON
+
 type Mutation {
   sampleMutation: String!
 }
 
 type Query {
-  hello: String!
+  getUsers: [User!]
+}
+
+type User {
+  id: ID!
+  givenName: String!
+  familyName: String!
+  email: String!
+  created: String
+  updated: String
+  featureFlag: [UserFlag!]
+}
+
+type FeatureFlag {
+  id: ID!
+  flagName: String!
+  flagType: FlagType!
+}
+
+type UserFlag {
+  id: ID!
+  user: User!
+  featureFlag: FeatureFlag!
+  value: JSON
 }
 
 enum FlagType {

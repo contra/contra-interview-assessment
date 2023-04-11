@@ -1,5 +1,7 @@
 import Logger from 'roarr';
 import { PrismaClient } from '@prisma/client';
+// @ts-expect-error
+import { createInterceptors } from 'slonik-interceptor-preset';
 import { createFastifyServer } from '../factories/createFastifyServer';
 
 const log = Logger.child({ context: 'bin/server' });
