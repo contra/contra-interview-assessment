@@ -1,26 +1,67 @@
-import type { GraphQLResolveInfo } from 'graphql';
+import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import type { ResolverContext } from '../ResolverContextType';
 export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
+  ID: string | number;
   String: string;
   Boolean: boolean;
   Int: number;
   Float: number;
+  JSON: any;
 };
+
 
 export type Mutation = {
   __typename?: 'Mutation';
-  sampleMutation: Scalars['String'];
+  updateFeatureFlagValue: UserFeatureFlag;
+  targetUsersWithFeatureFlag: Array<Maybe<UserFeatureFlag>>;
+};
+
+
+export type MutationUpdateFeatureFlagValueArgs = {
+  userId: Scalars['ID'];
+  featureId: Scalars['ID'];
+  flagValue: Scalars['JSON'];
+};
+
+
+export type MutationTargetUsersWithFeatureFlagArgs = {
+  userIds: Array<Scalars['ID']>;
+  featureId: Scalars['ID'];
+  flagValue: Scalars['JSON'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
+  getUserFeatureFlags: Array<UserFeatureFlags>;
+};
+
+export type UserFeatureFlags = {
+  __typename?: 'UserFeatureFlags';
+  id: Scalars['ID'];
+  givenName: Scalars['String'];
+  familyName: Scalars['String'];
+  emailAddress: Scalars['String'];
+  features: Array<FeatureFlag>;
+};
+
+export type FeatureFlag = {
+  __typename?: 'FeatureFlag';
+  featureId: Scalars['ID'];
+  name: Scalars['String'];
+  value: Scalars['JSON'];
+};
+
+export type UserFeatureFlag = {
+  __typename?: 'UserFeatureFlag';
+  userId: Scalars['ID'];
+  featureId: Scalars['ID'];
+  flagValue: Scalars['JSON'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -89,31 +130,73 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
+  JSON: ResolverTypeWrapper<Scalars['JSON']>;
   Mutation: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Query: ResolverTypeWrapper<{}>;
+  UserFeatureFlags: ResolverTypeWrapper<UserFeatureFlags>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
+  UserFeatureFlag: ResolverTypeWrapper<UserFeatureFlag>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
+  JSON: Scalars['JSON'];
   Mutation: {};
-  String: Scalars['String'];
+  ID: Scalars['ID'];
   Query: {};
+  UserFeatureFlags: UserFeatureFlags;
+  String: Scalars['String'];
+  FeatureFlag: FeatureFlag;
+  UserFeatureFlag: UserFeatureFlag;
   Boolean: Scalars['Boolean'];
 }>;
 
+export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
+  name: 'JSON';
+}
+
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
-  sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updateFeatureFlagValue?: Resolver<ResolversTypes['UserFeatureFlag'], ParentType, ContextType, RequireFields<MutationUpdateFeatureFlagValueArgs, 'userId' | 'featureId' | 'flagValue'>>;
+  targetUsersWithFeatureFlag?: Resolver<Array<Maybe<ResolversTypes['UserFeatureFlag']>>, ParentType, ContextType, RequireFields<MutationTargetUsersWithFeatureFlagArgs, 'userIds' | 'featureId' | 'flagValue'>>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
-  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  getUserFeatureFlags?: Resolver<Array<ResolversTypes['UserFeatureFlags']>, ParentType, ContextType>;
+}>;
+
+export type UserFeatureFlagsResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['UserFeatureFlags']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  givenName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  familyName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  emailAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  features?: Resolver<Array<ResolversTypes['FeatureFlag']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
+  featureId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserFeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['UserFeatureFlag']> = ResolversObject<{
+  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  featureId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  flagValue?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
+  JSON?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  UserFeatureFlags?: UserFeatureFlagsResolvers<ContextType>;
+  FeatureFlag?: FeatureFlagResolvers<ContextType>;
+  UserFeatureFlag?: UserFeatureFlagResolvers<ContextType>;
 }>;
 
 

@@ -5,6 +5,6 @@ import { Query } from './Queries';
 export const resolvers = mergeResolvers([
   {
     Mutation,
-    Query,
-  },
+    Query
+  }
 ]);

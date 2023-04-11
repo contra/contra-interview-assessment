@@ -12,7 +12,7 @@ export const createFastifyServer = async (pool: CommonQueryMethodsType) => {
     inheritResolversFromInterfaces: true,
     resolvers,
     resolverValidationOptions: { requireResolversForResolveType: 'ignore' },
-    typeDefs: importSchema(path.resolve(__dirname, '../schema/schema.graphql')),
+    typeDefs: importSchema(path.resolve(__dirname, '../schema/schema.graphql'))
   });
 
   const app = fastify();
@@ -21,9 +21,9 @@ export const createFastifyServer = async (pool: CommonQueryMethodsType) => {
     context: ({ request, reply }) => ({
       pool,
       reply,
-      request,
+      request
     }),
-    schema: executableSchema,
+    schema: executableSchema
   });
 
   await graphQLServer.start();

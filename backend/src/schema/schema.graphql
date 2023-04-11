@@ -1,7 +1,30 @@
+type FeatureFlag {
+  featureId: ID!
+  name: String!
+  value: JSON!
+}
+
+scalar JSON
+
 type Mutation {
-  sampleMutation: String!
+  targetUsersWithFeatureFlag(featureId: ID!, flagValue: JSON!, userIds: [ID!]!): [UserFeatureFlag]!
+  updateFeatureFlagValue(featureId: ID!, flagValue: JSON!, userId: ID!): UserFeatureFlag!
 }
 
 type Query {
-  hello: String!
+  getUserFeatureFlags: [UserFeatureFlags!]!
+}
+
+type UserFeatureFlag {
+  featureId: ID!
+  flagValue: JSON!
+  userId: ID!
+}
+
+type UserFeatureFlags {
+  emailAddress: String!
+  familyName: String!
+  features: [FeatureFlag!]!
+  givenName: String!
+  id: ID!
 }
