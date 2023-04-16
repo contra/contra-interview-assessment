@@ -1,28 +1,24 @@
-import path from 'path';
 import { ApolloServer } from 'apollo-server-fastify';
 import fastify from 'fastify';
 import { importSchema } from 'graphql-import';
 import { makeExecutableSchema } from 'graphql-tools';
-import type { CommonQueryMethodsType } from 'slonik';
+import path from 'path';
+
 // @ts-ignore
 import { resolvers } from '../schema/resolvers';
+import { createContext } from '../ResolverContext';
 
-export const createFastifyServer = async (pool: CommonQueryMethodsType) => {
+export const createFastifyServer = async () => {
   const executableSchema = makeExecutableSchema({
     inheritResolversFromInterfaces: true,
     resolvers,
     resolverValidationOptions: { requireResolversForResolveType: 'ignore' },
     typeDefs: importSchema(path.resolve(__dirname, '../schema/schema.graphql')),
   });
-
   const app = fastify();
 
   const graphQLServer = new ApolloServer({
-    context: ({ request, reply }) => ({
-      pool,
-      reply,
-      request,
-    }),
+    context: createContext,
     schema: executableSchema,
   });
 

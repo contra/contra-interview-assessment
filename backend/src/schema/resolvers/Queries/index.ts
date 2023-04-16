@@ -1,5 +1,5 @@
-import { resolve as hello } from './hello';
+import { resolve as users } from './users';
 
 export const Query = {
-  hello,
+  users,
 };
