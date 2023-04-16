@@ -1,13 +1,15 @@
 schema:
   - src/**/*.graphql
+override: true
 generates:
   'src/generated/types.ts':
     plugins:
       - typescript
+      - typescript-operations
       - typescript-resolvers
     config:
       allowParentTypeOverride: true
-      contextType: '../ResolverContextType#ResolverContext'
+      contextType: '../ResolverContext#ResolverContext'
       mapperTypeSuffix: 'Model'
       maybeValue: 'T | null | undefined'
       noSchemaStitching: true
@@ -17,3 +19,4 @@ generates:
         ID: 'string | number'
       useTypeImports: true
       mappers:
+        User: '@prisma/client#User'

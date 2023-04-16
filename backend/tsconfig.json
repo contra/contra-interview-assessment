@@ -25,7 +25,8 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "types": ["node", "jest"]
   },
-  "include": ["src", "test"]
+  "include": ["src","prisma","jest.config.ts", "test"]
 }

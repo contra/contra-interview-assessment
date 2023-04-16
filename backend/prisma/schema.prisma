@@ -1,0 +1,34 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTGRES_CONNECTION_STRING")
+}
+
+model User {
+    id           Int           @id @default(autoincrement())
+    email        String        @unique
+    firstName    String?
+    familyName   String?
+    created      DateTime      @default(now()) @db.Timestamp(6)
+    featureFlags FeatureFlag[]
+}
+
+model FeatureFlag {
+    email       String
+    name        String
+    description String?
+    value       Json
+    userId      Int
+    user        User    @relation(fields: [userId], references: [id])
+
+    @@id([email, name])
+}
+
+model FeatureFlagSelection {
+    id             Int    @id @default(autoincrement())
+    name           String @unique
+    possibleValues Json[]
+}

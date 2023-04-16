@@ -1,9 +1,11 @@
-import type { GraphQLResolveInfo } from 'graphql';
-import type { ResolverContext } from '../ResolverContextType';
+import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import type { User as UserModel } from '@prisma/client';
+import type { ResolverContext } from '../ResolverContext';
 export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -11,17 +13,56 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  MultivariateScalar: any;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  sampleMutation: Scalars['String'];
+  targetWithFeatureFlag?: Maybe<Array<Maybe<User>>>;
+  changeFeatureFlagValue?: Maybe<User>;
+};
+
+
+export type MutationTargetWithFeatureFlagArgs = {
+  input: TargetMutationInput;
+};
+
+
+export type MutationChangeFeatureFlagValueArgs = {
+  input: ChangeValueMutationInput;
+};
+
+export type TargetMutationInput = {
+  name: Scalars['String'];
+  value: Scalars['MultivariateScalar'];
+  userIds: Array<Scalars['String']>;
+};
+
+export type ChangeValueMutationInput = {
+  name: Scalars['String'];
+  value: Scalars['MultivariateScalar'];
+  userId: Scalars['String'];
+};
+
+export type FeatureFlag = {
+  __typename?: 'FeatureFlag';
+  name: Scalars['String'];
+  value?: Maybe<Scalars['MultivariateScalar']>;
+};
+
+export type User = {
+  __typename?: 'User';
+  firstName: Scalars['String'];
+  familyName: Scalars['String'];
+  email: Scalars['String'];
+  featureFlags?: Maybe<Array<Maybe<FeatureFlag>>>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
+  users?: Maybe<Array<Maybe<User>>>;
 };
+
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
@@ -90,30 +131,62 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
+  TargetMutationInput: TargetMutationInput;
   String: ResolverTypeWrapper<Scalars['String']>;
+  ChangeValueMutationInput: ChangeValueMutationInput;
+  FeatureFlag: ResolverTypeWrapper<FeatureFlag>;
+  User: ResolverTypeWrapper<UserModel>;
   Query: ResolverTypeWrapper<{}>;
+  MultivariateScalar: ResolverTypeWrapper<Scalars['MultivariateScalar']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
+  TargetMutationInput: TargetMutationInput;
   String: Scalars['String'];
+  ChangeValueMutationInput: ChangeValueMutationInput;
+  FeatureFlag: FeatureFlag;
+  User: UserModel;
   Query: {};
+  MultivariateScalar: Scalars['MultivariateScalar'];
   Boolean: Scalars['Boolean'];
 }>;
 
 export type MutationResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
-  sampleMutation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  targetWithFeatureFlag?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, RequireFields<MutationTargetWithFeatureFlagArgs, 'input'>>;
+  changeFeatureFlagValue?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationChangeFeatureFlagValueArgs, 'input'>>;
+}>;
+
+export type FeatureFlagResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['FeatureFlag']> = ResolversObject<{
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['MultivariateScalar']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['User']> = ResolversObject<{
+  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  familyName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  featureFlags?: Resolver<Maybe<Array<Maybe<ResolversTypes['FeatureFlag']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
-  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
 }>;
+
+export interface MultivariateScalarScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['MultivariateScalar'], any> {
+  name: 'MultivariateScalar';
+}
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
+  FeatureFlag?: FeatureFlagResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  MultivariateScalar?: GraphQLScalarType;
 }>;
 
 

@@ -1,7 +1,33 @@
 type Mutation {
-  sampleMutation: String!
+  targetWithFeatureFlag(input: TargetMutationInput!): [User]
+  changeFeatureFlagValue(input: ChangeValueMutationInput!): User
+}
+
+input TargetMutationInput {
+  name: String!
+  value: MultivariateScalar!
+  userIds: [String!]!
+}
+input ChangeValueMutationInput {
+  name: String!
+  value: MultivariateScalar!
+  userId: String!
+}
+
+type FeatureFlag {
+  name: String!
+  value: MultivariateScalar
+}
+
+type User {
+  firstName: String!
+  familyName: String!
+  email: String!
+  featureFlags: [FeatureFlag]
 }
 
 type Query {
-  hello: String!
+  users: [User]
 }
+
+scalar MultivariateScalar
