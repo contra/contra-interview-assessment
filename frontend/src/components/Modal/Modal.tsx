@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom';
-import { useModalFunctionality } from './utils';
 import styles from './styles.module.css';
+import { useModalFunctionality } from './utils';
 
 type ModalBaseProps = {
   children: React.ReactNode;
@@ -30,8 +30,8 @@ const Modal = ({
       {createPortal(
         <div className={styles['modalOuter']}>
           <div
-            role="dialog"
             aria-modal="true"
+            role="dialog"
             {...rest}
             className={`${className} ${styles['modalInner']}`}
           >
@@ -40,14 +40,15 @@ const Modal = ({
               <button
                 aria-label="close"
                 className={styles['closeButton']}
-                onClick={(e) => onClose?.(e)}
+                onClick={(event) => onClose(event)}
+                type="button"
               >
                 &times;
               </button>
             )}
           </div>
         </div>,
-        document.getElementById('contra_modal_container') as HTMLElement
+        document.querySelector('#contra_modal_container') as HTMLElement
       )}
     </>
   );
