@@ -1,0 +1,19 @@
+.root {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  padding: 0;
+}
+@media only screen and (min-width: 664px) {
+  .root {
+    max-width: 632px;
+  }
+}
+:root:has(.root[open]) {
+  overflow: hidden;
+}
+.form {
+  padding: 16px;
+}
