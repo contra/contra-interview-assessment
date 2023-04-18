@@ -27,14 +27,13 @@ export const Introduction = () => (
         </p>
         <p>
           The downside of this approach is that the built in JavaScript{' '}
-          <code>dialog</code>
-          methods do not have React bindings, so the developer must create them.
-          My implementation uses the <code>useImperativeHandle()</code> hook to
-          create these bindings rather than <code>useEffect()</code> for
-          performance reasons. However, this also makes the code less "React"-y
-          since it requires the use of more refs to access the modal's methods.
-          This could conflict with the code style or standards used in the rest
-          of the codebase.
+          <code>dialog</code> methods do not have React bindings, so the
+          developer must create them. My implementation uses the{' '}
+          <code>useImperativeHandle()</code> hook to create these bindings
+          rather than <code>useEffect()</code> for performance reasons. However,
+          this also makes the code less "React"-y since it requires the use of
+          more refs to access the modal's methods. This could conflict with the
+          code style or standards used in the rest of the codebase.
         </p>
       </li>
       <li>
