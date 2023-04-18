@@ -8,7 +8,7 @@ import {
   BranchModalPlaceholder,
   LeafModalPlaceholder,
 } from '@/../components/placeholderText';
-import { MouseEventHandler, useRef, useState } from 'react';
+import { ChangeEventHandler, MouseEventHandler, useRef, useState } from 'react';
 import styles from '../styles/htmlModalDemo.module.css';
 
 export const HtmlModalDemo = () => {
@@ -71,7 +71,7 @@ export const HtmlModalDemo = () => {
     setTermsConditionsAccepted(true);
   };
 
-  const handleBranchModalOpenClick: MouseEventHandler<HTMLLabelElement> = (
+  const handleBranchModalOpenChange: ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
     e.preventDefault();
@@ -112,11 +112,13 @@ export const HtmlModalDemo = () => {
         ref={rootModalImperativeHandleRef}
       >
         <RootModalPlaceholder />
-        <label
-          className={styles['termsConditions']}
-          onClick={handleBranchModalOpenClick}
-        >
-          <input checked={termsConditionsAccepted} readOnly type="checkbox" />
+        <label className={styles['termsConditions']}>
+          <input
+            checked={termsConditionsAccepted}
+            onChange={handleBranchModalOpenChange}
+            readOnly
+            type="checkbox"
+          />
           <span>I agree to the terms and conditions</span>
         </label>
         <div className={styles['modalActions']}>
