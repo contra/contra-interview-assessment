@@ -5,7 +5,7 @@ import {
   LeafModalPlaceholder,
 } from '@/../components/placeholderText';
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
-import styles from '../styles/htmlModalDemo.module.css';
+import styles from '../styles/modalDemo.module.css';
 
 export const ReactModalDemo = () => {
   const [rootModalOpen, setRootModalOpen] = useState(false);

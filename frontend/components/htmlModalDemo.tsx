@@ -9,7 +9,7 @@ import {
   LeafModalPlaceholder,
 } from '@/../components/placeholderText';
 import { ChangeEventHandler, MouseEventHandler, useRef, useState } from 'react';
-import styles from '../styles/htmlModalDemo.module.css';
+import styles from '../styles/modalDemo.module.css';
 
 export const HtmlModalDemo = () => {
   const rootModalImperativeHandleRef = useRef<HtmlModalImperativeHandle | null>(
