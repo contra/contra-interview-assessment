@@ -1,7 +1,21 @@
+scalar JSON
+
 type Mutation {
+  createFeatureFlags: String!
+  createUserAccounts: String!
+  createUserFlags: String!
   sampleMutation: String!
+  setFeatureFlag(featureId: Int, status: JSON): String!
+  setUserFeature(status: JSON, userId: Int): String!
 }
 
 type Query {
+  getAllUsersFlags: [UserFlags!]!
   hello: String!
+}
+
+type UserFlags {
+  featureName: String!
+  givenName: String!
+  status: JSON!
 }
