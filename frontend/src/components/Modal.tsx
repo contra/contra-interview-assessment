@@ -33,17 +33,24 @@ const ModalContainer = styled.div`
 `;
 
 const ModalCloseButton = styled.button`
+  cursor: pointer;
   position: absolute;
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%); 
   border: none;
   background-color: transparent;
+  border: 2px solid #000;
   font-size: 1.5rem;
-  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: roboto;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
-    color: red;
+    background-color: #008CBA; /* Blue */
+    color: #fff;
+    border: none;
   }
 `;
 
@@ -54,7 +61,7 @@ const ModalContent = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   margin-top: 0px;
-  font-family: "Arial", sans-serif;
+  font-family: roboto;
 `;
 
 const NextImageContainer = styled.div`
@@ -63,10 +70,6 @@ const NextImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 40px
-`
-
-const StyledClosedImage = styled(Image)`
-
 `
 
 const StyledNextImage = styled(Image)`
