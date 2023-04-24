@@ -127,7 +127,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return isOpen ? (
     <ModalBackdrop className="modal-backdrop" onClick={handleClick} ref={modalRef} onKeyDown={handleKeyDown} tabIndex={-1}>
       <ModalContainer className="modal">
-        <NextImageContainer>
+        <NextImageContainer className="next-image-container">
           <StyledNextImage src="/assets/png/check.png" width={80} height={80} alt="Example Image" />
         </NextImageContainer>
         <ModalContent>{children}</ModalContent>
