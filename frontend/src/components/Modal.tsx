@@ -48,9 +48,9 @@ const ModalCloseButton = styled.button`
   transition: background-color 0.3s ease-in-out;
 
   &:hover {
-    background-color: #008CBA; /* Blue */
+    background-color: #ff0000; /* Blue */
     color: #fff;
-    border: none;
+    border: red;
   }
 `;
 
@@ -75,7 +75,6 @@ const NextImageContainer = styled.div`
 const StyledNextImage = styled(Image)`
   // border-radius: 50%;
   margin-top: 50px;
-  
 `;
 
 

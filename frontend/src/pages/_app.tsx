@@ -10,12 +10,10 @@ const AppContainer = styled.div`
 const OpenModalButtonContainer = styled.div`
   width: 100%;
   height: 90vh;
-  // background-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
 `
-
 
 const OpenModalButton = styled.div`
   border: 2px solid #000;
@@ -23,6 +21,7 @@ const OpenModalButton = styled.div`
   border-radius: 5px;
   font-family: roboto;
   transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
 
   &:hover {
     background-color: #008CBA; /* Blue */
