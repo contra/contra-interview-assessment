@@ -1,5 +1,7 @@
 import { SlonikMigrator } from '@slonik/migrator';
 import { createPool } from 'slonik';
+require('dotenv').config()
+
 
 if (!process.env.POSTGRES_CONNECTION_STRING) {
   throw new Error(

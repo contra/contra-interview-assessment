@@ -1,7 +1,28 @@
+type User {
+  id: ID!
+  givenName: String!
+  familyName: String!
+  emailAddress: String!
+  featureflag: FeatureFlagAssignment!
+}
+
+type FeatureFlag {
+  id: ID!
+  name: String!
+  values: [String!]!
+}
+
+type FeatureFlagAssignment {
+  userId: ID!
+  featureFlagId: ID!
+  value: String!
+}
+
 type Mutation {
-  sampleMutation: String!
+  addTargetedUsers(userId: ID!, featureFlagId: ID!, value: String!): FeatureFlagAssignment!
+  updateFeatureFlagValue(userId: ID!, featureFlagId: ID!, value: String!): FeatureFlagAssignment!
 }
 
 type Query {
-  hello: String!
+  allUsersWithFeatureFlags: [User!]!
 }
