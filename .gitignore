@@ -42,4 +42,4 @@ src/types/api.ts
 !.yarn/sdks
 !.yarn/versions
 !.yarnrc.yml
-.turbo
+!.env.sample
