@@ -1,0 +1,21 @@
+.modal-background {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background: rgba(100, 100, 100, 0.6);
+}
+
+.modal {
+  position: fixed;
+  top: 30%;
+  left: calc(50% - 125px);
+
+  width: 350px;
+
+  box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
+  background-color: white;
+  border-radius: 12px;
+}

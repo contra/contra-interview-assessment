@@ -1,0 +1,53 @@
+fragment FlagData on Flag {
+  id
+  name
+  description
+  type
+  value
+  createdAt
+  updatedAt
+}
+fragment UserData on User {
+  id
+  givenName
+  familyName
+  emailAddress
+  createdAt
+  updatedAt
+}
+fragment UserDataWithFlag on User {
+  ...UserData
+  flags {
+    ...FlagData
+  }
+}
+query getUsers {
+  users {
+    ...UserData
+  }
+}
+query getUser($userId: ID!) {
+  user(userId: $userId) {
+    ...UserData
+  }
+}
+query getUsersWithFlag {
+  users {
+    ...UserDataWithFlag
+  }
+}
+query getUserWithFlag($userId: ID!) {
+  user(userId: $userId) {
+    ...UserDataWithFlag
+  }
+}
+query getFlags {
+  flags {
+    ...FlagData
+  }
+}
+query getFlag($flagId: ID!) {
+  flag(flagId: $flagId) {
+    ...FlagData
+  }
+}
