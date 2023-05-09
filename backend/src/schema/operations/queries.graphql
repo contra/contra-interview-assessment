@@ -1,26 +1,3 @@
-fragment FlagData on Flag {
-  id
-  name
-  description
-  type
-  value
-  createdAt
-  updatedAt
-}
-fragment UserData on User {
-  id
-  givenName
-  familyName
-  emailAddress
-  createdAt
-  updatedAt
-}
-fragment UserDataWithFlag on User {
-  ...UserData
-  flags {
-    ...FlagData
-  }
-}
 query getUsers {
   users {
     ...UserData
