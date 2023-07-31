@@ -1,18 +1,37 @@
 /* eslint-disable canonical/filename-match-exported */
 import { type NextPage } from 'next';
-import {Modal} from "@/components/Modal";
+import { Dialog } from 'components/Dialog';
+import { useState } from 'react';
+
+const toggleState = (previousState: boolean) => !previousState;
 
 const Index: NextPage = () => {
+  const [dialogOneOpen, setDialogOneOpen] = useState(true);
+  const [dialogTwoOpen, setDialogTwoOpen] = useState(true);
+
   return (
     <>
       <h1>Welcome to Contra!</h1>
+      <button onClick={() => setDialogOneOpen(toggleState)} type="button">
+        Open Dialog 1
+      </button>
+      <button onClick={() => setDialogTwoOpen(toggleState)} type="button">
+        Open Dialog 2
+      </button>
       {/* eslint-disable-next-line no-console */}
-      <Modal closeText="Close" isOpen={true} onClose={() => console.log('fechei o 1')}>
+      <Dialog
+        isOpen={dialogOneOpen}
+        onClose={() => setDialogOneOpen(toggleState)}
+      >
         <p>This is a test.</p>
-      </Modal>
-      <Modal closeText="Close" isOpen={true} onClose={() => console.log('fechei o 2')}>
-        <p>This is a second test.</p>
-      </Modal>
+      </Dialog>
+      <Dialog
+        isOpen={dialogTwoOpen}
+        onClose={() => setDialogTwoOpen(toggleState)}
+      >
+        <input name="test-1" type="text" />
+        <input autoFocus name="test-2" type="text" />
+      </Dialog>
     </>
   );
 };
