@@ -12,3 +12,12 @@ onClose={() => setIsOpen(false)}
 
 ### Extendability
 This component can be extended to support additional styles, either for the dialog itself, customize the close button and other minor details. I would apply conditional styles in this case, making them come via props optionally.
+
+
+### Props
+
+| Name     | Type                | Default | Description                                                                                                                      |
+|----------|---------------------|---------|----------------------------------------------------------------------------------------------------------------------------------|
+| children | ReactNode           | null    | Child elements for the dialog.                                                                                                   |
+| isOpen   | boolean             | -       | Whether the dialog should be open (required)                                                                                     |
+| onClose  | function            | null    | Function that updates isOpen to switch to true or false (required)                                                               |
