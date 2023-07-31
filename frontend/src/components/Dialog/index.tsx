@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, type ReactNode } from 'react';
-import { modalStack } from '@/components/Dialog/DialogManager';
 import closeStyle from './Close.module.css';
 import styles from './Dialog.module.css';
+import { modalStack } from './DialogManager';
 
 type ModalProps = {
   children: ReactNode;
@@ -98,6 +98,7 @@ export const Dialog: React.FC<ModalProps> = (props: ModalProps) => {
       className={styles['dialogRoot']}
       onClick={handleOutsideClick}
       ref={dialogRootRef}
+      data-testid="dialog-root"
     >
       <dialog className={styles['dialog']} open={isOpen} ref={dialogRef}>
         <a className={closeStyle['close']} onClick={handleClose}></a>
