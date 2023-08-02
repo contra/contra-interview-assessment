@@ -10,9 +10,15 @@ If you have any questions, reach out to [Joseph](mailto:joseph@contra.com) -- he
 
 ## Choose your own adventure
 
+**Software Engineers**:
+
 We have split our technical assessment into a backend assessment and frontend assessment -- you are free to choose which one you'd like to complete. While everyone we hire is full-stack, we want every candidate to play to their strengths and past experiences -- we recommend choosing the assessment at which you'll be the most successful. Show us what you've got!
 
 Within the backend and frontend folder you will find a `README.md` that outlines the technical assessment, criteria and setup steps.
+
+**Platform Reliability Engineers**: 
+
+While the PRE role will have you working with frontend and backend code, we would like you to complete the backend assessment so we can get a deeper understanding of your backend software engineering experience.
 
 ## Repository Setup Instructions
 
