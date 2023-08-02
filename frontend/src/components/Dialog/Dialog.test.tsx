@@ -1,13 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { Dialog } from '.';
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
 
 test('renders and opens the dialog when isOpen is true', () => {
   const onClose = jest.fn();
   const children = <div>Test Content</div>;
 
-  render(<Dialog isOpen={true} onClose={onClose}>{children}</Dialog>);
+  render(
+    <Dialog isOpen={true} onClose={onClose}>
+      {children}
+    </Dialog>
+  );
 
   // Dialog should be in the document
   const dialogElement = screen.getByRole('dialog');
@@ -25,7 +29,11 @@ test('does not render and closes the dialog when isOpen is false', () => {
   const onClose = jest.fn();
   const children = <div>Test Content</div>;
 
-  render(<Dialog isOpen={false} onClose={onClose}>{children}</Dialog>);
+  render(
+    <Dialog isOpen={false} onClose={onClose}>
+      {children}
+    </Dialog>
+  );
 
   // Dialog should not be in the document
   const dialogElement = screen.queryByRole('dialog');
@@ -36,7 +44,11 @@ test('calls onClose when clicking outside the dialog', () => {
   const onClose = jest.fn();
   const children = <div>Test Content</div>;
 
-  render(<Dialog isOpen={true} onClose={onClose}>{children}</Dialog>);
+  render(
+    <Dialog isOpen={true} onClose={onClose}>
+      {children}
+    </Dialog>
+  );
 
   // Click outside the dialog
   fireEvent.click(screen.getByTestId('dialog-root'));
