@@ -1,7 +1,54 @@
-type Mutation {
-  sampleMutation: String!
+enum FEATURE_FLAG_VALUE_TYPES {
+  BOOLEAN
+  STRING
+  NUMBER
+  JSON_ARRAY
+  JSON_OBJECT
+}
+
+type FeatureFlagPossibleValues {
+  type: FEATURE_FLAG_VALUE_TYPES!
+  values: [String!]!
+}
+
+type FeatureFlagValue {
+  type: FEATURE_FLAG_VALUE_TYPES!
+  value: String!
+}
+
+type FeatureFlag { 
+  id: ID!
+  name: String!
+  possibleValues: FeatureFlagPossibleValues!
+  userAssociations: [UserFeatureFlagAssociation!]
+}
+
+type UserAccount {
+  id: ID!
+  givenName: String!
+  familyName: String!
+  emailAddress: String!
+  featureFlagAssociations: [UserFeatureFlagAssociation!]
+}
+
+type UserFeatureFlagAssociation {
+  user: UserAccount!
+  featureFlag: FeatureFlag!
+  value: FeatureFlagValue!
 }
 
 type Query {
   hello: String!
+  userAccounts: [UserAccount] # Consider pagination in the future
+}
+
+type AssignUsersToFeatureFlagReturnType {
+  userId: ID!
+  value: Boolean!
+}
+
+type Mutation {
+  sampleMutation: String!
+  assignUsersToFeatureFlag(userAccountIds: [ID!]!, featureFlagId: ID!, value: String!): [AssignUsersToFeatureFlagReturnType]!
+  updateUserFeatureFlagValue(userAccountId: ID!, featureFlagId: ID!, newValue: String!): Boolean # With more time, return types should be enriched to give more details
 }
