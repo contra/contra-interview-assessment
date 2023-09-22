@@ -16,9 +16,9 @@ We have split our technical assessment into a backend assessment and frontend as
 
 Within the backend and frontend folder you will find a `README.md` that outlines the technical assessment, criteria and setup steps.
 
-**Platform Reliability Engineers**: 
+**Site Reliability Engineers**: 
 
-While the PRE role will have you working with frontend and backend code, we would like you to complete the backend assessment so we can get a deeper understanding of your backend software engineering experience.
+While the SRE role will have you working with frontend and backend code, we would like you to complete the backend assessment so we can get a deeper understanding of your backend software engineering experience.
 
 ## Repository Setup Instructions
 
