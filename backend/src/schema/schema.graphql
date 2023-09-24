@@ -1,7 +1,59 @@
+scalar JSON
+scalar Timestamp
+
 type Mutation {
-  sampleMutation: String!
+  targetUsers(input: TargetUsersInput!): TargetUsersResult!
+  updateFlagForUser(input: UpdateFlagForUserInput!): UpdateFlagForUserResult!
 }
 
 type Query {
-  hello: String!
+  flag(flagId: ID!): Flag!
+  flags: [Flag!]!
+  user(userId: ID!): User!
+  users: [User!]!
+}
+
+type Flag {
+  createdAt: Timestamp!
+  description: String!
+  id: ID!
+  name: String!
+  type: FlagTypeEnum!
+  updatedAt: Timestamp!
+  value: JSON!
+}
+
+enum FlagTypeEnum {
+  boolean
+  multi
+}
+
+type TargetUsersResult {
+  success: Boolean!
+}
+
+type UpdateFlagForUserResult {
+  success: Boolean!
+}
+
+type User {
+  createdAt: Timestamp!
+  emailAddress: String!
+  familyName: String!
+  flags: [Flag!]!
+  givenName: String!
+  id: ID!
+  updatedAt: Timestamp!
+}
+
+input TargetUsersInput {
+  flagId: ID!
+  usersIds: [ID!]!
+  value: JSON
+}
+
+input UpdateFlagForUserInput {
+  flagId: ID!
+  userId: ID!
+  value: JSON!
 }

@@ -1,0 +1,10 @@
+.items-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 20px;
+}
+
+.item-details {
+  padding: 20px;
+}

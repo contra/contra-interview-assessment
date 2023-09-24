@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "dev": "dotenv -- turbo run dev",
+    "codegen": "turbo run codegen",
+    "seed": "dotenv -- turbo run seed",
+    "migrate:up": "dotenv -- turbo run migrate:up",
+    "docker:up": "dotenv -- docker-compose up -d",
+    "docker:down": "dotenv -- docker-compose down",
+    "docker:stop": "dotenv -- docker-compose stop",
+    "docker:start": "dotenv -- docker-compose start"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^7.2.1",
+    "turbo": "^1.9.3"
+  },
+  "workspaces": [
+    "backend/",
+    "frontend/"
+  ]
+}

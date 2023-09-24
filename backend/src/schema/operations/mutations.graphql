@@ -1,0 +1,11 @@
+mutation targetUsers($input: TargetUsersInput!) {
+  targetUsers(input: $input) {
+    success
+  }
+}
+
+mutation updateFlagForUser($input: UpdateFlagForUserInput!) {
+  updateFlagForUser(input: $input) {
+    success
+  }
+}

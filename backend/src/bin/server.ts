@@ -1,17 +1,15 @@
-import Logger from 'roarr';
+import { Roarr } from 'roarr';
 import { createPool } from 'slonik';
 // @ts-expect-error
 import { createInterceptors } from 'slonik-interceptor-preset';
+import { getPgConfig } from '../config/databaseConfiguration';
 import { createFastifyServer } from '../factories/createFastifyServer';
 
-const log = Logger.child({ context: 'bin/server' });
+const log = Roarr.child({ context: 'bin/server' });
 
-if (!process.env.POSTGRES_CONNECTION_STRING)
-  throw new Error(
-    'Must provide a PG connection string (export POSTGRES_CONNECTION_STRING=value) -- if you need a fresh database, we recommend using Render.com',
-  );
+const { connectionString } = getPgConfig();
 
-const pool = createPool(process.env.POSTGRES_CONNECTION_STRING, {
+const pool = createPool(connectionString, {
   captureStackTrace: false,
   connectionTimeout: 60 * 1_000,
   interceptors: createInterceptors(),
@@ -19,11 +17,11 @@ const pool = createPool(process.env.POSTGRES_CONNECTION_STRING, {
 
 (async () => {
   try {
-    const app = await createFastifyServer(pool);
+    const app = await createFastifyServer(pool, log);
 
-    app.listen(8_080, () =>
-      log.info(`🛩 Server ready at http://localhost:8080/graphql`),
-    );
+    app.listen(5000, () => {
+      log.info(`🛩 Server ready at http://localhost:5000/graphql`);
+    });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error);

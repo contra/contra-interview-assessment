@@ -1,0 +1,29 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build", "lint"],
+      "outputs": ["build/**", ".next/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "dev": {
+      "dependsOn": ["codegen"],
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "outputs": ["coverage/**"]
+    },
+    "migrate:up": {
+      "cache": false
+    },
+    "codegen": {
+      "outputs": ["build/**"]
+    },
+    "seed": {
+      "cache": false
+    }
+  }
+}

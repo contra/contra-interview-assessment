@@ -1,10 +1,14 @@
 schema:
-  - src/**/*.graphql
+  - src/schema/schema.graphql
 generates:
-  'src/generated/types.ts':
+  src/generated/types.ts:
     plugins:
       - typescript
       - typescript-resolvers
+      - typescript-operations
+      - typescript-graphql-request
+    documents:
+      - src/schema/operations/*.graphql
     config:
       allowParentTypeOverride: true
       contextType: '../ResolverContextType#ResolverContext'
@@ -14,6 +18,8 @@ generates:
       optionalResolveType: true
       useIndexSignature: true
       scalars:
-        ID: 'string | number'
+        ID: 'number'
+        Timestamp: 'string'
+        JSON: '../ResolverContextType#JsonScalar'
       useTypeImports: true
       mappers:

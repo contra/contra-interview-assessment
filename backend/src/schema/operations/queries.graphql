@@ -1,0 +1,30 @@
+query getUsers {
+  users {
+    ...UserData
+  }
+}
+query getUser($userId: ID!) {
+  user(userId: $userId) {
+    ...UserData
+  }
+}
+query getUsersWithFlag {
+  users {
+    ...UserDataWithFlag
+  }
+}
+query getUserWithFlag($userId: ID!) {
+  user(userId: $userId) {
+    ...UserDataWithFlag
+  }
+}
+query getFlags {
+  flags {
+    ...FlagData
+  }
+}
+query getFlag($flagId: ID!) {
+  flag(flagId: $flagId) {
+    ...FlagData
+  }
+}

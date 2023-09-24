@@ -6,7 +6,7 @@ tsconfig.tsbuildinfo
 next-env.d.ts
 schema.graphql
 src/types/api.ts
-/.next/
+.next/
 /out/
 *.log
 .*
