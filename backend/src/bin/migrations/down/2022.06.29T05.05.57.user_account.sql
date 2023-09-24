@@ -1,1 +1,1 @@
-raise 'down migration not implemented'
+drop table user_account
