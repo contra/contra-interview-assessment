@@ -1,9 +1,8 @@
 import Logger from 'roarr';
 import { createPool } from 'slonik';
-// @ts-expect-error
 import { createInterceptors } from 'slonik-interceptor-preset';
 import { createFastifyServer } from '../factories/createFastifyServer';
-
+require('dotenv').config()
 const log = Logger.child({ context: 'bin/server' });
 
 if (!process.env.POSTGRES_CONNECTION_STRING)
