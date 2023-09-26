@@ -1,5 +1,6 @@
-import { resolve as sampleMutation } from './sampleMutation';
+import { targetUsers, updateFlagForUser } from './flags';
 
 export const Mutation = {
-  sampleMutation,
+  targetUsers,
+  updateFlagForUser,
 };
