@@ -1,5 +1,15 @@
-import { resolve as hello } from './hello';
+import { 
+    queryFlag as flag, 
+    queryFlags as flags 
+} from './flags';
+import { 
+  queryUser as user, 
+  queryUsers as users 
+} from './users';
 
 export const Query = {
-  hello,
+  flag,
+  flags,
+  user,
+  users,
 };
