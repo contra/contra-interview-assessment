@@ -10,7 +10,7 @@ import { resolvers } from '../schema/resolvers';
 export const createFastifyServer = async (pool: CommonQueryMethodsType) => {
   const executableSchema = makeExecutableSchema({
     inheritResolversFromInterfaces: true,
-    resolvers,
+    resolvers: [resolvers],
     resolverValidationOptions: { requireResolversForResolveType: 'ignore' },
     typeDefs: importSchema(path.resolve(__dirname, '../schema/schema.graphql')),
   });
