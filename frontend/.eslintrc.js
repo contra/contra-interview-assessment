@@ -48,6 +48,7 @@ module.exports = {
       files: '*.ts',
       parserOptions: {
         project: tsconfigs,
+        tsconfigRootDir: __dirname / frontend / tsconfig
       },
       rules: ruleOverrides,
     },
