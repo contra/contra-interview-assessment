@@ -9,7 +9,8 @@
     "build": "tsc --project ./",
     "lint": "eslint --fix src . && prettier --write src . && tsc --noEmit && format-graphql --write true src/schema/schema.graphql",
     "generate-types": "graphql-codegen",
-    "migrate": "ts-node ./src/bin/migrate.ts"
+    "migrate": "ts-node ./src/bin/migrate.ts",
+    "testdata": "ts-node ./src/bin/testdata.ts"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "1.21.2",
@@ -39,6 +40,7 @@
     "got": "^11.8.5",
     "graphql": "^15.4.0",
     "graphql-import": "^1.0.2",
+    "graphql-scalars": "^1.21.3",
     "graphql-tools": "^7.0.2",
     "roarr": "^3.2.0",
     "slonik": "^23.5.1",

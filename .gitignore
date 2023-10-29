@@ -11,7 +11,7 @@ src/types/api.ts
 /out/
 *.log
 .*
-.yarn/*
+**/.yarn/*
 
 *.log
 .*

@@ -1,0 +1,1 @@
+TRUNCATE TABLE feature_flag_variant RESTART IDENTITY CASCADE;
