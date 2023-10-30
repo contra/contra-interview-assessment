@@ -129,7 +129,15 @@ export type MutationResolvers<ContextType = ResolverContext, ParentType = Resolv
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  feature?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  feature?: Resolver<Array<{
+    given_name: string;
+    family_name: string;
+    email_address: string;
+    featureFlags: Array<{
+      name: string;
+      value: boolean;
+    }>;
+  }>, ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{

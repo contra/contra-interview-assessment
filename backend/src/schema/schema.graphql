@@ -5,7 +5,7 @@ type Mutation {
 type Query {
   hello: String!
 }
-// Schema definitions to identify user and mutate feature flags
+# Schema definitions to identify user and mutate feature flags
 type User {
     id: ID!
     given_name: String!
@@ -29,9 +29,10 @@ type UserWithFeatureFlag {
 
 type Query {
   users: [User!]!
+  feature: [FeatureFlag!]!
 }
 
 type Mutation {
-  assignFeatureFlagToUser(userId: ID!, featureFlagId: ID!): User
-  changeFeatureFlagValue(userId: ID!, featureFlagId: ID!, value: Boolean!): FeatureFlag
+  assignFlag(userId: ID!, featureFlagId: ID!): User
+  changeFlag(userId: ID!, featureFlagId: ID!, value: Boolean!): FeatureFlag
 }

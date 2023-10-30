@@ -27,11 +27,8 @@ export const user: QueryResolvers['feature'] = async (
         given_name: result.given_name,
         family_name: result.family_name,
         email_address: result.email_address,
-        featureFlags: result.featureFlags.map(featureFlag => ({
-          name: featureFlag.name,
-          value: featureFlag.value
+        featureFlags: result.featureFlags
         }))
-      }));
     };
   
   
