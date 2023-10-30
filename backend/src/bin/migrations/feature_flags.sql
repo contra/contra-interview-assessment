@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE user (
   id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   given_name text NOT NULL,
   family_name text NOT NULL,
@@ -8,8 +8,8 @@ CREATE TABLE users (
 );
 
 CREATE TABLE feature_flags (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    name text NOT NULL,
     value BOOLEAN NOT NULL DEFAULT false
 );
 

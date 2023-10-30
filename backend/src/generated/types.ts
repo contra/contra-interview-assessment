@@ -16,12 +16,32 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   sampleMutation: Scalars['String'];
+  assignFlag: Scalars['String'];
+  changeFlag: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
+  feature: Scalars['String'];
 };
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['Int'];
+  given_name: Scalars['String'];
+  family_name: Scalars['String'];
+  email_address: Scalars['String'];
+  featureFlags: Array<FeatureFlag>;
+};
+
+export type FeatureFlag = {
+  __typename?: 'FeatureFlag';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  value: Boolean;
+};
+  
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
@@ -109,6 +129,7 @@ export type MutationResolvers<ContextType = ResolverContext, ParentType = Resolv
 
 export type QueryResolvers<ContextType = ResolverContext, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  feature?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ResolverContext> = ResolversObject<{
