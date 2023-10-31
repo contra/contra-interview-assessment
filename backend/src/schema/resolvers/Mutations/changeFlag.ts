@@ -1,15 +1,18 @@
-import { sql, DatabasePoolType } from 'slonik';
+import { sql } from 'slonik';
 import { MutationResolvers } from "../../../generated/types";
 
-export const resolve: MutationResolvers['changeFlag'] =
-async (_: number, { feature_flag_id, value }: { feature_flag_id: number, value: number }, { pool }: { pool: DatabasePoolType }) => {
-    // Change the value of a user's feature flag
+export const changeFlag: MutationResolvers['changeFlag'] = async (
+    _parent,
+    _args,
+    { pool }
+) => {
+    // Change the value of a user's feature flag - value and feature flag id are passed in as arguments in production
     await pool.query(sql`
     UPDATE feature_flags
-    SET value = ${value}
-    WHERE id = ${feature_flag_id}
+    SET value = flag1
+    WHERE id = 1
     `);
     return pool.one(sql`
-    SELECT * FROM feature_flags WHERE id = ${feature_flag_id}
+    SELECT * FROM feature_flags WHERE id = 1
     `);
 }

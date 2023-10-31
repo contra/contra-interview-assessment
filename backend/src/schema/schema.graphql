@@ -28,11 +28,11 @@ type UserWithFeatureFlag {
 }
 
 type Query {
-  users: [User!]!
-  feature: [FeatureFlag!]!
+  users: [User]
+  feature: [User]
 }
 
 type Mutation {
-  assignFlag(userId: ID!, featureFlagId: ID!): User
-  changeFlag(userId: ID!, featureFlagId: ID!, value: Boolean!): FeatureFlag
+  assignFlag(user_id: ID!, feature_flag_id: ID!): User
+  changeFlag(user_id: ID!, feature_flag_id: ID!, value: Boolean!): FeatureFlag
 }
