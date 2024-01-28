@@ -50,14 +50,14 @@ When evaluating your submission, we care about the following:
 - Correctness
 - Developer Experience
 - Tests of any kind, as long as you can explain why you added the tests that you did
-- Performance & Scaleability
+- Performance & Scalability
 - Code consistency, style, and quality
 
-There's no perfect solution — "Developer Experience, "Performance & Scaleability,", and "Code Quality" mean different things in different contexts. Use your best judgement, and explicitly call out any assumptions you made along the way. Remember: there aren't any tricks here, and we review every submission with the best intent.
+There's no perfect solution — "Developer Experience, "Performance & Scalability,", and "Code Quality" mean different things in different contexts. Use your best judgement, and explicitly call out any assumptions you made along the way. Remember: there aren't any tricks here, and we review every submission with the best intent.
 
 ## AI Tools
 
-With the rapid pace and innovation of AI for software engineering, we have found tools such as Github CoPilot, ChatGPT and Codeium to be helpful in enabling us to be more productive in writing code. You are free to use these tools (heck we encourage it) with this technical assessment but keep in mind you need to understand the code suggestions they generate if you use them.
+With the rapid pace and innovation of AI for software engineering, we have found tools such as GitHub CoPilot, ChatGPT and Codeium to be helpful in enabling us to be more productive in writing code. You are free to use these tools (heck we encourage it) with this technical assessment but keep in mind you need to understand the code suggestions they generate if you use them.
 
 ## Submission
 

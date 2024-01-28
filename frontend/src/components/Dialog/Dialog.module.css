@@ -1,0 +1,63 @@
+.dialogRoot {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    transition: all 0.25s ease-in;
+    backdrop-filter: blur(1px);
+    opacity: 0;
+}
+
+.dialogRootShow {
+    opacity: 1;
+}
+
+.dialog[open]::backdrop {
+    animation-name: backdrop-fade;
+    animation-duration: 0.25s;
+    animation-timing-function: ease-in;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+}
+
+.dialog.close::backdrop {
+    animation-name: backdrop-fade;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-direction: alternate-reverse;
+    animation-fill-mode: backwards;
+    animation-delay: 0.5s;
+    background: transparent;
+}
+
+@keyframes backdrop-fade {
+    from {
+        background: transparent;
+    }
+    to {
+        background: rgba(0, 0, 0, 0.5);
+    }
+}
+
+.dialog {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    max-width: 80vh;
+    overflow: visible;
+}
+
+.dialog::backdrop {
+    transition: all 0.25s ease-in-out;
+    /*background: transparent;*/
+}
+
+.blockScrolling {
+    overflow: hidden;
+}

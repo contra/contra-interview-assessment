@@ -1,0 +1,33 @@
+.close {
+    position: absolute;
+    right: -16px;
+    top: -16px;
+    width: 32px;
+    height: 32px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+    text-indent: -9999px;
+}
+.close:hover:before {
+    box-shadow: white 0 0 5px;
+}
+
+.close:before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 18px;
+    width: 18px;
+    font-size: 20px;
+    content: '\00d7';
+    background-color: rgba(0, 0, 0, 1);
+    box-shadow: white 0 0 4px;
+    border-radius: 100%;
+    padding: 1px 2px 3px;
+    line-height: 100%;
+    text-indent: 0;
+}
